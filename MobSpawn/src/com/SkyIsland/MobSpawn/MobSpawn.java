@@ -9,7 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class MobSpawn extends JavaPlugin {
 	
-	
+	 
 	@Override
 	public void onEnable() {
 		//runs when plugin is enabled;
@@ -35,7 +35,7 @@ public final class MobSpawn extends JavaPlugin {
 			case 1:
 				//just a zombie
 				Player player = (Player) sender;
-				player.getWorld().spawnEntity(arg0, arg1)
+				player.getWorld().spawnEntity(arg0, arg1);
 			}
 			
 			return true;
