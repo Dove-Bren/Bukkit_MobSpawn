@@ -100,6 +100,27 @@ public class MobSpawnCommandProcessor implements CommandExecutor {
 						testSlime2.setPassenger(testSlime3);
 						testSlime3.setPassenger(testSlime4);
 						testSlime4.setPassenger(testSlime5);
+						return true;
+					case 9:
+						Ghast testGhast = (Ghast) player.getWorld().spawn(player.getLocation(), Ghast.class);
+						Creeper testCreeper = (Creeper) player.getWorld().spawn(player.getLocation(), Creeper.class);
+						plugin.invisQuietForever.apply((LivingEntity) testGhast);
+						testCreeper.setPassenger(testGhast);
+						testCreeper.getEquipment().setHelmet(new ItemStack(Material.TNT));
+						testGhast.setMaximumAir(1000);
+						return true;
+					case 10:
+						for (int i = 0; i < 100; i++) {
+							if (Math.round(Math.random()) % 2 == 0) {
+								Chicken testChicken = (Chicken) player.getWorld().spawnEntity(spawnAt, EntityType.CHICKEN);						Creeper testCreeper2 = (Creeper) player.getWorld().spawn(player.getLocation(), Creeper.class);
+								plugin.invisQuietForever.apply((LivingEntity) testCreeper2);
+								testChicken.setPassenger(testCreeper2);
+							}
+							else {
+								Chicken testChicken = (Chicken) player.getWorld().spawnEntity(spawnAt, EntityType.CHICKEN);	
+							}
+						}
+						return true;
 					default:
 						plugin.getLogger().info("MobSpawn debug: Looking up index failed!");
 						return false;
