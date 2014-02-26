@@ -7,3 +7,8 @@ commands:
     usage: /spawn_mob [ID]
     permissions: MobSpawn.spawn_mob
     permission-message: You don't have permission to use spawn_mob
+  spawn_constants:
+    description: Prints out constants used with spawn_mob command
+    usage: /spawn_constants
+    permissions: MobSpawn.spawn_constants
+    permission-message: You don't have permissions to look at the spawn constants
