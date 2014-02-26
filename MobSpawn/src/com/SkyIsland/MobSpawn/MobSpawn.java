@@ -1,10 +1,22 @@
 package com.SkyIsland.MobSpawn;
 
+//import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public final class MobSpawn extends JavaPlugin {
 	
-	 
+	//we will create a couple PotionEffects (like invis) we can use with the mobs
+	
+		//this effect is invisibility, hopefully forever, with particles off
+		protected PotionEffect invisQuietForever = new PotionEffect(PotionEffectType.INVISIBILITY, 99999999, 1, true);
+		
+	
+	//load up config files (a string-to-mob-id config file, for now
+	//YamlConfiguration mobIdLookup = new YamlConfiguration();
+	//mobIdLookup.load("");
+		
 	@Override
 	public void onEnable() {
 		//runs when plugin is enabled;
@@ -20,6 +32,7 @@ public final class MobSpawn extends JavaPlugin {
 	public void onDisable() {
 		
 	}
+	
 	
 	
 }

@@ -9,12 +9,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 public class MobSpawnCommandProcessor implements CommandExecutor {
 
-	private MobSpawn plugin;
+	private MobSpawn plugin; //we can use this to reference any methods in our plugin
 	
+	
+	//just the constructor
 	public MobSpawnCommandProcessor(MobSpawn plugin) {
 		this.plugin = plugin;
 	}
@@ -35,7 +38,7 @@ public class MobSpawnCommandProcessor implements CommandExecutor {
 					Entity mob;
 					Location spawnAt = player.getLocation();
 					double distance = 50.0;
-					spawnAt.add(Math.random() * distance, Math.random() * distance, Math.random() * distance);
+					spawnAt.add((Math.random() * distance) - (distance / 2), (Math.random() * distance) - (distance / 2), (Math.random() * distance) - (distance / 2));
 					
 					//make sure to move from a stupid switch statement
 					switch (Integer.parseInt(args[0])) {
@@ -54,21 +57,31 @@ public class MobSpawnCommandProcessor implements CommandExecutor {
 					case 3:
 						mob = player.getWorld().spawnEntity(spawnAt, EntityType.CHICKEN);
 						mob.setPassenger(player.getWorld().spawnEntity(spawnAt, EntityType.ZOMBIE));
+						return true;
 					case 4:
 						mob = player.getWorld().spawnEntity(spawnAt, EntityType.CHICKEN);
 						mob.setPassenger(player.getWorld().spawnEntity(spawnAt, EntityType.ZOMBIE));
 						((Chicken) mob).setTarget(player);
+						return true;
+					case 5:
+						mob = player.getWorld().spawnEntity(spawnAt, EntityType.BAT);
+						//a potion effect specified in MobSpawn is used here!
+						plugin.invisQuietForever.apply((LivingEntity) mob);
+						mob.setPassenger(player.getWorld().spawnEntity(spawnAt, EntityType.COW));
+						return true;
 					default:
 						plugin.getLogger().info("MobSpawn debug: Looking up index failed!");
 						return false;
 					}
+					
+					//Bosses should use mob.setRemoveWhenFarAway(false)
 					
 					
 				}
 				if (cmd.getName().equalsIgnoreCase("spawn_constants")) {
 					//print out constants
 					Player player = (Player) sender;
-					player.chat("zombie on zombie - 0 | giant - 1 | creeper - 2\nZombie on Chicken (aggro test) - 3 | Chicken aggroed with a Zombie - 4");
+					player.chat("zombie on zombie - 0 | giant - 1 | creeper - 2\nZombie on Chicken (aggro test) - 3 \n Chicken aggroed with a Zombie - 4 | Flying Cow - 5");
 					return true;
 				}
 				
