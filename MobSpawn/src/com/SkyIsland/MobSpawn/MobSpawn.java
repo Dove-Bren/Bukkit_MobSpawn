@@ -33,6 +33,15 @@ public final class MobSpawn extends JavaPlugin {
 		
 	}
 	
+	/**
+	 * Load up yaml files for easy parsing
+	 * 
+	 * 
+	 */
+	protected void loadYaml() {
+		
+	}
+	
 	
 	
 }
