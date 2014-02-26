@@ -39,23 +39,44 @@ public class MobSpawnCommandProcessor implements CommandExecutor {
 					double distance = 50.0;
 					spawnAt.add((Math.random() * distance) - (distance / 2), (Math.random() * distance) - (distance / 2), (Math.random() * distance) - (distance / 2));
 					ItemStack skeletonBow;
+					int index;
+					
+					//!!!!!!!!!!!!!!!!!!!!!!!!!
+					//Notice i've moved the argument of the switch statement from args[0]
+					//to an index returned by lookup up a string in a yaml file.
+					//
+					//Even if you make a class to do this spawning (like abstract this switch to a class)
+					//make sure you still take whatever STRING is passed to the command
+					//and lookup the proper index
+					//!!!!!!!!!!!!!!!!!!!!!!!!!
+					
+					index = plugin.mobIdLookup.getInt("Names." + args[0].toLowerCase());
+					
+					//if it didn't match, returns 0
+					
+					
 					//make sure to move from a stupid switch statement
-					switch (Integer.parseInt(args[0])) {
+					switch (index) {
+					/* case 0 is what it returns if the constant wasn't recognized!
 					case 0:
 						//just a zombie
 						mob = player.getWorld().spawnEntity(spawnAt, EntityType.ZOMBIE);
 						mob.setPassenger(player.getWorld().spawnEntity(spawnAt, EntityType.ZOMBIE));
 						return true;
-					case 1:
+					*/
+					case 19: //these values should not be hardcoded; instead load them from yaml for enforced
+							//conform. Unfortunately, a switch makes you...
 						//giant zombie
 						mob = player.getWorld().spawnEntity(spawnAt, EntityType.GIANT);
 						return true;
-					case 2:
+					case 3:
 						mob = player.getWorld().spawnEntity(spawnAt, EntityType.CREEPER);
 						return true;
-					case 3:
-						mob = player.getWorld().spawnEntity(spawnAt, EntityType.CHICKEN);
-						mob.setPassenger(player.getWorld().spawnEntity(spawnAt, EntityType.ZOMBIE));
+					case 20:
+						mob = player.getWorld().spawnEntity(spawnAt, EntityType.ZOMBIE);
+						((Ageable) mob).setBaby();
+						plugin.invisQuietForever.apply((LivingEntity) mob);
+						mob.setPassenger(player.getWorld().spawnEntity(spawnAt, EntityType.CHICKEN));
 						return true;
 					case 4:
 						mob = player.getWorld().spawnEntity(spawnAt, EntityType.CHICKEN);
@@ -117,7 +138,7 @@ public class MobSpawnCommandProcessor implements CommandExecutor {
 								testChicken.setPassenger(testCreeper2);
 							}
 							else {
-								Chicken testChicken = (Chicken) player.getWorld().spawnEntity(spawnAt, EntityType.CHICKEN);	
+								player.getWorld().spawnEntity(spawnAt, EntityType.CHICKEN);	
 							}
 						}
 						return true;

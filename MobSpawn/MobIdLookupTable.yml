@@ -1,0 +1,26 @@
+#this is what it's GOING to look like, but this file will not be included in final .jar
+#nor is it referenced in current builds. This is just for us to be able to use it quickly
+
+#Any changes to this must be implemented in the makeMobIdLookupTable method in MobSpawn.java!!!!!!
+
+Names:
+    zombie: 1
+    skeleton: 2
+    creeper: 3
+    ghast: 4
+    blaze: 5
+    cow: 6
+    chicken: 7
+    sheep: 8
+    horse: 9
+    zombie_horse: 10
+    skeleton_horse: 11
+    cow_flying: 12
+    slime: 13
+    slime_pyramid: 14
+    creeper_on_chicken: 15
+    skeleton_on_horse: 16
+    ghast_on_creeper: 17
+    pig_mutated: 18
+    giant: 19
+    chicken_on_baby_zombie: 20
