@@ -35,7 +35,8 @@ public final class MobSpawn extends JavaPlugin {
 
 			Player player = (Player) sender;
 			Location spawnAt = player.getLocation();
-			spawnAt.add(Math.random()*100, Math.random()*100, Math.random() * 100);
+			double distance = 50.0;
+			spawnAt.add(Math.random() * distance, Math.random() * distance, Math.random() * distance);
 			
 			//make sure to move from a stupid switch statement
 			switch (args[0].toLowerCase()) {
