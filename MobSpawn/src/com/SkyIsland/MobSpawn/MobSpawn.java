@@ -6,6 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.entity.EntityType;;
 
 public final class MobSpawn extends JavaPlugin {
 	
@@ -35,10 +36,12 @@ public final class MobSpawn extends JavaPlugin {
 			case 1:
 				//just a zombie
 				Player player = (Player) sender;
-				player.getWorld().spawnEntity(arg0, arg1);
+				player.getWorld().spawnEntity(player.getLocation(), EntityType.ZOMBIE);
+				return true;
+			default:
+				return false;
 			}
 			
-			return true;
 		}
 		
 		return false;
