@@ -1,6 +1,6 @@
 name: MobSpawn
 main: com.SkyIsland.MobSpawn.MobSpawn
-version: 0.1
+version: 0.2
 commands:
   spawn_mob:
     description: spawns a mob with super special id ID relative to the player
