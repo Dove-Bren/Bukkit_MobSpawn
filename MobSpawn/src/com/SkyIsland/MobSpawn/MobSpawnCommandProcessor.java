@@ -3,14 +3,13 @@ package com.SkyIsland.MobSpawn;
 import java.lang.reflect.Array;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Chicken;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.*;
+import org.bukkit.inventory.ItemStack;
 
 public class MobSpawnCommandProcessor implements CommandExecutor {
 
@@ -39,7 +38,7 @@ public class MobSpawnCommandProcessor implements CommandExecutor {
 					Location spawnAt = player.getLocation();
 					double distance = 50.0;
 					spawnAt.add((Math.random() * distance) - (distance / 2), (Math.random() * distance) - (distance / 2), (Math.random() * distance) - (distance / 2));
-					
+					ItemStack skeletonBow;
 					//make sure to move from a stupid switch statement
 					switch (Integer.parseInt(args[0])) {
 					case 0:
@@ -69,6 +68,38 @@ public class MobSpawnCommandProcessor implements CommandExecutor {
 						plugin.invisQuietForever.apply((LivingEntity) mob);
 						mob.setPassenger(player.getWorld().spawnEntity(spawnAt, EntityType.COW));
 						return true;
+					case 6:
+						Skeleton testSkele = (Skeleton) player.getWorld().spawn(player.getLocation(), Skeleton.class);
+						skeletonBow = new ItemStack(Material.BOW);
+						skeletonBow.addEnchantment(Enchantment.ARROW_KNOCKBACK, 2);
+						//testSkele.setCustomName("LOLLOLOLOLOLOL\n");
+						testSkele.getEquipment().setItemInHand(skeletonBow);
+						return true;
+					case 7:
+						Horse testHorse = (Horse) player.getWorld().spawn(player.getLocation(), Horse.class);
+						Skeleton testSkele2 = (Skeleton) player.getWorld().spawn(player.getLocation(), Skeleton.class);
+						skeletonBow = new ItemStack(Material.BOW);
+						skeletonBow.addEnchantment(Enchantment.ARROW_FIRE,1);
+						testSkele2.getEquipment().setItemInHand(skeletonBow);
+						testHorse.setVariant(Horse.Variant.SKELETON_HORSE);
+						testHorse.setPassenger(testSkele2);
+						testHorse.setTamed(true);
+						return true;
+					case 8:
+						Slime testSlime = (Slime) player.getWorld().spawn(player.getLocation(), Slime.class);
+						Slime testSlime2 = (Slime) player.getWorld().spawn(player.getLocation(), Slime.class);
+						Slime testSlime3 = (Slime) player.getWorld().spawn(player.getLocation(), Slime.class);
+						Slime testSlime4 = (Slime) player.getWorld().spawn(player.getLocation(), Slime.class);
+						Slime testSlime5 = (Slime) player.getWorld().spawn(player.getLocation(), Slime.class);
+						testSlime.setSize(5);
+						testSlime2.setSize(4);
+						testSlime3.setSize(3);
+						testSlime4.setSize(2);
+						testSlime5.setSize(1);
+						testSlime.setPassenger(testSlime2);
+						testSlime2.setPassenger(testSlime3);
+						testSlime3.setPassenger(testSlime4);
+						testSlime4.setPassenger(testSlime5);
 					default:
 						plugin.getLogger().info("MobSpawn debug: Looking up index failed!");
 						return false;
