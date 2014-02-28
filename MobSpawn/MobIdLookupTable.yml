@@ -42,7 +42,7 @@ Definitions:
     entity1Name = none
     #Hp given to this entity (in half hearts)
     entity1Hp = 9
-    #Potion effect for this entity. This is a valid com.SkyIsland.MobSpawn.PredefinedPotionEffect index (which can be looked
+    #Potion effect for this entity. This is a valid com.SkyIsland.MobSpawn.PotionEffect index (which can be looked
     #up in the "potion constants.txt" exported when first starting plugin)
     entity1PotionEffect = none
     
