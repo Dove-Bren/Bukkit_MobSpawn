@@ -97,27 +97,60 @@ public final class MobSpawn extends JavaPlugin {
 		}
 		
 		YamlConfiguration mobIdLookup = new YamlConfiguration();
-		mobIdLookup.createSection("Names");
-		mobIdLookup.set("Names.zombie", 1);
-		mobIdLookup.set("Names.skeleton", 2);
-		mobIdLookup.set("Names.creeper", 3);
-		mobIdLookup.set("Names.ghast", 4);
-		mobIdLookup.set("Names.blaze", 5);
-		mobIdLookup.set("Names.cow", 6);
-		mobIdLookup.set("Names.chicken", 7);
-		mobIdLookup.set("Names.sheep", 8);
-		mobIdLookup.set("Names.horse", 9);
-		mobIdLookup.set("Names.zombie_horse", 10);
-		mobIdLookup.set("Names.skeleton_horse", 11);
-		mobIdLookup.set("Names.cow_flying", 12);
-		mobIdLookup.set("Names.slime", 13);
-		mobIdLookup.set("Names.slime_pyramid", 14);
-		mobIdLookup.set("Names.creeper_on_chicken", 15);
-		mobIdLookup.set("Names.skeleton_on_horse", 16);
-		mobIdLookup.set("Names.ghast_on_creeper", 17);
-		mobIdLookup.set("Names.pig_mutated", 18);
-		mobIdLookup.set("Names.giant", 19);
-		mobIdLookup.set("Names.chicken_on_baby_zombie", 20);
+		mobIdLookup.createSection("Types");
+		mobIdLookup.set("Types.zombie", "simple");
+		mobIdLookup.set("Types.zombie_on_zombie", "double ZOMBIE ZOMBIE");
+		mobIdLookup.set("Types.skeleton", "skeleton");
+		mobIdLookup.set("Types.skeleton_on_skeleton", "double SKELETON SKELETON");
+		mobIdLookup.set("Types.totem_pole", "complex");
+		mobIdLookup.set("Types.ghast_on_creeper", "double CREEPER GHAST true");
+		mobIdLookup.set("Types.pig_mutated", "complex");
+		
+		
+		mobIdLookup.createSection("Definitions");
+		
+		mobIdLookup.createSection("totem_pole");
+		mobIdLookup.set("Definitions.totem_pole.numberOfPieces", 5);
+		mobIdLookup.set("Definitions.totem_pole.isBoss", true);
+		mobIdLookup.set("Definitions.totem_pole.entity1", "BLAZE");
+		mobIdLookup.set("Definitions.totem_pole.entity1Equips", "none none none none none");
+		mobIdLookup.set("Definitions.totem_pole.entity1Name", "none");
+		mobIdLookup.set("Definitions.totem_pole.entity1Hp", 9);
+		mobIdLookup.set("Definitions.totem_pole.entity1PotionEffect", "none");
+		mobIdLookup.set("Definitions.totem_pole.entity2", "BLAZE");
+		mobIdLookup.set("Definitions.totem_pole.entity2Equips", "none none none none none");
+		mobIdLookup.set("Definitions.totem_pole.entity2Name", "none");
+		mobIdLookup.set("Definitions.totem_pole.entity2Hp", 9);
+		mobIdLookup.set("Definitions.totem_pole.entity2PotionEffect", "none");
+		mobIdLookup.set("Definitions.totem_pole.entity3", "BLAZE");
+		mobIdLookup.set("Definitions.totem_pole.entity3Equips", "none none none none none");
+		mobIdLookup.set("Definitions.totem_pole.entity3Name", "none");
+		mobIdLookup.set("Definitions.totem_pole.entity3Hp", 9);
+		mobIdLookup.set("Definitions.totem_pole.entity3PotionEffect", "none");
+		mobIdLookup.set("Definitions.totem_pole.entity4", "BLAZE");
+		mobIdLookup.set("Definitions.totem_pole.entity4Equips", "none none none none none");
+		mobIdLookup.set("Definitions.totem_pole.entity4Name", "none");
+		mobIdLookup.set("Definitions.totem_pole.entity4Hp", 9);
+		mobIdLookup.set("Definitions.totem_pole.entity4PotionEffect", "none");
+		mobIdLookup.set("Definitions.totem_pole.entity5", "BLAZE");
+		mobIdLookup.set("Definitions.totem_pole.entity5Equips", "none none none none none");
+		mobIdLookup.set("Definitions.totem_pole.entity5Name", "none");
+		mobIdLookup.set("Definitions.totem_pole.entity5Hp", 9);
+		mobIdLookup.set("Definitions.totem_pole.entity5PotionEffect", "none");
+		
+		mobIdLookup.createSection("pig_mutated");
+		mobIdLookup.set("Definitions.pig_mutated.numberOfPieces", 2);
+		mobIdLookup.set("Definitions.pig_mutated.isBoss", "false");
+		mobIdLookup.set("Definitions.pig_mutated.entity1", "PIG");
+		mobIdLookup.set("Definitions.pig_mutated.entity1Equips", "none none none none none");
+		mobIdLookup.set("Definitions.pig_mutated.entity1Name", "");
+		mobIdLookup.set("Definitions.pig_mutated.entity1Hp", 20);
+		mobIdLookup.set("Definitions.pig_mutated.entity1PotionEffect", "none");
+		mobIdLookup.set("Definitions.pig_mutated.entity2", "PIG");
+		mobIdLookup.set("Definitions.pig_mutated.entity2Equips", "none none none none none");
+		mobIdLookup.set("Definitions.pig_mutated.entity2Name", "Grumm");
+		mobIdLookup.set("Definitions.pig_mutated.entity2Hp", 20);
+		mobIdLookup.set("Definitions.pig_mutated.entity2PotionEffect", "none");
 		
 		
 		try {
