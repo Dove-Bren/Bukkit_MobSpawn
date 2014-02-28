@@ -2,25 +2,86 @@
 #nor is it referenced in current builds. This is just for us to be able to use it quickly
 
 #Any changes to this must be implemented in the makeMobIdLookupTable method in MobSpawn.java!!!!!!
+#!!!Yaml setup has been changed!!!#
 
-Names:
-    zombie: 1
-    skeleton: 2
-    creeper: 3
-    ghast: 4
-    blaze: 5
-    cow: 6
-    chicken: 7
-    sheep: 8
-    horse: 9
-    zombie_horse: 10
-    skeleton_horse: 11
-    cow_flying: 12
-    slime: 13
-    slime_pyramid: 14
-    creeper_on_chicken: 15
-    skeleton_on_horse: 16
-    ghast_on_creeper: 17
-    pig_mutated: 18
-    giant: 19
-    chicken_on_baby_zombie: 20
+#Types now define if the mob type is simple, double, or complex.
+#If it's simple, nothing need follow; string SHOULD BE converted to all caps and used to lookup value in EntityType
+
+#Double classes need two strings to follow the declaration as double; the entity on bottom and the entity on top.
+#in addition (since mobs on other mobs tend to be invisible) anything after second entity type signals invis top 
+#mob
+
+#Complex classes need nothing to follow, as they are defined more abstractly below
+
+#Entity names following doubles MUST BE VALID IN org.bukkit.entity.EntityType
+
+Types:
+  zombie: simple
+  zombie_on_zombie: double ZOMBIE ZOMBIE
+  skeleton: simple
+  skeleton_on_skeleton: double SKELETON SKELETON
+  totem_pole: complex
+  ghast_on_creeper: double CREEPER GHAST true
+  pig_mutated: complex
+  
+
+#This section defines how complex mobs should be made. Each complex mob should be given it's own sub-section
+#that defines defined subsets of mobs. See below for each unique field. Make sure to mark each empty field with
+#the keyword none instead of skipping over it
+Definitions:
+  totem_pole:
+    #number of entities in this complex entity; each are stacked on eachother:
+    numberOfPieces: 5
+    #is this complex mob a boss? bosses don't despawn, to say the least. true/yes for yes, anything else for no
+    isBoss = true
+    #EntityType of first entity:
+    entity1 = BLAZE
+    #Equipment on entity. 5 part string; head chest legs boots inHand (remember to use none instead of leaving blank)
+    entity1Equips = none none none none none
+    #Name on this entity. Remember stacking names looks bad
+    entity1Name = none
+    #Hp given to this entity (in half hearts)
+    entity1Hp = 9
+    #Potion effect for this entity. This is a valid com.SkyIsland.MobSpawn.PotionEffect index (which can be looked
+    #up in the "potion constants.txt" exported when first starting plugin)
+    entity1PotionEffect = none
+    
+    #each entity in the complex entity must be defined like above
+    entity2 = BLAZE
+    entity2Equips = none none none none none
+    entity2Name = none
+    entity2Hp = 9
+    entity2PotionEffect = none
+    
+    entity3 = BLAZE
+    entity3Equips = none none none none none
+    entity3Name = none
+    entity3Hp = 9
+    entity3PotionEffect = none
+    
+    entity4 = BLAZE
+    entity4Equips = none none none none none
+    entity4Name = none
+    entity4Hp = 9
+    entity4PotionEffect = none
+    
+    entity5 = BLAZE
+    entity5Equips = none none none none none
+    entity5Name = none
+    entity5Hp = 9
+    entity5PotionEffect = none
+  
+  pig_mutated:
+    numberOfPieces: 2
+    isBoss = false
+    entity1 = PIG
+    entity1Equips = none none none none none
+    entity1Name = none
+    entity1Hp = 20 #hehe twice as durable
+    entity1PotionEffect = none
+    
+    entity2 = PIG
+    entity2Equips = none none none none none
+    entity2Name = Grumm
+    entity2Hp = 20
+    entity2PotionEffect = none
