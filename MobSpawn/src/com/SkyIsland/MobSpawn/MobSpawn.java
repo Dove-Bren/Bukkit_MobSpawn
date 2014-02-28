@@ -77,9 +77,14 @@ public final class MobSpawn extends JavaPlugin {
 		
 		//path should have been created
 		File pathName = new File(path.getPath() + File.separator + "MobIdLookupTable.yml");
+		YamlConfiguration mobIdLookup;
 		
 		if (pathName.exists()) {
 			//already exists
+			
+			//make sure that the file is current
+			
+			
 			mobIdLookup = new YamlConfiguration();
 			try {
 				mobIdLookup.load(pathName);
@@ -93,10 +98,15 @@ public final class MobSpawn extends JavaPlugin {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return true;
+			if (mobIdLookup.contains("Types") && mobIdLookup.contains("Types.totem_pole") && mobIdLookup.contains("Definitions") && mobIdLookup.contains("Definitions.totem_pole.entity3")) {
+				return true;
+			}
+			else {
+				pathName.delete();
+				//delete the current config file so it can make a brand new one below
+			}
 		}
-		
-		YamlConfiguration mobIdLookup = new YamlConfiguration();
+		mobIdLookup = new YamlConfiguration(); 
 		mobIdLookup.createSection("Types");
 		mobIdLookup.set("Types.zombie", "simple");
 		mobIdLookup.set("Types.zombie_on_zombie", "double ZOMBIE ZOMBIE");
