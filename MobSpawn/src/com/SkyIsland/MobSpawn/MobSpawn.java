@@ -86,6 +86,7 @@ public final class MobSpawn extends JavaPlugin {
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				getLogger().info("Throw FILE NOT FOUND exception!");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
