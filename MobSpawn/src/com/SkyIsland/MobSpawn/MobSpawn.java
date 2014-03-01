@@ -11,13 +11,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class MobSpawn extends JavaPlugin {
 	
-	//we will create a couple PotionEffects (like invis) we can use with the mobs
-	
-		//this effect is invisibility, hopefully forever, with particles off
+	public static double spawnRate;
 		
 	
 	//load up config files (a string-to-mob-id config file, for now
 	YamlConfiguration mobIdLookup = new YamlConfiguration();
+	YamlConfiguration config = new YamlConfiguration();
 		
 	@Override
 	public void onEnable() {
@@ -45,12 +44,25 @@ public final class MobSpawn extends JavaPlugin {
 			e.printStackTrace();
 		}
 		
+		spawnRate = config.getDouble("Main.spawn_rate", 1.0);
+		
+		
+		
+		
+		
 	}
 	
 	@Override
 	public void onDisable() {
 		
 	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -64,7 +76,10 @@ public final class MobSpawn extends JavaPlugin {
 	 */
 	protected void loadYaml() throws FileNotFoundException, IOException, InvalidConfigurationException {
 		File path = new File(getDataFolder() + "/Resources");
-		Config.makeMobIdLookupTable(path);
+		
+		mobIdLookup = Config.makeMobIdLookupTable(path);
+		config = Config.makeConfig(path);
+		
 		
 		//mobIdLookup = YamlConfiguration.loadConfiguration(this.getResource("MobIdLookupTable.yml"));
 		//mobIdLookup.addDefault("Names", new Integer(-1));

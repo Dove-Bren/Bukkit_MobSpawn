@@ -23,7 +23,19 @@ Types:
   totem_pole: complex
   ghast_on_creeper: double CREEPER GHAST true
   pig_mutated: complex
+
+#The following rates section describes how often a mob is made. This literally is the chance that, even if the mob is randomly selected, it will actually be created.
+#The number should be 1 through 100 describing the percent-chance of being instantiated. If the mob isn't instantiated, a new random mob type is picked and it starts over again
+Rates:
+  zombie: 80
+  zombie_on_zombie: 50
+  skeleton: 70
+  skeleton_on_skeleton: 40
+  totem_pole: 8
+  ghast_on_creeper: 15
+  pig_mutated: 30
   
+
 
 #This section defines how complex mobs should be made. Each complex mob should be given it's own sub-section
 #that defines defined subsets of mobs. See below for each unique field. Make sure to mark each empty field with

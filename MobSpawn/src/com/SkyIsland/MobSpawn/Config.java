@@ -10,8 +10,45 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public final class Config {
 	
+	final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 	
 	
+	/**
+	 * Creates (or tries to) the config file, which stores essential information like global spawn rating.
+	 * 
+	 * @param String local path to where it will be saved. Should leave off ending path separator
+	 * @return whether or not it succeeded
+	 */
+	protected static YamlConfiguration makeConfig(File path) throws FileNotFoundException, IOException, InvalidConfigurationException {
+		if (!path.exists()) {
+			if (!path.mkdirs()) {
+				//failed; read-write permissions?
+				logger.info("Failed to create directories up to the MobIdLookupTable!");
+				return null;
+			}
+		}
+		
+		File pathName = new File(path.getPath() + File.separator + "Config.yml");
+		YamlConfiguration configFile = new YamlConfiguration();
+		if (pathName.exists()) {
+			configFile.load(pathName);
+			if (configFile.contains("Main.spawn_rate")) {
+				return configFile;
+			}
+			//it exists, but is corrupt or doesn't have the right stuff
+			pathName.delete();
+		}
+		//if it gets here, needs to create the file
+		
+		configFile.createSection("Main");
+		configFile.set("Main.spawn_rate", 1.0); //this is how many times the regular rate
+		
+		configFile.save(pathName);
+		
+		
+		
+		return configFile;
+	}
 	
 	
 	/**
@@ -20,9 +57,9 @@ public final class Config {
 	 * @param String local path to where it will be saved. Should leave off ending path separator
 	 * @return whether or not it succeeded
 	 */
-	protected static boolean makeMobIdLookupTable(File path) throws FileNotFoundException, IOException, InvalidConfigurationException {
+	protected static YamlConfiguration makeMobIdLookupTable(File path) throws FileNotFoundException, IOException, InvalidConfigurationException {
 		
-		final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+		
 		
 		if (!path.exists()) {
 			//path doesn't exist, so create it
@@ -30,7 +67,7 @@ public final class Config {
 			if (!path.mkdirs()) {
 				//failed; read-write permissions?
 				logger.info("Failed to create directories up to the MobIdLookupTable!");
-				return false;
+				return null;
 			}
 		}
 		
@@ -60,8 +97,8 @@ public final class Config {
 				e.printStackTrace();
 				throw e;
 			}
-			if (mobIdLookup.contains("Types") && mobIdLookup.contains("Types.totem_pole") && mobIdLookup.contains("Definitions") && mobIdLookup.contains("Definitions.totem_pole.entity3")) {
-				return true;
+			if (mobIdLookup.contains("Types") && mobIdLookup.contains("Types.totem_pole") && mobIdLookup.contains("Rates") && mobIdLookup.contains("Definitions") && mobIdLookup.contains("Definitions.totem_pole.entity3")) {
+				return mobIdLookup;
 			}
 			else {
 				pathName.delete();
@@ -77,6 +114,15 @@ public final class Config {
 		mobIdLookup.set("Types.totem_pole", "complex");
 		mobIdLookup.set("Types.ghast_on_creeper", "double CREEPER GHAST true");
 		mobIdLookup.set("Types.pig_mutated", "complex");
+		
+		mobIdLookup.createSection("Rates");
+		mobIdLookup.set("Rates.zombie", 80);
+		mobIdLookup.set("Rates.zombie_on_zombie", 50);
+		mobIdLookup.set("Rates.skeleton", 70);
+		mobIdLookup.set("Rates.skeleton_on_skeleton", 40);
+		mobIdLookup.set("Rates.totem_pole", 8);
+		mobIdLookup.set("Rates.ghast_on_creeper", 15);
+		mobIdLookup.set("Rates.pig_mutated", 30);
 		
 		
 		mobIdLookup.createSection("Definitions");
@@ -130,11 +176,11 @@ public final class Config {
 		} catch (IOException e) {
 			e.printStackTrace();
 			logger.info("Failed to save yaml config file!");;
-			return false;
+			return null;
 		}
 		
 		
-		return true;
+		return mobIdLookup;
 		
 	}
 }
