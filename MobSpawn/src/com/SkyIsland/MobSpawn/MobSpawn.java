@@ -8,15 +8,12 @@ import java.io.IOException;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 public final class MobSpawn extends JavaPlugin {
 	
 	//we will create a couple PotionEffects (like invis) we can use with the mobs
 	
 		//this effect is invisibility, hopefully forever, with particles off
-		protected PotionEffect invisQuietForever = new PotionEffect(PotionEffectType.INVISIBILITY, 99999999, 1, true);
 		
 	
 	//load up config files (a string-to-mob-id config file, for now
@@ -33,7 +30,20 @@ public final class MobSpawn extends JavaPlugin {
 		getCommand("spawn_constants").setExecutor(cmdProcess); // " "
 		
 		//load up yaml files
-		loadYaml();
+		try {
+			loadYaml();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			getLogger().info("Plugin failed in loading/creating mobLookupTable file (located in MobSpawn/Resources/ in plugin directory) !!");
+			getLogger().info("MobSpawn has loaded incorrectly");
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -44,10 +54,13 @@ public final class MobSpawn extends JavaPlugin {
 	
 	/**
 	 * Load up yaml files for easy parsing
+	 * @throws InvalidConfigurationException 
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 * 
 	 * 
 	 */
-	protected void loadYaml() {
+	protected void loadYaml() throws FileNotFoundException, IOException, InvalidConfigurationException {
 		File path = new File(getDataFolder() + "/Resources");
 		makeMobIdLookupTable(path);
 		
@@ -57,12 +70,12 @@ public final class MobSpawn extends JavaPlugin {
 	}
 	
 	/**
-	 * Creates the MobIdLookupTable
+	 * Creates the MobIdLookupTable. Doesn't create one if it already exists
 	 * 
 	 * @param String local path to where it will be saved. Should leave off ending path separator
 	 * @return whether or not it succeeded
 	 */
-	protected boolean makeMobIdLookupTable(File path) {
+	protected boolean makeMobIdLookupTable(File path) throws FileNotFoundException, IOException, InvalidConfigurationException {
 
 		
 		if (!path.exists()) {
@@ -89,14 +102,17 @@ public final class MobSpawn extends JavaPlugin {
 			try {
 				mobIdLookup.load(pathName);
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
+				getLogger().info("Threw FILENOTFOUND exception while trying to load mobIdLookup config file. Make sure file is a .yml file!!!!");
 				e.printStackTrace();
+				throw e;
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				getLogger().info("Threw FILENOTFOUND exception while trying to load mobIdLookup config file. Make sure file is a .yml file!!!!");
 				e.printStackTrace();
+				throw e;
 			} catch (InvalidConfigurationException e) {
-				// TODO Auto-generated catch block
+				getLogger().info("Threw FILENOTFOUND exception while trying to load mobIdLookup config file. Make sure file is a .yml file!!!!");
 				e.printStackTrace();
+				throw e;
 			}
 			if (mobIdLookup.contains("Types") && mobIdLookup.contains("Types.totem_pole") && mobIdLookup.contains("Definitions") && mobIdLookup.contains("Definitions.totem_pole.entity3")) {
 				return true;
