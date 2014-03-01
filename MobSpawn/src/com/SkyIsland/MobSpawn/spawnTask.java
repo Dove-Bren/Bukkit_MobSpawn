@@ -20,7 +20,7 @@ public class spawnTask extends BukkitRunnable {
 	 * @param mobTable the yaml config file to fetch mob from
 	 * @return the keyword for the mob
 	 */
-	private String getMob(YamlConfiguration mobTable) {
+	public static String getMob(YamlConfiguration mobTable) {
 		List<String> keys = mobTable.getStringList("Rates");
 		int length, pos, chance, actualChance;
 		
