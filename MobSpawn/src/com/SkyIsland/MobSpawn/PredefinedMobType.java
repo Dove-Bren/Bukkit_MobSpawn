@@ -25,8 +25,11 @@ public enum PredefinedMobType {
 	}
 	
 	protected void spawnSkeletonOnHorse(Location loc) {
-		Entity mob;
-		mob = loc.getWorld().spawnEntity(loc, EntityType.HORSE);
+		Entity Horse;
+		Entity SkeletonRider;
+		
+		Horse = loc.getWorld().spawnEntity(loc, EntityType.HORSE);
+		SkeletonRider = loc.getWorld().spawnEntity(Horse.getLocation(), EntityType.SKELETON);
 		//....etc. you can take it from here
 	}
 }
