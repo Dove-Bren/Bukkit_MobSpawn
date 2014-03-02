@@ -27,6 +27,7 @@ public enum PredefinedMobType {
 	/**
 	 * This constructor creates a Skeleton Horse with a Skeleton Rider (No item)
 	 * @param loc The location for which the mobs will spawn at
+	 * @bugs Warning: Default Horse entities will kick off their passengers (To fix, turn "tamed" on)
 	 */
 	protected static void spawnSkeletonOnHorse (Location loc) {
 		Horse HorseVehicle;
@@ -43,6 +44,7 @@ public enum PredefinedMobType {
 	 * This constructor creates a Skeleton Horse with a Skeleton Rider armed with an item
 	 * @param loc The location for which the mobs will spawn at
 	 * @param SkeletonWeapon The item that will be in the Skeleton Rider's hand
+	 * @bugs Warning: Default Horse entities will kick off their passengers (To fix, turn "tamed" on)
 	 */
 	protected void spawnSkeletonOnHorse (Location loc, ItemStack SkeletonWeapon) {
 		Horse HorseVehicle;
@@ -59,6 +61,7 @@ public enum PredefinedMobType {
 	/**
 	 * This constructor creates a Skeleton Horse with a Wither Skeleton Rider (No item)
 	 * @param loc The location for which the mobs will spawn at
+	 * @bugs Warning: Default Horse entities will kick off their passengers (To fix, turn "tamed" on)
 	 */
 	protected static void witherSkeletonOnHorse (Location loc) {
 		Horse HorseVehicle;
@@ -76,6 +79,7 @@ public enum PredefinedMobType {
 	 * This constructor creates a Skeleton Horse with a Wither Skeleton Rider armed with an item
 	 * @param loc The location for which the mobs will spawn at
 	 * @param SkeletonWeapon The item that will be in the Wither Skeleton Rider's hand
+	 * @bugs Warning: Default Horse entities will kick off their passengers (To fix, turn "tamed" on)
 	 */
 	protected void witherSkeletonOnHorse (Location loc, ItemStack SkeletonWeapon) {
 		Horse HorseVehicle;
@@ -93,6 +97,7 @@ public enum PredefinedMobType {
 	/**
 	 * This constructor creates an Undead Horse with a Zombie Rider (No item)
 	 * @param loc The location for which the mobs will spawn at
+	 * @bugs Warning: Default Horse entities will kick off their passengers (To fix, turn "tamed" on)
 	 */
 	protected static void zombieOnHorse (Location loc) {
 		Horse HorseVehicle;
@@ -109,6 +114,7 @@ public enum PredefinedMobType {
 	 * This constructor creates an Undead Horse with a Zombie Rider armed with an item
 	 * @param loc The location for which the mobs will spawn at
 	 * @param ZombieWeapon The item that will be in the Zombie Rider's hand
+	 * @bugs Warning: Default Horse entities will kick off their passengers (To fix, turn "tamed" on)
 	 */
 	protected void zombieOnHorse (Location loc, ItemStack ZombieWeapon) {
 		Horse HorseVehicle;

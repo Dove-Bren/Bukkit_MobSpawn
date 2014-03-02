@@ -2,6 +2,7 @@ package com.SkyIsland.MobSpawn;
 
 import org.bukkit.Location;
 import org.bukkit.entity.*;
+import org.bukkit.inventory.ItemStack;
 
 public class ComplexMobType {
 	/**
@@ -24,7 +25,6 @@ public class ComplexMobType {
 	 * @param Loc The location of both entities
 	 * @param ticksLived The amount of ticks the mob has 'lived' (higher levels mean higher difficulty)
 	 * @return The Vehicle Entity
-	 * @bugs Warning: Default Horse entities will kick off their passengers (To fix, turn "tamed" on)
 	 */
 	public static Entity CustomEntity (EntityType VehicleType, EntityType PassengerType, Location Loc, int ticksLived) {
 		Entity VehicleEntity = Loc.getWorld().spawnEntity(Loc, VehicleType);
@@ -32,6 +32,22 @@ public class ComplexMobType {
 		VehicleEntity.setPassenger(PassengerEntity);
 		VehicleEntity.setTicksLived(ticksLived);
 		PassengerEntity.setTicksLived(ticksLived);
+		return VehicleEntity;
+	}
+	
+	/**
+	 * This constructor creates a 'vehicle' entity along with its 'passenger' with a potion effect applied to it
+	 * @param VehicleType The vehicle type (the Bottom)
+	 * @param PassengerType The passenger type (the Top)
+	 * @param Loc The location of both entities
+	 * @param PotionEffect The potion effect to be applied to the passenger
+	 * @return The Vehicle Entity
+	 */
+	public static Entity CustomEntity (EntityType VehicleType, EntityType PassengerType, Location Loc, String PotionEffect) {
+		Entity VehicleEntity = Loc.getWorld().spawnEntity(Loc, VehicleType);
+		Entity PassengerEntity = Loc.getWorld().spawnEntity(Loc, PassengerType);
+		VehicleEntity.setPassenger(PassengerEntity);
+		PredefinedPotionEffect.valueOf(PotionEffect).potionEffect.apply((LivingEntity) PassengerEntity);
 		return VehicleEntity;
 	}
 	

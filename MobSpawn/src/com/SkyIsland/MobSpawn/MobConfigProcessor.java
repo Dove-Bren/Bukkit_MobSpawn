@@ -16,7 +16,7 @@ public final class MobConfigProcessor {
 	 * @param Command Various attributes associated with the specified mob type
 	 * @param Loc The location to generate the mob
 	 */
-	public static void SpawnMob (String Name, String Command, Location Loc) {
+	public static void SpawnMob (String Name, String Command, Location Loc, MobSpawn plugin) {
 		StringTokenizer stringToken = new StringTokenizer(Command, " ");
 		String tokenString = stringToken.nextToken();
 		//Check for type of mob: Simple, Predefined, Complex
