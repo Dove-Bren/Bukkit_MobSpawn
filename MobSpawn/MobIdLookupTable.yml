@@ -31,7 +31,7 @@ Rates:
   zombie_on_zombie: 50
   skeleton: 70
   skeleton_on_skeleton: 40
-  totem_pole: 8
+  totem_pole: 100
   ghast_on_creeper: 15
   pig_mutated: 30
   

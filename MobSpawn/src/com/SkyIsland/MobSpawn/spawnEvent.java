@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -23,7 +24,7 @@ public class spawnEvent implements Listener {
 	
 	@EventHandler (priority=EventPriority.HIGH)
 	protected void generateSpawn(CreatureSpawnEvent event) {
-		if (event.getSpawnReason() == SpawnReason.NATURAL || event.getSpawnReason() == SpawnReason.CHUNK_GEN) {
+		if (event.getSpawnReason() == SpawnReason.NATURAL || event.getSpawnReason() == SpawnReason.CHUNK_GEN && event.getEntityType().compareTo(EntityType.SQUID) == 0) {
 			boolean trip = false;
 			for (String e: plugin.config.getConfigurationSection("Main").getStringList("worlds")) {
 				if (e.compareToIgnoreCase(event.getLocation().getWorld().getName()) == 0) {
@@ -35,7 +36,7 @@ public class spawnEvent implements Listener {
 			if (trip == true) {
 				event.setCancelled(true);
 				String current = getMob(plugin.mobIdLookup);
-				MobConfigProcessor.SpawnMob(current, plugin.mobIdLookup.getString("Types." + current), event.getLocation());
+				MobConfigProcessor.SpawnMob(current, plugin.mobIdLookup.getString("Types." + current), event.getLocation(), plugin);
 			}
 		}
 	}
