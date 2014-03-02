@@ -11,7 +11,7 @@ public class ComplexMobType {
 	 * @param Loc The location of both entities
 	 * @return The Vehicle Entity
 	 */
-	public Entity CustomEntity (EntityType VehicleType, EntityType PassengerType, Location Loc) {
+	public static Entity CustomEntity (EntityType VehicleType, EntityType PassengerType, Location Loc) {
 		Entity VehicleEntity = Loc.getWorld().spawnEntity(Loc, VehicleType);
 		Entity PassengerEntity = Loc.getWorld().spawnEntity(Loc, PassengerType);
 		VehicleEntity.setPassenger(PassengerEntity);
@@ -26,7 +26,7 @@ public class ComplexMobType {
 	 * @return The Vehicle Entity
 	 * @bugs Warning: Default Horse entities will kick off their passengers (To fix, turn "tamed" on)
 	 */
-	public Entity CustomEntity (EntityType VehicleType, EntityType PassengerType, Location Loc, int ticksLived) {
+	public static Entity CustomEntity (EntityType VehicleType, EntityType PassengerType, Location Loc, int ticksLived) {
 		Entity VehicleEntity = Loc.getWorld().spawnEntity(Loc, VehicleType);
 		Entity PassengerEntity = Loc.getWorld().spawnEntity(Loc, PassengerType);
 		VehicleEntity.setPassenger(PassengerEntity);
@@ -41,7 +41,7 @@ public class ComplexMobType {
 	 * @param PassengerType The type of passenger to be created
 	 * @return The created Passenger Entity
 	 */
-	public Entity MountedEntity (Entity Vehicle, EntityType PassengerType) {
+	public static Entity MountedEntity (Entity Vehicle, EntityType PassengerType) {
 		Location Loc = Vehicle.getLocation();
 		Entity PassengerEntity = Loc.getWorld().spawnEntity(Loc, PassengerType);
 		Vehicle.setPassenger(PassengerEntity);
@@ -55,7 +55,7 @@ public class ComplexMobType {
 	 * @param ticksLived The amount of ticks the mob as 'lived' (higher levels mean higher difficulty)
 	 * @return The created Passenger Entity
 	 */
-	public Entity MountedEntity (Entity Vehicle, EntityType PassengerType, int ticksLived) {
+	public static Entity MountedEntity (Entity Vehicle, EntityType PassengerType, int ticksLived) {
 		Location Loc = Vehicle.getLocation();
 		Entity PassengerEntity = Loc.getWorld().spawnEntity(Loc, PassengerType);
 		Vehicle.setPassenger(PassengerEntity);

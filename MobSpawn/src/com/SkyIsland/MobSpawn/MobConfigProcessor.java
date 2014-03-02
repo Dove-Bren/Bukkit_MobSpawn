@@ -1,7 +1,9 @@
 package com.SkyIsland.MobSpawn;
 
 import java.util.StringTokenizer;
+
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
 public final class MobConfigProcessor {
@@ -34,12 +36,22 @@ public final class MobConfigProcessor {
 				System.err.println("Incorrect Predefined Type!");
 				break;
 			}
-		if (tokenString.trim().compareTo("complex") == 0) {
+		if (tokenString.trim().compareTo("double") == 0) {
 			//Determine how complex types will be generated
 			tokenString = stringToken.nextToken();
+			tokenString.trim();
 			tokenString.toLowerCase();
-			
-		}
+			String Vehicle = tokenString;
+			if (!stringToken.hasMoreTokens()) {
+				System.err.println("Incorrect yml feed!");
+				return;
+			}
+			tokenString = stringToken.nextToken();
+			tokenString.trim();
+			tokenString.toLowerCase();
+			String Passenger = tokenString;
+			ComplexMobType.CustomEntity(EntityType.valueOf(Vehicle), EntityType.valueOf(Passenger), Loc);
+			}
 		}
 	}
 }
