@@ -3,6 +3,7 @@ package com.SkyIsland.MobSpawn;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -30,9 +31,11 @@ public final class Config {
 		
 		File pathName = new File(path.getPath() + File.separator + "Config.yml");
 		YamlConfiguration configFile = new YamlConfiguration();
+		ArrayList<String> worldList = new ArrayList<String>();
+		
 		if (pathName.exists()) {
 			configFile.load(pathName);
-			if (configFile.contains("Main.spawn_rate") && configFile.contains("Main.internalSpawnEvent")) {
+			if (configFile.contains("Main.worlds")) {
 				return configFile;
 			}
 			//it exists, but is corrupt or doesn't have the right stuff
@@ -41,8 +44,10 @@ public final class Config {
 		//if it gets here, needs to create the file
 		
 		configFile.createSection("Main");
-		configFile.set("Main.internalSpawnEvent", false);
-		configFile.set("Main.spawn_rate", 1.0); //this is how many times the regular rate
+		
+		worldList.add("wildernes");
+		configFile.getConfigurationSection("Main").set("worlds", worldList);
+		
 		
 		configFile.save(pathName);
 		
