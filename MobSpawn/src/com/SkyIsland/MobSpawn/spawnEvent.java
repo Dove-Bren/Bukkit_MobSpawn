@@ -9,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class spawnEvent implements Listener {
@@ -22,11 +23,22 @@ public class spawnEvent implements Listener {
 	
 	@EventHandler (priority=EventPriority.HIGH)
 	protected void generateSpawn(CreatureSpawnEvent event) {
-		String current = getMob(plugin.mobIdLookup);
-		MobConfigProcessor.SpawnMob(current, plugin.mobIdLookup.getString("Types:" + current), event.getLocation());
+		if (event.getSpawnReason() == SpawnReason.NATURAL) {
+			boolean trip = false;
+			for (String e: plugin.config.getStringList("Main")) {
+				if (e.compareToIgnoreCase(event.getLocation().getWorld().getName()) == 0) {
+					trip = true;
+					break;
+				}
+			}
+			
+			if (trip == true) {
+				event.setCancelled(true);
+				String current = getMob(plugin.mobIdLookup);
+				MobConfigProcessor.SpawnMob(current, plugin.mobIdLookup.getString("Types." + current), event.getLocation());
+			}
+		}
 	}
-	
-	
 	
 	
 	/**
@@ -57,5 +69,7 @@ public class spawnEvent implements Listener {
 		}
 		
 	}
+	
+	
 	
 }
