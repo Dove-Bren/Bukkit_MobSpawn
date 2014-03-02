@@ -3,10 +3,12 @@ package com.SkyIsland.MobSpawn;
 import java.util.Random;
 import java.util.Set;
 
+import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class spawnEvent implements Listener {
@@ -19,9 +21,9 @@ public class spawnEvent implements Listener {
 	
 	
 	@EventHandler (priority=EventPriority.HIGH)
-	protected void generateSpawn() {
+	protected void generateSpawn(CreatureSpawnEvent event) {
 		String current = getMob(plugin.mobIdLookup);
-		//CALL WILLIES FUNCTION WITH CURRENT and mobIDLookup.valueof(current)
+		MobConfigProcessor.SpawnMob(current, plugin.mobIdLookup.getString("Types:" + current), event.getLocation());
 	}
 	
 	

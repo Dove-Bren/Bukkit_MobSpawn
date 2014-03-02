@@ -50,6 +50,7 @@ public final class MobSpawn extends JavaPlugin {
 		
 		
 		getLogger().info("MobSpawn initialization complete and successful!");
+		getLogger().info("MobSpawn is now turning off regular mob spawning");
 		
 		
 		if (config.getBoolean("Main.internalSpawnEvent")) {
