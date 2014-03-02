@@ -46,7 +46,7 @@ public enum PredefinedMobType {
 	 * @param SkeletonWeapon The item that will be in the Skeleton Rider's hand
 	 * @bugs Warning: Default Horse entities will kick off their passengers (To fix, turn "tamed" on)
 	 */
-	protected void spawnSkeletonOnHorse (Location loc, ItemStack SkeletonWeapon) {
+	protected static void spawnSkeletonOnHorse (Location loc, ItemStack SkeletonWeapon) {
 		Horse HorseVehicle;
 		Skeleton SkeletonRider;
 		HorseVehicle = (Horse) loc.getWorld().spawnEntity(loc, EntityType.HORSE);
@@ -81,7 +81,7 @@ public enum PredefinedMobType {
 	 * @param SkeletonWeapon The item that will be in the Wither Skeleton Rider's hand
 	 * @bugs Warning: Default Horse entities will kick off their passengers (To fix, turn "tamed" on)
 	 */
-	protected void witherSkeletonOnHorse (Location loc, ItemStack SkeletonWeapon) {
+	protected static void witherSkeletonOnHorse (Location loc, ItemStack SkeletonWeapon) {
 		Horse HorseVehicle;
 		Skeleton WitherSkeletonRider;
 		HorseVehicle = (Horse) loc.getWorld().spawnEntity(loc, EntityType.HORSE);
@@ -116,7 +116,7 @@ public enum PredefinedMobType {
 	 * @param ZombieWeapon The item that will be in the Zombie Rider's hand
 	 * @bugs Warning: Default Horse entities will kick off their passengers (To fix, turn "tamed" on)
 	 */
-	protected void zombieOnHorse (Location loc, ItemStack ZombieWeapon) {
+	protected static void zombieOnHorse (Location loc, ItemStack ZombieWeapon) {
 		Horse HorseVehicle;
 		Zombie ZombieRider;
 		HorseVehicle = (Horse) loc.getWorld().spawnEntity(loc, EntityType.HORSE);

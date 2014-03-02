@@ -4,8 +4,10 @@ import java.util.StringTokenizer;
 import java.util.logging.Logger;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.inventory.ItemStack;
 
 public final class MobConfigProcessor {
 	
@@ -24,16 +26,16 @@ public final class MobConfigProcessor {
 			SimpleMobType.CustomEntity(EntityType.valueOf(Name.toUpperCase()), Loc);
 		}
 		if (tokenString.trim().compareTo("predefined") == 0) {
-			//These predefined types are only here due to specific nature of horses
+			//These predefined types are only here due to the specific nature of horses
 			switch(PredefinedMobType.valueOf(Name)) {
 			case skeletonOnHorse:
-				PredefinedMobType.spawnSkeletonOnHorse(Loc);
+				PredefinedMobType.spawnSkeletonOnHorse(Loc, new ItemStack(Material.BOW));
 				break;
 			case witherSkeletonOnHorse:
-				PredefinedMobType.witherSkeletonOnHorse(Loc);
+				PredefinedMobType.witherSkeletonOnHorse(Loc, new ItemStack(Material.IRON_SWORD));
 				break;
 			case zombieOnHorse:
-				PredefinedMobType.zombieOnHorse(Loc);
+				PredefinedMobType.zombieOnHorse(Loc, new ItemStack(Material.IRON_SWORD));
 				break;
 			default:
 				System.err.println("Incorrect Predefined Type!");

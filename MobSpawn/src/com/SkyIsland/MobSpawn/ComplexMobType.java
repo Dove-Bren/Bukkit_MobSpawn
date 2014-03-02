@@ -47,7 +47,13 @@ public class ComplexMobType {
 		Entity VehicleEntity = Loc.getWorld().spawnEntity(Loc, VehicleType);
 		Entity PassengerEntity = Loc.getWorld().spawnEntity(Loc, PassengerType);
 		VehicleEntity.setPassenger(PassengerEntity);
-		PredefinedPotionEffect.valueOf(PotionEffect).potionEffect.apply((LivingEntity) PassengerEntity);
+		//True for Potion effect default to invisForever
+		if(PotionEffect.compareTo("true") == 0) {
+			PredefinedPotionEffect.invisForever.potionEffect.apply((LivingEntity) PassengerEntity);
+		}
+		else {
+			PredefinedPotionEffect.valueOf(PotionEffect).potionEffect.apply((LivingEntity) PassengerEntity);
+		}
 		return VehicleEntity;
 	}
 	
