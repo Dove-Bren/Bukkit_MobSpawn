@@ -1,6 +1,7 @@
 package com.SkyIsland.MobSpawn;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 public enum PredefinedMobType {
@@ -35,6 +36,7 @@ public enum PredefinedMobType {
 		SkeletonRider = (Skeleton) loc.getWorld().spawnEntity(HorseVehicle.getLocation(), EntityType.SKELETON);
 		HorseVehicle.setPassenger(SkeletonRider);
 		HorseVehicle.setVariant(Horse.Variant.SKELETON_HORSE);
+		HorseVehicle.getInventory().setSaddle(new ItemStack(Material.SADDLE));
 	}
 	
 	/**
@@ -51,6 +53,7 @@ public enum PredefinedMobType {
 		SkeletonRider.getEquipment().setItemInHand(SkeletonWeapon);
 		HorseVehicle.setPassenger(SkeletonRider);
 		HorseVehicle.setVariant(Horse.Variant.SKELETON_HORSE);
+		HorseVehicle.getInventory().setSaddle(new ItemStack(Material.SADDLE));
 	}
 	
 	/**
@@ -66,6 +69,7 @@ public enum PredefinedMobType {
 		WitherSkeletonRider.setSkeletonType(Skeleton.SkeletonType.WITHER);
 		HorseVehicle.setPassenger(WitherSkeletonRider);
 		HorseVehicle.setVariant(Horse.Variant.SKELETON_HORSE);
+		HorseVehicle.getInventory().setSaddle(new ItemStack(Material.SADDLE));
 	}
 	
 	/**
@@ -83,6 +87,7 @@ public enum PredefinedMobType {
 		WitherSkeletonRider.getEquipment().setItemInHand(SkeletonWeapon);
 		HorseVehicle.setPassenger(WitherSkeletonRider);
 		HorseVehicle.setVariant(Horse.Variant.SKELETON_HORSE);
+		HorseVehicle.getInventory().setSaddle(new ItemStack(Material.SADDLE));
 	}
 	
 	/**
@@ -97,6 +102,7 @@ public enum PredefinedMobType {
 		ZombieRider = (Zombie) loc.getWorld().spawnEntity(loc, EntityType.ZOMBIE);
 		HorseVehicle.setPassenger(ZombieRider);
 		HorseVehicle.setVariant(Horse.Variant.UNDEAD_HORSE);
+		HorseVehicle.getInventory().setSaddle(new ItemStack(Material.SADDLE));
 	}
 	
 	/**
@@ -113,5 +119,6 @@ public enum PredefinedMobType {
 		ZombieRider.getEquipment().setItemInHand(ZombieWeapon);
 		HorseVehicle.setPassenger(ZombieRider);
 		HorseVehicle.setVariant(Horse.Variant.UNDEAD_HORSE);
+		HorseVehicle.getInventory().setSaddle(new ItemStack(Material.SADDLE));
 	}
 }
