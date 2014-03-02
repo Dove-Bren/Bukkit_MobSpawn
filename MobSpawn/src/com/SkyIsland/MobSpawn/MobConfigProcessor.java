@@ -4,8 +4,8 @@ import java.util.StringTokenizer;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 
-public class MobConfigProcessor {
-	public void SpawnMob (String Name, String Command, Location Loc) {
+public final class MobConfigProcessor {
+	public static void SpawnMob (String Name, String Command, Location Loc) {
 		StringTokenizer stringToken = new StringTokenizer(Command, " ");
 		String tokenString = stringToken.nextToken();
 		if (tokenString == "simple") {
