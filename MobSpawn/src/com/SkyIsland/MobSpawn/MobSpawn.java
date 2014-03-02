@@ -50,34 +50,12 @@ public final class MobSpawn extends JavaPlugin {
 		
 		
 		getLogger().info("MobSpawn initialization complete and successful!");
-		getLogger().info("MobSpawn is now turning off regular mob spawning");
+		getLogger().info("MobSpawn is now turning off regular mob spawning in worlds specified in config.yml");
 		
 		
-		if (config.getBoolean("Main.internalSpawnEvent")) {
 		
-			spawnRate = config.getDouble("Main.spawn_rate", 1.0);
-			ArrayList<spawnTask> taskList = new ArrayList<spawnTask>();
-			spawnTask task;
-			int i;
-			
-			for (i = 0; i <= Math.floor(spawnRate); i++) {
-				task = new spawnTask(this);
-				taskList.add(task);
-				task.runTaskTimer(this, 1, 1);
-			}
-			
-			if (spawnRate - Math.floor(spawnRate) <= .05) {
-				task = new spawnTask(this);
-				taskList.add(task);
-				task.runTaskTimer(this, 1, (long) (1/spawnRate));
-			}
-			
-			
-		}
-		else {
-			spawnEvent spawn = new spawnEvent(this);
-			getServer().getPluginManager().registerEvents(spawn, this);
-		}
+		spawnEvent spawn = new spawnEvent(this);
+		getServer().getPluginManager().registerEvents(spawn, this);
 		
 	}
 	
