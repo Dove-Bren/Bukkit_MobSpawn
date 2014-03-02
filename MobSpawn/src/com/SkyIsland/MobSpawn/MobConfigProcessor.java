@@ -58,6 +58,9 @@ public final class MobConfigProcessor {
 			String Passenger = tokenString;
 			ComplexMobType.CustomEntity(EntityType.valueOf(Vehicle), EntityType.valueOf(Passenger), Loc);
 		}
+		if (tokenString.trim().compareToIgnoreCase("complex") == 0) {
+			complexParser.createFromDefinition(plugin, Name, Loc);
+		}
 	}
 }
 
