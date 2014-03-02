@@ -20,14 +20,14 @@ public final class MobConfigProcessor {
 		}
 		if (tokenString.trim().compareTo("predefined") == 0) {
 			//These predefined types are only here due to specific nature of horses
-			switch(Name) {
-			case "skeletonOnHorse":
+			switch(PredefinedMobType.valueOf(Name)) {
+			case skeletonOnHorse:
 				PredefinedMobType.spawnSkeletonOnHorse(Loc);
 				break;
-			case "witherSkeletonOnHorse":
+			case witherSkeletonOnHorse:
 				PredefinedMobType.witherSkeletonOnHorse(Loc);
 				break;
-			case "zombieOnHorse":
+			case zombieOnHorse:
 				PredefinedMobType.zombieOnHorse(Loc);
 				break;
 			default:
@@ -37,7 +37,10 @@ public final class MobConfigProcessor {
 		if (tokenString.trim().compareTo("complex") == 0) {
 			//Determine how complex types will be generated
 			tokenString = stringToken.nextToken();
+			tokenString.toLowerCase();
+			
 		}
 		}
 	}
 }
+

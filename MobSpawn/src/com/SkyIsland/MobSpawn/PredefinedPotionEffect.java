@@ -4,7 +4,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public enum PredefinedPotionEffect {
-	invisForever (new PotionEffect(PotionEffectType.INVISIBILITY, 99999999, 1, true)), //invisibility designed to be there forever.
+	invisForever (new PotionEffect(PotionEffectType.INVISIBILITY, 99999999, 1, true)), //Invisibility designed to be there forever.
 	invis5Minutes (new PotionEffect(PotionEffectType.INVISIBILITY, 5*60*5, 1 , true)), //Invisibility, but only for 5 minutes
 	strengthII (new PotionEffect(PotionEffectType.INCREASE_DAMAGE , 999999999, 2 , true)), //This is a lot of damage....
 	strengthV (new PotionEffect(PotionEffectType.INCREASE_DAMAGE , 999999999, 5 , true)), //crazy damage. What are you doing??
