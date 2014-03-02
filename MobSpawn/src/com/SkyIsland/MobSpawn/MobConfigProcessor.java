@@ -15,10 +15,10 @@ public final class MobConfigProcessor {
 		StringTokenizer stringToken = new StringTokenizer(Command, " ");
 		String tokenString = stringToken.nextToken();
 		//Check for type of mob: Simple, Predefined, Complex
-		if (tokenString == "simple") {
+		if (tokenString.trim().compareTo("simple") == 0) {
 			SimpleMobType.CustomEntity(EntityType.valueOf(Name), Loc);
 		}
-		if (tokenString == "predefined") {
+		if (tokenString.trim().compareTo("predefined") == 0) {
 			//These predefined types are only here due to specific nature of horses
 			switch(Name) {
 			case "skeletonOnHorse":
@@ -34,9 +34,9 @@ public final class MobConfigProcessor {
 				System.err.println("Incorrect Predefined Type!");
 				break;
 			}
-		if (tokenString == "complex") {
+		if (tokenString.trim().compareTo("complex") == 0) {
 			//Determine how complex types will be generated
-			
+			tokenString = stringToken.nextToken();
 		}
 		}
 	}
