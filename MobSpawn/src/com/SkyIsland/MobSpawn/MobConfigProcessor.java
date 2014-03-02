@@ -1,12 +1,15 @@
 package com.SkyIsland.MobSpawn;
 
 import java.util.StringTokenizer;
+import java.util.logging.Logger;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
 public final class MobConfigProcessor {
+	
+	final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 	/**
 	 * This method determines how a new entity(ies) will be generated
 	 * @param Name The name of the entity
@@ -36,6 +39,7 @@ public final class MobConfigProcessor {
 				System.err.println("Incorrect Predefined Type!");
 				break;
 			}
+		}
 		if (tokenString.trim().compareTo("double") == 0) {
 			//Determine how complex types will be generated
 			tokenString = stringToken.nextToken();
@@ -43,7 +47,7 @@ public final class MobConfigProcessor {
 			tokenString.toUpperCase();
 			String Vehicle = tokenString;
 			if (!stringToken.hasMoreTokens()) {
-				System.err.println("Incorrect yml feed!");
+				logger.info("Incorrect yml feed!");
 				return;
 			}
 			tokenString = stringToken.nextToken();
@@ -51,7 +55,6 @@ public final class MobConfigProcessor {
 			tokenString.toUpperCase();
 			String Passenger = tokenString;
 			ComplexMobType.CustomEntity(EntityType.valueOf(Vehicle), EntityType.valueOf(Passenger), Loc);
-			}
 		}
 	}
 }

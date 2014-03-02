@@ -23,9 +23,9 @@ public class spawnEvent implements Listener {
 	
 	@EventHandler (priority=EventPriority.HIGH)
 	protected void generateSpawn(CreatureSpawnEvent event) {
-		if (event.getSpawnReason() == SpawnReason.NATURAL) {
+		if (event.getSpawnReason() == SpawnReason.NATURAL || event.getSpawnReason() == SpawnReason.CHUNK_GEN) {
 			boolean trip = false;
-			for (String e: plugin.config.getStringList("Main")) {
+			for (String e: plugin.config.getConfigurationSection("Main").getStringList("worlds")) {
 				if (e.compareToIgnoreCase(event.getLocation().getWorld().getName()) == 0) {
 					trip = true;
 					break;

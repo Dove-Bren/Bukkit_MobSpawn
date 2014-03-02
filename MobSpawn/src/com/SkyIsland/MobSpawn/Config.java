@@ -45,7 +45,7 @@ public final class Config {
 		
 		configFile.createSection("Main");
 		
-		worldList.add("wildernes");
+		worldList.add("wilderness");
 		configFile.getConfigurationSection("Main").set("worlds", worldList);
 		
 		
