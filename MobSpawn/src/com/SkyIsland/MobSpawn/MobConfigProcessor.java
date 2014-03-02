@@ -18,7 +18,7 @@ public final class MobConfigProcessor {
 		String tokenString = stringToken.nextToken();
 		//Check for type of mob: Simple, Predefined, Complex
 		if (tokenString.trim().compareTo("simple") == 0) {
-			SimpleMobType.CustomEntity(EntityType.valueOf(Name), Loc);
+			SimpleMobType.CustomEntity(EntityType.valueOf(Name.toUpperCase()), Loc);
 		}
 		if (tokenString.trim().compareTo("predefined") == 0) {
 			//These predefined types are only here due to specific nature of horses
@@ -40,7 +40,7 @@ public final class MobConfigProcessor {
 			//Determine how complex types will be generated
 			tokenString = stringToken.nextToken();
 			tokenString.trim();
-			tokenString.toLowerCase();
+			tokenString.toUpperCase();
 			String Vehicle = tokenString;
 			if (!stringToken.hasMoreTokens()) {
 				System.err.println("Incorrect yml feed!");
@@ -48,7 +48,7 @@ public final class MobConfigProcessor {
 			}
 			tokenString = stringToken.nextToken();
 			tokenString.trim();
-			tokenString.toLowerCase();
+			tokenString.toUpperCase();
 			String Passenger = tokenString;
 			ComplexMobType.CustomEntity(EntityType.valueOf(Vehicle), EntityType.valueOf(Passenger), Loc);
 			}
