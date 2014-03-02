@@ -4,6 +4,7 @@ package com.SkyIsland.MobSpawn;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -12,6 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class MobSpawn extends JavaPlugin {
 	
 	public static double spawnRate;
+	protected spawnEvent spawn;
 		
 	
 	//load up config files (a string-to-mob-id config file, for now
@@ -21,12 +23,14 @@ public final class MobSpawn extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		//runs when plugin is enabled;
-		getLogger().info("Plugin enabled!");
+		getLogger().info("MobSpawn Plugin enabled!");
 		
 		//need to specify the commands are to be run using the command processor
 		MobSpawnCommandProcessor cmdProcess = new MobSpawnCommandProcessor(this); //create our command processor
 		getCommand("spawn_mob").setExecutor(cmdProcess); //tie spawn_mob command to command processor
 		getCommand("spawn_constants").setExecutor(cmdProcess); // " "
+		
+		
 		
 		//load up yaml files
 		try {
@@ -44,11 +48,35 @@ public final class MobSpawn extends JavaPlugin {
 			e.printStackTrace();
 		}
 		
-		spawnRate = config.getDouble("Main.spawn_rate", 1.0);
+		
+		getLogger().info("MobSpawn initialization complete and successful!");
 		
 		
+		if (config.getBoolean("Main.internalSpawnEvent")) {
 		
-		
+			spawnRate = config.getDouble("Main.spawn_rate", 1.0);
+			ArrayList<spawnTask> taskList = new ArrayList<spawnTask>();
+			spawnTask task;
+			int i;
+			
+			for (i = 0; i <= Math.floor(spawnRate); i++) {
+				task = new spawnTask(this);
+				taskList.add(task);
+				task.runTaskTimer(this, 1, 1);
+			}
+			
+			if (spawnRate - Math.floor(spawnRate) <= .05) {
+				task = new spawnTask(this);
+				taskList.add(task);
+				task.runTaskTimer(this, 1, (long) (1/spawnRate));
+			}
+			
+			
+		}
+		else {
+			spawnEvent spawn = new spawnEvent(this);
+			getServer().getPluginManager().registerEvents(spawn, this);
+		}
 		
 	}
 	

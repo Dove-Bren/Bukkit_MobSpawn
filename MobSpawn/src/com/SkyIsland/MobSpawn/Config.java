@@ -32,7 +32,7 @@ public final class Config {
 		YamlConfiguration configFile = new YamlConfiguration();
 		if (pathName.exists()) {
 			configFile.load(pathName);
-			if (configFile.contains("Main.spawn_rate")) {
+			if (configFile.contains("Main.spawn_rate") && configFile.contains("Main.internalSpawnEvent")) {
 				return configFile;
 			}
 			//it exists, but is corrupt or doesn't have the right stuff
@@ -41,6 +41,7 @@ public final class Config {
 		//if it gets here, needs to create the file
 		
 		configFile.createSection("Main");
+		configFile.set("Main.internalSpawnEvent", false);
 		configFile.set("Main.spawn_rate", 1.0); //this is how many times the regular rate
 		
 		configFile.save(pathName);

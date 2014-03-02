@@ -1,20 +1,31 @@
 package com.SkyIsland.MobSpawn;
 
-import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.plugin.java.JavaPlugin;
 
-public class spawnTask extends BukkitRunnable {
+public class spawnEvent implements Listener {
 	
-	MobSpawn plugin;
-	double spawnRate;
+	private MobSpawn plugin;
 	
-	public spawnTask(MobSpawn plugin) {
+	protected spawnEvent(MobSpawn plugin) {
 		this.plugin = plugin;
 	}
+	
+	
+	@EventHandler (priority=EventPriority.HIGH)
+	protected void generateSpawn() {
+		String current = getMob(plugin.mobIdLookup);
+		//CALL WILLIES FUNCTION WITH CURRENT and mobIDLookup.valueof(current)
+	}
+	
+	
+	
 	
 	/**
 	 * 
@@ -45,13 +56,4 @@ public class spawnTask extends BukkitRunnable {
 		
 	}
 	
-	
-	
-	
-	
-	@Override
-	public void run() {
-		plugin.spawn.generateSpawn();
-	}
-
 }
