@@ -1,5 +1,6 @@
 package com.SkyIsland.MobSpawn;
 
+import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
 
@@ -8,10 +9,12 @@ import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.entity.LivingEntity;
 
 public final class MobConfigProcessor {
 	
 	final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+	private static Entity helper;
 	/**
 	 * This method determines how a new entity(ies) will be generated
 	 * @param Name The name of the entity
@@ -23,7 +26,10 @@ public final class MobConfigProcessor {
 		String tokenString = stringToken.nextToken();
 		//Check for type of mob: Simple, Predefined, Complex
 		if (tokenString.trim().compareTo("simple") == 0) {
-			SimpleMobType.CustomEntity(EntityType.valueOf(Name.toUpperCase()), Loc);
+			helper =  SimpleMobType.CustomEntity(EntityType.valueOf(Name.toUpperCase()), Loc);
+			if (helper.getType().compareTo(EntityType.SKELETON) == 0) {
+				((LivingEntity) helper).getEquipment().setItemInHand(InventoryCreator.RangedWeapon((int) (2 + Math.random() * 3)));
+			}
 		}
 		if (tokenString.trim().compareTo("predefined") == 0) {
 			//These predefined types are only here due to the specific nature of horses

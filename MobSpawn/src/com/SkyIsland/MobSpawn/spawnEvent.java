@@ -13,11 +13,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
-import org.bukkit.event.entity.EntityDamageByBlockEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.entity.Fireball;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.vehicle.VehicleExitEvent;
 
 public class spawnEvent implements Listener {
 	
@@ -25,6 +22,7 @@ public class spawnEvent implements Listener {
 	private Entity helperEntity;
 	private Location loc;
 	private double distance;
+	private boolean trip;
 	
 	protected spawnEvent(MobSpawn plugin) {
 		this.plugin = plugin;
@@ -51,39 +49,43 @@ public class spawnEvent implements Listener {
 	}
 	
 	@EventHandler (priority=EventPriority.HIGH)
-	protected void modifyFireBall(ProjectileHitEvent event) {
-		if (event.getEntityType().compareTo(EntityType.FIREBALL) == 0) {
-			List<Entity> entitylist = event.getEntity().getNearbyEntities(1, 0, 1);
-			for (Entity e : entitylist) {
-				if (e.getType().compareTo(EntityType.BLAZE) == 0) {
-					plugin.getLogger().info("Fireball hit a blaze");
-					loc = e.getLocation();
-					loc = event.getEntity().getLocation().subtract(loc);
-					loc.multiply(10);
-					loc.add(e.getLocation());
-					helperEntity = loc.getWorld().spawnEntity(loc, EntityType.FIREBALL);
-					((Fireball) helperEntity).setDirection(((Fireball) (event.getEntity())).getDirection());
+	protected void killHorses(EntityDeathEvent event){
+		if (event.getEntity().isInsideVehicle() && event.getEntityType().compareTo(EntityType.PLAYER) != 0 && event.getEntity().getVehicle().getType().compareTo(EntityType.HORSE) == 0) {
+			
+			for (String e: plugin.config.getConfigurationSection("Main").getStringList("worlds")) {
+				if (e.compareToIgnoreCase(event.getEntity().getLocation().getWorld().getName()) == 0) {
+					trip = true;
 					break;
 				}
 			}
+			
+			if (trip == true) {
+				event.getEntity().getVehicle().remove();
+			}
+			
+			
 		}
 	}
 	
-	/*
 	@EventHandler (priority=EventPriority.HIGH)
-	protected void modifyFireBall(EntityDamageByEntityEvent event) {
-			if (event.getDamager() != null) {
-				if (event.getDamager().getType().compareTo(EntityType.FIREBALL) == 0 && event.getEntity().getType().compareTo(EntityType.BLAZE) == 0) {
-					//we dont want blazes to have their fireballs stopped by other blazes
-					//so we try just ignoring the event????
-					event.setCancelled(true);
-					helperEntity = event.getEntity().getWorld().spawnEntity(event.getEntity().getLocation(), EntityType.FIREBALL);
-					((Fireball) helperEntity).setDirection(((Fireball) event.getEntity()).getDirection());
-					
+	protected void noFreeLunch(VehicleExitEvent event){
+		if (event.getExited().getType().compareTo(EntityType.PLAYER) != 0) {
+			for (String e: plugin.config.getConfigurationSection("Main").getStringList("worlds")) {
+				if (e.compareToIgnoreCase(event.getVehicle().getLocation().getWorld().getName()) == 0) {
+					trip = true;
+					break;
 				}
 			}
+			
+			if (trip == true) {
+				event.getVehicle().remove();
+			}
+			
+			
+		}
 	}
-	*/
+	
+	
 	
 	/**
 	 * 
