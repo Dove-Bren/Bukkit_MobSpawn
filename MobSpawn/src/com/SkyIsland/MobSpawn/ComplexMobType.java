@@ -18,6 +18,25 @@ public class ComplexMobType {
 		VehicleEntity.setPassenger(PassengerEntity);
 		return VehicleEntity;
 	}
+	
+	/**
+	 * This constructor creates a 'vehicle' entity along with its armed 'passenger'
+	 * @param VehicleType The vehicle type (the Bottom)
+	 * @param PassengerType The passenger type (the Top)
+	 * @param Loc The location of both entities
+	 * @param PassengerWeapon The Passenger's weapon
+	 * @return The Vehicle Entity
+	 */
+	public static Entity CustomEntity (EntityType VehicleType, EntityType PassengerType, Location Loc, ItemStack PassengerWeapon) {
+		Entity helper;
+		Entity VehicleEntity = Loc.getWorld().spawnEntity(Loc, VehicleType);
+		Entity PassengerEntity = Loc.getWorld().spawnEntity(Loc, PassengerType);
+		VehicleEntity.setPassenger(PassengerEntity);
+		helper = PassengerEntity;
+		((LivingEntity) helper).getEquipment().setItemInHand(PassengerWeapon);
+		return VehicleEntity;
+	}
+	
 	/**
 	 * This constructor creates a 'vehicle' entity along with its 'passenger' as well as a "ticks lived" parameter for difficulty
 	 * @param VehicleType The vehicle type (the Bottom)
