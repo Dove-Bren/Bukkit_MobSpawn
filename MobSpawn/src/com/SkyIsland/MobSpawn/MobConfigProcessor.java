@@ -56,7 +56,12 @@ public final class MobConfigProcessor {
 			tokenString.trim();
 			tokenString.toUpperCase();
 			String Passenger = tokenString;
-			ComplexMobType.CustomEntity(EntityType.valueOf(Vehicle), EntityType.valueOf(Passenger), Loc);
+			if (!stringToken.hasMoreTokens())
+				ComplexMobType.CustomEntity(EntityType.valueOf(Vehicle), EntityType.valueOf(Passenger), Loc);
+			else {
+				tokenString = stringToken.nextToken();
+				ComplexMobType.CustomEntity(EntityType.valueOf(Vehicle), EntityType.valueOf(Passenger), Loc, tokenString);
+			}
 		}
 		if (tokenString.trim().compareToIgnoreCase("complex") == 0) {
 			complexParser.createFromDefinition(plugin, Name, Loc);
