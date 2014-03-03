@@ -112,6 +112,11 @@ public class InventoryCreator {
 		return new ItemStack(Material.STONE_SWORD);
 	}
 	
+	/**
+	 * Generates a Ranged weapon with an randomized enchantment
+	 * @param enchantmentLVL Higher levels (0-3) mean higher probabilities of higher enchantments
+	 * @return The item
+	 */
 	public static ItemStack RangedWeapon(int enchantmentLVL) {
 		ItemStack newItemStack = new ItemStack(Material.BOW);
 		int randomChance;
