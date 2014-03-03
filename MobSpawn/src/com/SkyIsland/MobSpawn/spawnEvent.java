@@ -1,27 +1,24 @@
 package com.SkyIsland.MobSpawn;
 
-import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.entity.Horse;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.vehicle.VehicleExitEvent;
+import org.bukkit.event.world.ChunkUnloadEvent;
 
 public class spawnEvent implements Listener {
 	
 	private MobSpawn plugin;
-	private Entity helperEntity;
-	private Location loc;
-	private double distance;
 	private boolean trip;
 	
 	protected spawnEvent(MobSpawn plugin) {
@@ -84,7 +81,28 @@ public class spawnEvent implements Listener {
 			
 		}
 	}
-	
+	/*
+	@EventHandler
+	protected void riderGone(ChunkUnloadEvent event) {
+		for (String e: plugin.config.getConfigurationSection("Main").getStringList("worlds")) {
+			if (e.compareToIgnoreCase(event.getWorld().getName()) == 0) {
+				trip = true;
+				break;
+			}
+		}
+			
+		if (trip == true) {
+			for (Entity e : event.getChunk().getEntities()) {
+				if (e.getType() == EntityType.HORSE) {
+					event.setCancelled(true);
+					e.remove();
+				}
+			}
+
+			
+		}
+	}
+	*/
 	
 	
 	/**
