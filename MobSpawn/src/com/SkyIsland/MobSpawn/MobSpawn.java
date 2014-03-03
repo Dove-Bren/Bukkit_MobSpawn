@@ -85,7 +85,7 @@ public final class MobSpawn extends JavaPlugin {
 		File path = new File(getDataFolder() + "/Resources");
 		
 		mobIdLookup = Config.makeMobIdLookupTable(path);
-		config = Config.makeConfig(path);
+		config = Config.makeConfig(path, this);
 		
 		
 		//mobIdLookup = YamlConfiguration.loadConfiguration(this.getResource("MobIdLookupTable.yml"));

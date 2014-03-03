@@ -20,7 +20,7 @@ public final class Config {
 	 * @param String local path to where it will be saved. Should leave off ending path separator
 	 * @return whether or not it succeeded
 	 */
-	protected static YamlConfiguration makeConfig(File path) throws FileNotFoundException, IOException, InvalidConfigurationException {
+	protected static YamlConfiguration makeConfig(File path, MobSpawn plugin) throws FileNotFoundException, IOException, InvalidConfigurationException {
 		if (!path.exists()) {
 			if (!path.mkdirs()) {
 				//failed; read-write permissions?
@@ -50,6 +50,7 @@ public final class Config {
 		
 		
 		configFile.save(pathName);
+		
 		
 		
 		
@@ -184,6 +185,7 @@ public final class Config {
 			logger.info("Failed to save yaml config file!");;
 			return null;
 		}
+		
 		
 		
 		return mobIdLookup;
