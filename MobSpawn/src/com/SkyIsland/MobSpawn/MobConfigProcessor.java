@@ -29,10 +29,10 @@ public final class MobConfigProcessor {
 			//These predefined types are only here due to the specific nature of horses
 			switch(PredefinedMobType.valueOf(Name)) {
 			case skeletonOnHorse:
-				PredefinedMobType.spawnSkeletonOnHorse(Loc, new ItemStack(Material.BOW));
+				PredefinedMobType.spawnSkeletonOnHorse(Loc, InventoryCreator.RangedWeapon(1));
 				break;
 			case witherSkeletonOnHorse:
-				PredefinedMobType.witherSkeletonOnHorse(Loc, new ItemStack(Material.IRON_SWORD));
+				PredefinedMobType.witherSkeletonOnHorse(Loc, InventoryCreator.RangedWeapon(3));
 				break;
 			case zombieOnHorse:
 				PredefinedMobType.zombieOnHorse(Loc, new ItemStack(Material.IRON_SWORD));
