@@ -8,8 +8,10 @@ public enum PredefinedMobType {
 	//follow pattern below to add more predefined mobs sir william
 	skeletonOnHorse (1),
 	witherSkeletonOnHorse (2),
-	zombieOnHorse (3);
-	
+	zombieOnHorse (3),
+	skeletonHorseSquad (4),
+	witherSkeletonSquad (5),
+	zombieOnHorseSquad (6);
 	/*
 	 * Instead of making a fourth spawn method (one for single spawn, one for double spawn, complex, and now predefined)
 	 * you can make the predefined methods in this enum class.
@@ -37,7 +39,8 @@ public enum PredefinedMobType {
 		SkeletonRider = (Skeleton) loc.getWorld().spawnEntity(HorseVehicle.getLocation(), EntityType.SKELETON);
 		HorseVehicle.setPassenger(SkeletonRider);
 		HorseVehicle.setVariant(Horse.Variant.SKELETON_HORSE);
-		HorseVehicle.getInventory().setSaddle(new ItemStack(Material.SADDLE));
+		HorseVehicle.setRemoveWhenFarAway(true);
+		//HorseVehicle.getInventory().setSaddle(new ItemStack(Material.SADDLE));
 	}
 	
 	/**
@@ -55,7 +58,8 @@ public enum PredefinedMobType {
 		SkeletonRider.getEquipment().setItemInHand(SkeletonWeapon);
 		HorseVehicle.setPassenger(SkeletonRider);
 		HorseVehicle.setVariant(Horse.Variant.SKELETON_HORSE);
-		HorseVehicle.getInventory().setSaddle(new ItemStack(Material.SADDLE));
+		HorseVehicle.setRemoveWhenFarAway(true);
+		//HorseVehicle.getInventory().setSaddle(new ItemStack(Material.SADDLE));
 	}
 	
 	/**
@@ -72,7 +76,8 @@ public enum PredefinedMobType {
 		WitherSkeletonRider.setSkeletonType(Skeleton.SkeletonType.WITHER);
 		HorseVehicle.setPassenger(WitherSkeletonRider);
 		HorseVehicle.setVariant(Horse.Variant.SKELETON_HORSE);
-		HorseVehicle.getInventory().setSaddle(new ItemStack(Material.SADDLE));
+		HorseVehicle.setRemoveWhenFarAway(true);
+		//HorseVehicle.getInventory().setSaddle(new ItemStack(Material.SADDLE));
 	}
 	
 	/**
@@ -91,7 +96,8 @@ public enum PredefinedMobType {
 		WitherSkeletonRider.getEquipment().setItemInHand(SkeletonWeapon);
 		HorseVehicle.setPassenger(WitherSkeletonRider);
 		HorseVehicle.setVariant(Horse.Variant.SKELETON_HORSE);
-		HorseVehicle.getInventory().setSaddle(new ItemStack(Material.SADDLE));
+		HorseVehicle.setRemoveWhenFarAway(true);
+		//HorseVehicle.getInventory().setSaddle(new ItemStack(Material.SADDLE));
 	}
 	
 	/**
@@ -107,7 +113,8 @@ public enum PredefinedMobType {
 		ZombieRider = (Zombie) loc.getWorld().spawnEntity(loc, EntityType.ZOMBIE);
 		HorseVehicle.setPassenger(ZombieRider);
 		HorseVehicle.setVariant(Horse.Variant.UNDEAD_HORSE);
-		HorseVehicle.getInventory().setSaddle(new ItemStack(Material.SADDLE));
+		HorseVehicle.setRemoveWhenFarAway(true);
+		//HorseVehicle.getInventory().setSaddle(new ItemStack(Material.SADDLE));
 	}
 	
 	/**
@@ -125,6 +132,92 @@ public enum PredefinedMobType {
 		ZombieRider.getEquipment().setItemInHand(ZombieWeapon);
 		HorseVehicle.setPassenger(ZombieRider);
 		HorseVehicle.setVariant(Horse.Variant.UNDEAD_HORSE);
-		HorseVehicle.getInventory().setSaddle(new ItemStack(Material.SADDLE));
+		HorseVehicle.setRemoveWhenFarAway(true);
+		//HorseVehicle.getInventory().setSaddle(new ItemStack(Material.SADDLE));
+	}
+	
+	/**
+	 * This constructor creates a squad of Skeleton Horses with Riders armed with items
+	 * In addition, a superior leader will also be spawned
+	 * @param loc The location for the squad
+	 */
+	protected static void skeletonHorseSquad(Location loc) {
+		Horse HorseVehicle;
+		Skeleton SkeletonRider;
+		int i;
+		for (i = (int) (Math.random() % 4) + 2; i > 0; i--) {
+			HorseVehicle = (Horse) loc.getWorld().spawnEntity(loc, EntityType.HORSE);
+			HorseVehicle.setTamed(Boolean.TRUE);
+			SkeletonRider = (Skeleton) loc.getWorld().spawnEntity(loc, EntityType.SKELETON);
+			SkeletonRider.getEquipment().setItemInHand(InventoryCreator.RangedWeapon(1));
+			HorseVehicle.setPassenger(SkeletonRider);
+			HorseVehicle.setVariant(Horse.Variant.SKELETON_HORSE);
+			HorseVehicle.setRemoveWhenFarAway(true);
+		}
+		HorseVehicle = (Horse) loc.getWorld().spawnEntity(loc,  EntityType.HORSE);
+		HorseVehicle.setTamed(Boolean.TRUE);
+		SkeletonRider = (Skeleton)	loc.getWorld().spawnEntity(loc,EntityType.SKELETON);
+		SkeletonRider.getEquipment().setItemInHand(InventoryCreator.RangedWeapon(5));
+		HorseVehicle.setPassenger(SkeletonRider);
+		HorseVehicle.setVariant(Horse.Variant.SKELETON_HORSE);
+		HorseVehicle.getInventory().setArmor(new ItemStack(Material.IRON_BARDING));
+		HorseVehicle.setRemoveWhenFarAway(true);
+	}
+	
+	/**
+	 * This constructor creates a squad of Skeleton Horses with Wither Riders armed with items
+	 * In addition, a superior leader will also be spawned
+	 * @param loc The location for the squad
+	 */
+	protected static void witherHorseSquad(Location loc) {
+		Horse HorseVehicle;
+		Skeleton WitherSkeletonRider;
+		int i;
+		for (i = (int) (Math.random() % 4) + 2; i > 0; i--) {
+			HorseVehicle = (Horse) loc.getWorld().spawnEntity(loc, EntityType.HORSE);
+			HorseVehicle.setTamed(Boolean.TRUE);
+			WitherSkeletonRider = (Skeleton) loc.getWorld().spawnEntity(loc, EntityType.SKELETON);
+			WitherSkeletonRider.getEquipment().setItemInHand(InventoryCreator.RangedWeapon(1));
+			WitherSkeletonRider.setSkeletonType(Skeleton.SkeletonType.WITHER);
+			HorseVehicle.setPassenger(WitherSkeletonRider);
+			HorseVehicle.setVariant(Horse.Variant.SKELETON_HORSE);
+			HorseVehicle.setRemoveWhenFarAway(true);
+		}
+		HorseVehicle = (Horse) loc.getWorld().spawnEntity(loc,  EntityType.HORSE);
+		HorseVehicle.setTamed(Boolean.TRUE);
+		WitherSkeletonRider = (Skeleton)	loc.getWorld().spawnEntity(loc,EntityType.SKELETON);
+		WitherSkeletonRider.getEquipment().setItemInHand(InventoryCreator.RangedWeapon(5));
+		HorseVehicle.setPassenger(WitherSkeletonRider);
+		HorseVehicle.setVariant(Horse.Variant.SKELETON_HORSE);
+		HorseVehicle.getInventory().setArmor(new ItemStack(Material.IRON_BARDING));
+		HorseVehicle.setRemoveWhenFarAway(true);
+	}
+	
+	/**
+	 * This constructor creates a squad of Skeleton Horses with Wither Riders armed with items
+	 * In addition, a superior leader will also be spawned
+	 * @param loc The location for the squad
+	 */
+	protected static void ZombieHorseSquad(Location loc) {
+		Horse HorseVehicle;
+		Zombie ZombieRider;
+		int i;
+		for (i = (int) (Math.random() % 4) + 2; i > 0; i--) {
+			HorseVehicle = (Horse) loc.getWorld().spawnEntity(loc, EntityType.HORSE);
+			HorseVehicle.setTamed(Boolean.TRUE);
+			ZombieRider = (Zombie) loc.getWorld().spawnEntity(loc, EntityType.ZOMBIE);
+			ZombieRider.getEquipment().setItemInHand(InventoryCreator.RangedWeapon(1));
+			HorseVehicle.setPassenger(ZombieRider);
+			HorseVehicle.setVariant(Horse.Variant.SKELETON_HORSE);
+			HorseVehicle.setRemoveWhenFarAway(true);
+		}
+		HorseVehicle = (Horse) loc.getWorld().spawnEntity(loc,  EntityType.HORSE);
+		HorseVehicle.setTamed(Boolean.TRUE);
+		ZombieRider = (Zombie)	loc.getWorld().spawnEntity(loc,EntityType.ZOMBIE);
+		ZombieRider.getEquipment().setItemInHand(InventoryCreator.RangedWeapon(5));
+		HorseVehicle.setPassenger(ZombieRider);
+		HorseVehicle.setVariant(Horse.Variant.SKELETON_HORSE);
+		HorseVehicle.getInventory().setArmor(new ItemStack(Material.IRON_BARDING));
+		HorseVehicle.setRemoveWhenFarAway(true);
 	}
 }

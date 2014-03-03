@@ -63,7 +63,7 @@ public final class MobConfigProcessor {
 			tokenString.toUpperCase();
 			String Passenger = tokenString;
 			if (!stringToken.hasMoreTokens())
-				ComplexMobType.CustomEntity(EntityType.valueOf(Vehicle), EntityType.valueOf(Passenger), Loc);
+				ComplexMobType.CustomEntity(EntityType.valueOf(Vehicle), EntityType.valueOf(Passenger), Loc, InventoryCreator.RangedWeapon((int) (2 + Math.random() * 3)));
 			else {
 				tokenString = stringToken.nextToken();
 				ComplexMobType.CustomEntity(EntityType.valueOf(Vehicle), EntityType.valueOf(Passenger), Loc, tokenString);
