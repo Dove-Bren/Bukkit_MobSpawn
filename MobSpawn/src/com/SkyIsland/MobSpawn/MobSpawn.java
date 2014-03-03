@@ -56,6 +56,7 @@ public final class MobSpawn extends JavaPlugin {
 		
 		spawnEvent spawn = new spawnEvent(this);
 		getServer().getPluginManager().registerEvents(spawn, this);
+		getServer().getPluginManager().registerEvents(spawn, this);
 		
 	}
 	

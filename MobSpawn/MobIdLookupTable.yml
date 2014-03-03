@@ -31,7 +31,7 @@ Rates:
   zombie_on_zombie: 50
   skeleton: 70
   skeleton_on_skeleton: 40
-  totem_pole: 8
+  totem_pole: 100
   ghast_on_creeper: 15
   pig_mutated: 30
   
@@ -59,11 +59,11 @@ Definitions:
     entity1PotionEffect = none
     
     #each entity in the complex entity must be defined like above
-    entity2 = BLAZE
+    entity2 = CHICKEN
     entity2Equips = none none none none none
     entity2Name = none
     entity2Hp = 9
-    entity2PotionEffect = none
+    entity2PotionEffect = invisForever
     
     entity3 = BLAZE
     entity3Equips = none none none none none
@@ -71,11 +71,11 @@ Definitions:
     entity3Hp = 9
     entity3PotionEffect = none
     
-    entity4 = BLAZE
+    entity4 = CHICKEN
     entity4Equips = none none none none none
     entity4Name = none
     entity4Hp = 9
-    entity4PotionEffect = none
+    entity4PotionEffect = invisForever
     
     entity5 = BLAZE
     entity5Equips = none none none none none

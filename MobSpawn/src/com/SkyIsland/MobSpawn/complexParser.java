@@ -19,11 +19,17 @@ public final class complexParser {
 		String buffer;
 		
 		int numberOfMobs = memSection.getInt("numberOfPieces", 1), i;
-		LivingEntity mob;
+		LivingEntity mob = null, mob2 = null;
 		boolean isBoss = memSection.getBoolean("isBoss", false);
 		
 		for (i = 1; i <= numberOfMobs && memSection.contains("entity" + i); i++) {
-			mob = (LivingEntity) loc.getWorld().spawnEntity(loc, EntityType.valueOf(memSection.getString("entity" + i)));
+			
+			mob2 = mob;
+			mob =  (LivingEntity) loc.getWorld().spawnEntity(loc, EntityType.valueOf(memSection.getString("entity" + i)));
+			
+			if (i > 1) {
+				mob2.setPassenger(mob);
+			}
 			
 				//if it's a boss, we don't want it to despawn
 			mob.setRemoveWhenFarAway(!isBoss);
