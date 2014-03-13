@@ -4,10 +4,8 @@ import java.util.StringTokenizer;
 import java.util.logging.Logger;
 
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.entity.LivingEntity;
 
 public final class MobConfigProcessor {

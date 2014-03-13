@@ -97,6 +97,7 @@ public enum PredefinedMobType {
 		HorseVehicle.setRemoveWhenFarAway(true);
 		bat = (Bat) loc.getWorld().spawnEntity(loc, EntityType.BAT);
 		bat.setPassenger(HorseVehicle);
+		bat.addPotionEffect(PredefinedPotionEffect.invisForever.potionEffect);
 	}
 	
 	/**
