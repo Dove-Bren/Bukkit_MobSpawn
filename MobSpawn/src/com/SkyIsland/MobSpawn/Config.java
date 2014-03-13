@@ -104,7 +104,7 @@ public final class Config {
 				e.printStackTrace();
 				throw e;
 			}
-			if (mobIdLookup.contains("Types") && mobIdLookup.contains("Types.totem_pole") && mobIdLookup.contains("Rates") && mobIdLookup.contains("Definitions") && mobIdLookup.contains("Definitions.totem_pole.entity3")) {
+			if (mobIdLookup.contains("Types") && mobIdLookup.contains("Rates") && mobIdLookup.contains("Definitions")) {
 				return mobIdLookup;
 			}
 			else {

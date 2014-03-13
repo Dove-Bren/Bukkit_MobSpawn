@@ -4,17 +4,14 @@ import java.util.Random;
 import java.util.Set;
 
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.entity.Horse;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.vehicle.VehicleExitEvent;
-import org.bukkit.event.world.ChunkUnloadEvent;
 
 public class spawnEvent implements Listener {
 	
