@@ -11,7 +11,9 @@ public enum PredefinedMobType {
 	zombieOnHorse (3),
 	skeletonHorseSquad (4),
 	witherSkeletonSquad (5),
-	zombieOnHorseSquad (6);
+	zombieOnHorseSquad (6),
+	slimePyramid (7),
+	skeletonOnHorseOnBat (8);
 	/*
 	 * Instead of making a fourth spawn method (one for single spawn, one for double spawn, complex, and now predefined)
 	 * you can make the predefined methods in this enum class.
@@ -24,6 +26,77 @@ public enum PredefinedMobType {
 	
 	PredefinedMobType(int type) {
 		this.type = type;
+	}
+	
+	protected static void spawnLocalized(PredefinedMobType type, Location Loc) {
+		//These predefined types are only here due to the specific nature of horses
+		switch(type) {
+		case skeletonOnHorse:
+			PredefinedMobType.spawnSkeletonOnHorse(Loc, InventoryCreator.RangedWeapon(1));
+			break;
+		case witherSkeletonOnHorse:
+			PredefinedMobType.witherSkeletonOnHorse(Loc, InventoryCreator.RangedWeapon(3));
+			break;
+		case zombieOnHorse:
+			PredefinedMobType.zombieOnHorse(Loc, new ItemStack(Material.IRON_SWORD));
+			break;
+		case skeletonHorseSquad:
+			skeletonHorseSquad(Loc);
+			break;
+		case witherSkeletonSquad:
+			witherHorseSquad(Loc);
+			break;
+		case zombieOnHorseSquad:
+			ZombieHorseSquad(Loc);
+			break;
+		case slimePyramid:
+			slimePyramid(Loc);
+			break;
+		case skeletonOnHorseOnBat:
+			skeletonOnHorseOnBat(Loc);
+			break;
+		default:
+			System.err.println("Incorrect Predefined Type!");
+			break;
+		}
+	}
+	
+	/**
+	 * Spawns a slime pyramid, with height 5. 
+	 * @param loc the location of the pyramid
+	 */
+	protected static void slimePyramid(Location loc) {
+		Slime currentSlime, oldSlime;
+		int i;
+		
+		currentSlime = (Slime) loc.getWorld().spawnEntity(loc, EntityType.SLIME);
+		currentSlime.setSize(5);
+		
+		for (i = 4; i > 0; i--) {
+			oldSlime = currentSlime;
+			currentSlime = (Slime) loc.getWorld().spawnEntity(loc, EntityType.SLIME);
+			currentSlime.setSize(i);
+			oldSlime.setPassenger(currentSlime);
+		}
+	}
+	
+	/**
+	 * Spawns a skeleton on a horse on a bat
+	 * @param loc the location of the monstah
+	 */
+	protected static void skeletonOnHorseOnBat(Location loc) {
+		Horse HorseVehicle;
+		Skeleton SkeletonRider;
+		Bat bat;
+		HorseVehicle = (Horse) loc.getWorld().spawnEntity(loc, EntityType.HORSE);
+		HorseVehicle.setTamed(Boolean.TRUE);
+		SkeletonRider = (Skeleton) loc.getWorld().spawnEntity(HorseVehicle.getLocation(), EntityType.SKELETON);
+		SkeletonRider.getEquipment().setItemInHand(new ItemStack(Material.BOW));
+		HorseVehicle.setPassenger(SkeletonRider);
+		HorseVehicle.setVariant(Horse.Variant.SKELETON_HORSE);
+		HorseVehicle.setRemoveWhenFarAway(true);
+		bat = (Bat) loc.getWorld().spawnEntity(loc, EntityType.BAT);
+		bat.setPassenger(HorseVehicle);
 	}
 	
 	/**

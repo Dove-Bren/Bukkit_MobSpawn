@@ -31,21 +31,9 @@ public final class MobConfigProcessor {
 			}
 		}
 		if (tokenString.trim().compareTo("predefined") == 0) {
-			//These predefined types are only here due to the specific nature of horses
-			switch(PredefinedMobType.valueOf(Name)) {
-			case skeletonOnHorse:
-				PredefinedMobType.spawnSkeletonOnHorse(Loc, InventoryCreator.RangedWeapon(1));
-				break;
-			case witherSkeletonOnHorse:
-				PredefinedMobType.witherSkeletonOnHorse(Loc, InventoryCreator.RangedWeapon(3));
-				break;
-			case zombieOnHorse:
-				PredefinedMobType.zombieOnHorse(Loc, new ItemStack(Material.IRON_SWORD));
-				break;
-			default:
-				System.err.println("Incorrect Predefined Type!");
-				break;
-			}
+			PredefinedMobType.spawnLocalized(PredefinedMobType.valueOf(Name), Loc);
+			
+			
 		}
 		if (tokenString.trim().compareTo("double") == 0) {
 			//Determine how complex types will be generated
