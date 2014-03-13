@@ -37,6 +37,7 @@ public class spawnEvent implements Listener {
 			if (trip == true) {
 				event.setCancelled(true);
 				String current = getMob(plugin.mobIdLookup);
+				plugin.getLogger().info("String obtained: " + current);
 				MobConfigProcessor.SpawnMob(current, plugin.mobIdLookup.getString("Types." + current), event.getLocation(), plugin);
 			}
 		}
