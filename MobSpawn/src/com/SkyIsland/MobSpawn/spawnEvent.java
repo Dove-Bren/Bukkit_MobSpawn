@@ -1,9 +1,11 @@
 package com.SkyIsland.MobSpawn;
 
+import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -18,7 +20,11 @@ public class spawnEvent implements Listener {
 	private MobSpawn plugin;
 	private boolean trip;
 	
+	//load the config once, generate entities, and store them here
+	private Set<Entity> mobs;
+	
 	protected spawnEvent(MobSpawn plugin) {
+		mobs = new HashSet<Entity>();
 		this.plugin = plugin;
 	}
 	
