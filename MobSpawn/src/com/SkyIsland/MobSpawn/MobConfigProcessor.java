@@ -64,7 +64,7 @@ public final class MobConfigProcessor {
 	
 	//type stores the name of the mob as a string
 	public static void createFromDefinition(MobSpawn plugin, String mobType, Location loc) {
-		ConfigurationSection memSection = plugin.mobIdLookup.getConfigurationSection("Definitions." + mobType);
+		ConfigurationSection memSection = plugin.mobTable.getConfigurationSection("Definitions." + mobType);
 		String buffer;
 		
 		int numberOfMobs = memSection.getInt("numberOfPieces", 1), i;

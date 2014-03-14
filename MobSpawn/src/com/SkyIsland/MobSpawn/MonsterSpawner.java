@@ -77,8 +77,8 @@ public class MonsterSpawner implements Listener {
 		for (String e: plugin.config.getConfigurationSection("Main").getStringList("worlds")) {
 			if (e.compareToIgnoreCase(event.getLocation().getWorld().getName()) == 0) {
 				event.setCancelled(true);
-				String current = getMob(plugin.mobIdLookup);
-				MobConfigProcessor.SpawnMob(current, plugin.mobIdLookup.getString("Types." + current), event.getLocation(), plugin);
+				String current = getMob(plugin.mobTable);
+				MobConfigProcessor.SpawnMob(current, plugin.mobTable.getString("Types." + current), event.getLocation(), plugin);
 				return;
 			}
 		}

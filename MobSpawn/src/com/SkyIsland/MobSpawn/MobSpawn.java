@@ -14,15 +14,23 @@ public final class MobSpawn extends JavaPlugin {
 	
 	public static double spawnRate;
 	
+	final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+	
 	//the monster spawner
 	protected MonsterSpawner spawn;
 	
-	final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+	//filenames
+	private final String configName = "config.yml";
+	private final String mobTableName = "MobIdLookupTable.yml";
 	
-	//configuration files. config stores the worlds, and mobIDLookup stores the mobs
-	YamlConfiguration config = new YamlConfiguration();
-	YamlConfiguration mobIdLookup = new YamlConfiguration();	
-		
+	//files
+	private final File configFile = new File(this.getDataFolder(), configName);
+	private final File mobTableFile = new File(this.getDataFolder(), mobTableName);
+	
+	//configurations
+	public YamlConfiguration config;
+	public YamlConfiguration mobTable;
+	
 	@Override
 	public void onEnable() {
 		
@@ -36,7 +44,7 @@ public final class MobSpawn extends JavaPlugin {
 		
 		//load up yaml files
 		try {
-			loadYaml();
+			load();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			getLogger().info("Plugin failed in loading/creating mobLookupTable file (located in MobSpawn/Resources/ in plugin directory) !!");
@@ -50,7 +58,7 @@ public final class MobSpawn extends JavaPlugin {
 		getLogger().info("MobSpawn initialization complete and successful!");
 		getLogger().info("MobSpawn is now turning off regular mob spawning in worlds specified in config.yml");
 		
-		MonsterSpawner spawn = new MonsterSpawner(this, mobIdLookup);
+		MonsterSpawner spawn = new MonsterSpawner(this, mobTable);
 		getServer().getPluginManager().registerEvents(spawn, this);
 		getServer().getPluginManager().registerEvents(spawn, this);
 	}
@@ -61,7 +69,7 @@ public final class MobSpawn extends JavaPlugin {
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
 	 */
-	protected void loadYaml() throws FileNotFoundException, IOException, InvalidConfigurationException {
+	protected void load() throws FileNotFoundException, IOException, InvalidConfigurationException {
 		File path = new File(getDataFolder() + "/Resources");
 		
 		//create plugin directory
@@ -73,168 +81,146 @@ public final class MobSpawn extends JavaPlugin {
 			}
 		}
 		
-		config = makeConfig(path, this);
-		mobIdLookup = makeMobIdLookupTable(path);
+		//load config files
+		loadConfig();
+		loadMobTable();
+		
+		//load worlds
+		
+		//load mobs
+		
 	}
 	
 	/**
-	 * Creates (or tries to) the config file, which stores essential information like global spawn rating.
-	 * 
-	 * @param String local path to where it will be saved. Should leave off ending path separator
-	 * @return whether or not it succeeded
+	 * Loads the config file. Creates a default config file if one doesn't exist
 	 */
-	private YamlConfiguration makeConfig(File path, MobSpawn plugin) throws FileNotFoundException, IOException, InvalidConfigurationException {
-		
-		File pathName = new File(path.getPath() + File.separator + "Config.yml");
-		YamlConfiguration configFile = new YamlConfiguration();
-		ArrayList<String> worldList = new ArrayList<String>();
-		
-		if (pathName.exists()) {
-			configFile.load(pathName);
-			if (configFile.contains("Main.worlds")) {
-				return configFile;
+	private void loadConfig(){	
+		try{
+			
+			//create file if it doesn't exist
+			if (!configFile.exists()){
+				if (!configFile.createNewFile()){
+					return;
+				}
+				//create default
+				this.createDefaultConfig();
 			}
-			//it exists, but is corrupt or doesn't have the right stuff
-			pathName.delete();
+			
+			//load configuration
+			config.load(configFile);
+		
 		}
-		
-		//if it gets here, needs to create the file
-		configFile.createSection("Main");
-		
-		worldList.add("wilderness");
-		configFile.getConfigurationSection("Main").set("worlds", worldList);
-		
-		
-		configFile.save(pathName);
-		
-		return configFile;
-	}
-	
-	
-	/**
-	 * Creates the MobIdLookupTable. Doesn't create one if it already exists
-	 * 
-	 * @param String local path to where it will be saved. Should leave off ending path separator
-	 * @return whether or not it succeeded
-	 */
-	private YamlConfiguration makeMobIdLookupTable(File path) throws FileNotFoundException, IOException, InvalidConfigurationException {
-		
-		//path should have been created
-		File pathName = new File(path.getPath() + File.separator + "MobIdLookupTable.yml");
-		YamlConfiguration mobIdLookup;
-		
-		if (pathName.exists()) {
-			//already exists
-			
-			//make sure that the file is current
-			
-			
-			mobIdLookup = new YamlConfiguration();
-			try {
-				mobIdLookup.load(pathName);
-			} catch (FileNotFoundException e) {
-				logger.info("Threw FILENOTFOUND exception while trying to load mobIdLookup config file. Make sure file is a .yml file!!!!");
-				e.printStackTrace();
-				throw e;
-			} catch (IOException e) {
-				logger.info("Threw FILENOTFOUND exception while trying to load mobIdLookup config file. Make sure file is a .yml file!!!!");
-				e.printStackTrace();
-				throw e;
-			} catch (InvalidConfigurationException e) {
-				logger.info("Threw FILENOTFOUND exception while trying to load mobIdLookup config file. Make sure file is a .yml file!!!!");
-				e.printStackTrace();
-				throw e;
-			}
-			if (mobIdLookup.contains("Types") && mobIdLookup.contains("Rates") && mobIdLookup.contains("Definitions")) {
-				return mobIdLookup;
-			}
-			else {
-				pathName.delete();
-				//delete the current config file so it can make a brand new one below
-			}
-		}
-		mobIdLookup = new YamlConfiguration(); 
-		mobIdLookup.createSection("Types");
-		mobIdLookup.set("Types.zombie", "simple");
-		mobIdLookup.set("Types.zombie_on_zombie", "double ZOMBIE ZOMBIE");
-		mobIdLookup.set("Types.skeleton", "skeleton");
-		mobIdLookup.set("Types.skeleton_on_skeleton", "double SKELETON SKELETON");
-		mobIdLookup.set("Types.totem_pole", "complex");
-		mobIdLookup.set("Types.ghast_on_creeper", "double CREEPER GHAST true");
-		mobIdLookup.set("Types.pig_mutated", "complex");
-		
-		mobIdLookup.createSection("Rates");
-		mobIdLookup.set("Rates.zombie", 80);
-		mobIdLookup.set("Rates.zombie_on_zombie", 50);
-		mobIdLookup.set("Rates.skeleton", 70);
-		mobIdLookup.set("Rates.skeleton_on_skeleton", 40);
-		mobIdLookup.set("Rates.totem_pole", 8);
-		mobIdLookup.set("Rates.ghast_on_creeper", 15);
-		mobIdLookup.set("Rates.pig_mutated", 30);
-		
-		
-		mobIdLookup.createSection("Definitions");
-		
-		mobIdLookup.createSection("totem_pole");
-		mobIdLookup.set("Definitions.totem_pole.numberOfPieces", 5);
-		mobIdLookup.set("Definitions.totem_pole.isBoss", true);
-		mobIdLookup.set("Definitions.totem_pole.entity1", "BLAZE");
-		mobIdLookup.set("Definitions.totem_pole.entity1Equips", "none none none none none");
-		mobIdLookup.set("Definitions.totem_pole.entity1Name", "none");
-		mobIdLookup.set("Definitions.totem_pole.entity1Hp", 9);
-		mobIdLookup.set("Definitions.totem_pole.entity1PotionEffect", "none");
-		mobIdLookup.set("Definitions.totem_pole.entity2", "CHIKEN");
-		mobIdLookup.set("Definitions.totem_pole.entity2Equips", "none none none none none");
-		mobIdLookup.set("Definitions.totem_pole.entity2Name", "none");
-		mobIdLookup.set("Definitions.totem_pole.entity2Hp", 9);
-		mobIdLookup.set("Definitions.totem_pole.entity2PotionEffect", "invisForever");
-		mobIdLookup.set("Definitions.totem_pole.entity3", "BLAZE");
-		mobIdLookup.set("Definitions.totem_pole.entity3Equips", "none none none none none");
-		mobIdLookup.set("Definitions.totem_pole.entity3Name", "none");
-		mobIdLookup.set("Definitions.totem_pole.entity3Hp", 9);
-		mobIdLookup.set("Definitions.totem_pole.entity3PotionEffect", "none");
-		mobIdLookup.set("Definitions.totem_pole.entity4", "CHICKEN");
-		mobIdLookup.set("Definitions.totem_pole.entity4Equips", "none none none none none");
-		mobIdLookup.set("Definitions.totem_pole.entity4Name", "none");
-		mobIdLookup.set("Definitions.totem_pole.entity4Hp", 9);
-		mobIdLookup.set("Definitions.totem_pole.entity4PotionEffect", "invisForever");
-		mobIdLookup.set("Definitions.totem_pole.entity5", "BLAZE");
-		mobIdLookup.set("Definitions.totem_pole.entity5Equips", "none none none none none");
-		mobIdLookup.set("Definitions.totem_pole.entity5Name", "none");
-		mobIdLookup.set("Definitions.totem_pole.entity5Hp", 9);
-		mobIdLookup.set("Definitions.totem_pole.entity5PotionEffect", "none");
-		
-		mobIdLookup.createSection("pig_mutated");
-		mobIdLookup.set("Definitions.pig_mutated.numberOfPieces", 2);
-		mobIdLookup.set("Definitions.pig_mutated.isBoss", "false");
-		mobIdLookup.set("Definitions.pig_mutated.entity1", "PIG");
-		mobIdLookup.set("Definitions.pig_mutated.entity1Equips", "none none none none none");
-		mobIdLookup.set("Definitions.pig_mutated.entity1Name", "");
-		mobIdLookup.set("Definitions.pig_mutated.entity1Hp", 20);
-		mobIdLookup.set("Definitions.pig_mutated.entity1PotionEffect", "none");
-		mobIdLookup.set("Definitions.pig_mutated.entity2", "PIG");
-		mobIdLookup.set("Definitions.pig_mutated.entity2Equips", "none none none none none");
-		mobIdLookup.set("Definitions.pig_mutated.entity2Name", "Grumm");
-		mobIdLookup.set("Definitions.pig_mutated.entity2Hp", 20);
-		mobIdLookup.set("Definitions.pig_mutated.entity2PotionEffect", "none");
-		
-		
-		try {
-			mobIdLookup.save(pathName);
-		} catch (IOException e) {
+		catch (Exception e){
 			e.printStackTrace();
-			logger.info("Failed to save yaml config file!");;
-			return null;
 		}
-		
-		
-		
-		return mobIdLookup;
-		
 	}
 	
+	/**
+	 * Loads the mob table. Creates a default mob table if one doesn't exist
+	 */
+	private void loadMobTable(){
+		try{
+		
+			//create file if it doesn't exist
+			if (!mobTableFile.exists()){
+				if (!mobTableFile.createNewFile()){
+					return;
+				}
+				
+				//create default
+				createDefaultMobTable();
+			}
+			
+			//load configuration
+			mobTable.load(mobTableFile);
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+	}
 	
+	/**
+	 * Creates a default configuration
+	 * @throws IOException
+	 */
+	private void createDefaultConfig() throws IOException{
+		config.createSection("Main");
+		ArrayList<String> worldList = new ArrayList<String>();
+		worldList.add("wilderness");
+		config.getConfigurationSection("Main").set("worlds", worldList);
+		config.save(configFile);
+	}
 	
-	
+	/**
+	 * Creates a default mob table
+	 * @throws IOException
+	 */
+	private void createDefaultMobTable() throws IOException{
+		mobTable = new YamlConfiguration(); 
+		mobTable.createSection("Types");
+		mobTable.set("Types.zombie", "simple");
+		mobTable.set("Types.zombie_on_zombie", "double ZOMBIE ZOMBIE");
+		mobTable.set("Types.skeleton", "skeleton");
+		mobTable.set("Types.skeleton_on_skeleton", "double SKELETON SKELETON");
+		mobTable.set("Types.totem_pole", "complex");
+		mobTable.set("Types.ghast_on_creeper", "double CREEPER GHAST true");
+		mobTable.set("Types.pig_mutated", "complex");
+		
+		mobTable.createSection("Rates");
+		mobTable.set("Rates.zombie", 80);
+		mobTable.set("Rates.zombie_on_zombie", 50);
+		mobTable.set("Rates.skeleton", 70);
+		mobTable.set("Rates.skeleton_on_skeleton", 40);
+		mobTable.set("Rates.totem_pole", 8);
+		mobTable.set("Rates.ghast_on_creeper", 15);
+		mobTable.set("Rates.pig_mutated", 30);
+		
+		mobTable.createSection("Definitions");
+		
+		mobTable.createSection("totem_pole");
+		mobTable.set("Definitions.totem_pole.numberOfPieces", 5);
+		mobTable.set("Definitions.totem_pole.isBoss", true);
+		mobTable.set("Definitions.totem_pole.entity1", "BLAZE");
+		mobTable.set("Definitions.totem_pole.entity1Equips", "none none none none none");
+		mobTable.set("Definitions.totem_pole.entity1Name", "none");
+		mobTable.set("Definitions.totem_pole.entity1Hp", 9);
+		mobTable.set("Definitions.totem_pole.entity1PotionEffect", "none");
+		mobTable.set("Definitions.totem_pole.entity2", "CHIKEN");
+		mobTable.set("Definitions.totem_pole.entity2Equips", "none none none none none");
+		mobTable.set("Definitions.totem_pole.entity2Name", "none");
+		mobTable.set("Definitions.totem_pole.entity2Hp", 9);
+		mobTable.set("Definitions.totem_pole.entity2PotionEffect", "invisForever");
+		mobTable.set("Definitions.totem_pole.entity3", "BLAZE");
+		mobTable.set("Definitions.totem_pole.entity3Equips", "none none none none none");
+		mobTable.set("Definitions.totem_pole.entity3Name", "none");
+		mobTable.set("Definitions.totem_pole.entity3Hp", 9);
+		mobTable.set("Definitions.totem_pole.entity3PotionEffect", "none");
+		mobTable.set("Definitions.totem_pole.entity4", "CHICKEN");
+		mobTable.set("Definitions.totem_pole.entity4Equips", "none none none none none");
+		mobTable.set("Definitions.totem_pole.entity4Name", "none");
+		mobTable.set("Definitions.totem_pole.entity4Hp", 9);
+		mobTable.set("Definitions.totem_pole.entity4PotionEffect", "invisForever");
+		mobTable.set("Definitions.totem_pole.entity5", "BLAZE");
+		mobTable.set("Definitions.totem_pole.entity5Equips", "none none none none none");
+		mobTable.set("Definitions.totem_pole.entity5Name", "none");
+		mobTable.set("Definitions.totem_pole.entity5Hp", 9);
+		mobTable.set("Definitions.totem_pole.entity5PotionEffect", "none");
+		
+		mobTable.createSection("pig_mutated");
+		mobTable.set("Definitions.pig_mutated.numberOfPieces", 2);
+		mobTable.set("Definitions.pig_mutated.isBoss", "false");
+		mobTable.set("Definitions.pig_mutated.entity1", "PIG");
+		mobTable.set("Definitions.pig_mutated.entity1Equips", "none none none none none");
+		mobTable.set("Definitions.pig_mutated.entity1Name", "");
+		mobTable.set("Definitions.pig_mutated.entity1Hp", 20);
+		mobTable.set("Definitions.pig_mutated.entity1PotionEffect", "none");
+		mobTable.set("Definitions.pig_mutated.entity2", "PIG");
+		mobTable.set("Definitions.pig_mutated.entity2Equips", "none none none none none");
+		mobTable.set("Definitions.pig_mutated.entity2Name", "Grumm");
+		mobTable.set("Definitions.pig_mutated.entity2Hp", 20);
+		mobTable.set("Definitions.pig_mutated.entity2PotionEffect", "none");
+		
+		mobTable.save(mobTableFile);
+	}
 	
 }
