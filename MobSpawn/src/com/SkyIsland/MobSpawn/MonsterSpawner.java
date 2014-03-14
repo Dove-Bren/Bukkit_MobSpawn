@@ -37,25 +37,31 @@ public class MonsterSpawner implements Listener {
 	 */
 	@EventHandler (priority=EventPriority.HIGH)
 	protected void generateSpawn(CreatureSpawnEvent event) {
-		if ((event.getSpawnReason() == SpawnReason.NATURAL || event.getSpawnReason() == SpawnReason.CHUNK_GEN) && (event.getEntityType().compareTo(EntityType.SQUID) != 0)) {
-			boolean trip = false;
-			for (String e: plugin.config.getConfigurationSection("Main").getStringList("worlds")) {
-				if (e.compareToIgnoreCase(event.getLocation().getWorld().getName()) == 0) {
-					trip = true;
-					break;
-				}
+		
+		boolean trip = false;
+		
+		//do nothing if the spawn event was not naturally occurring
+		if (event.getSpawnReason() != SpawnReason.NATURAL && event.getSpawnReason() != SpawnReason.CHUNK_GEN){
+			return;
+		}
+		
+		for (String e: plugin.config.getConfigurationSection("Main").getStringList("worlds")) {
+			if (e.compareToIgnoreCase(event.getLocation().getWorld().getName()) == 0) {
+				trip = true;
+				break;
 			}
-			
-			if (trip == true) {
-				event.setCancelled(true);
-				String current = getMob(plugin.mobIdLookup);
-				MobConfigProcessor.SpawnMob(current, plugin.mobIdLookup.getString("Types." + current), event.getLocation(), plugin);
-			}
+		}
+		
+		if (trip == true) {
+			event.setCancelled(true);
+			String current = getMob(plugin.mobIdLookup);
+			MobConfigProcessor.SpawnMob(current, plugin.mobIdLookup.getString("Types." + current), event.getLocation(), plugin);
 		}
 	}
 	
 	@EventHandler (priority=EventPriority.HIGH)
 	protected void killHorses(EntityDeathEvent event){
+		
 		if (event.getEntity().isInsideVehicle() && event.getEntityType().compareTo(EntityType.PLAYER) != 0 && event.getEntity().getVehicle().getType().compareTo(EntityType.HORSE) == 0) {
 			boolean trip = false;
 			for (String e: plugin.config.getConfigurationSection("Main").getStringList("worlds")) {
@@ -69,51 +75,29 @@ public class MonsterSpawner implements Listener {
 				event.getEntity().getVehicle().remove();
 			}
 			
-			
 		}
 	}
 	
 	@EventHandler (priority=EventPriority.HIGH)
 	protected void noFreeLunch(VehicleExitEvent event){
-		if (event.getExited().getType().compareTo(EntityType.PLAYER) != 0) {
-			boolean trip = false;
-			for (String e: plugin.config.getConfigurationSection("Main").getStringList("worlds")) {
-				if (e.compareToIgnoreCase(event.getVehicle().getLocation().getWorld().getName()) == 0) {
-					trip = true;
-					break;
-				}
-			}
-			
-			if (trip == true) {
-				event.getVehicle().remove();
-			}
-			
-			
+		
+		//do nothing if the player exited
+		if (event.getExited().getType().equals(EntityType.PLAYER)){
+			return;
 		}
-	}
-	/*
-	@EventHandler
-	protected void riderGone(ChunkUnloadEvent event) {
+		
+		boolean trip = false;
 		for (String e: plugin.config.getConfigurationSection("Main").getStringList("worlds")) {
-			if (e.compareToIgnoreCase(event.getWorld().getName()) == 0) {
+			if (e.compareToIgnoreCase(event.getVehicle().getLocation().getWorld().getName()) == 0) {
 				trip = true;
 				break;
 			}
 		}
-			
+		
 		if (trip == true) {
-			for (Entity e : event.getChunk().getEntities()) {
-				if (e.getType() == EntityType.HORSE) {
-					event.setCancelled(true);
-					e.remove();
-				}
-			}
-
-			
+			event.getVehicle().remove();
 		}
 	}
-	*/
-	
 	
 	/**
 	 * 
@@ -143,7 +127,4 @@ public class MonsterSpawner implements Listener {
 		}
 		
 	}
-	
-	
-	
 }
