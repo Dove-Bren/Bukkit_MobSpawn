@@ -22,7 +22,6 @@ import org.bukkit.event.vehicle.VehicleExitEvent;
 public class MonsterSpawner implements Listener {
 	
 	private MobSpawn plugin;
-	private boolean trip;
 	
 	//load the config once, generate entities, and store them here
 	private Set<Entity> mobs;
@@ -58,7 +57,7 @@ public class MonsterSpawner implements Listener {
 	@EventHandler (priority=EventPriority.HIGH)
 	protected void killHorses(EntityDeathEvent event){
 		if (event.getEntity().isInsideVehicle() && event.getEntityType().compareTo(EntityType.PLAYER) != 0 && event.getEntity().getVehicle().getType().compareTo(EntityType.HORSE) == 0) {
-			
+			boolean trip = false;
 			for (String e: plugin.config.getConfigurationSection("Main").getStringList("worlds")) {
 				if (e.compareToIgnoreCase(event.getEntity().getLocation().getWorld().getName()) == 0) {
 					trip = true;
@@ -77,6 +76,7 @@ public class MonsterSpawner implements Listener {
 	@EventHandler (priority=EventPriority.HIGH)
 	protected void noFreeLunch(VehicleExitEvent event){
 		if (event.getExited().getType().compareTo(EntityType.PLAYER) != 0) {
+			boolean trip = false;
 			for (String e: plugin.config.getConfigurationSection("Main").getStringList("worlds")) {
 				if (e.compareToIgnoreCase(event.getVehicle().getLocation().getWorld().getName()) == 0) {
 					trip = true;
