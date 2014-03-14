@@ -11,6 +11,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 
+import com.SkyIsland.MobSpawn.mobs.PredefinedMob;
+
 public final class MobConfigProcessor {
 	
 	final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -33,7 +35,7 @@ public final class MobConfigProcessor {
 			}
 		}
 		if (tokenString.trim().compareTo("predefined") == 0) {
-			PredefinedMobType.spawnLocalized(PredefinedMobType.valueOf(Name), Loc);	
+			PredefinedMob.spawnLocalized(PredefinedMob.valueOf(Name), Loc);	
 		}
 		if (tokenString.trim().compareTo("double") == 0) {
 			//Determine how complex types will be generated

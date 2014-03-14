@@ -1,11 +1,14 @@
 package com.SkyIsland.MobSpawn;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -14,6 +17,11 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.vehicle.VehicleExitEvent;
+
+import com.SkyIsland.MobSpawn.mobs.CustomMob;
+import com.SkyIsland.MobSpawn.mobs.PredefinedMob;
+import com.SkyIsland.MobSpawn.mobs.SimpleMob;
+import com.SkyIsland.MobSpawn.mobs.StackedMob;
 
 /**
  * Catches spawn events and changes the creatures being spawned
@@ -24,42 +32,100 @@ public class MonsterSpawner implements Listener {
 	private MobSpawn plugin;
 	
 	//load the config once, generate entities, and store them here
-	private Set<CustomMob> mobs;
+	private Map<CustomMob, Integer> mobs;
 	
 	//after all mobs are in the set, turn it into an array, for fast random access
-	private CustomMob[] mobList;
+	private Entry<CustomMob,Integer>[] mobList;
 	
 	private Random random;
 	
+	private Set<String> worlds;
+	
+	@SuppressWarnings("unchecked")
 	public MonsterSpawner(MobSpawn plugin, YamlConfiguration config) {
-		mobs = new HashSet<CustomMob>();
+		worlds = new HashSet<String>();
+		mobs = new HashMap<CustomMob, Integer>();
 		random = new Random();
 		this.plugin = plugin;
 		
 		//add all mobs
-		loadMobs();
+		loadMobs(config);
 		
 		//generate random list
-		mobList = (CustomMob[]) mobs.toArray();
+		mobList = (Entry<CustomMob, Integer>[]) mobs.entrySet().toArray();
 		
 	}
 	
 	
-	private void loadMobs() {
-		// TODO Auto-generated method stub
+	private void loadMobs(YamlConfiguration config) {
+		Map<String, String> mobTypes = new HashMap<String, String>();
+		Map<String, Integer> mobRates = new HashMap<String, Integer>();
 		
+		ConfigurationSection typesSection = config.getConfigurationSection("Types");
+		if (typesSection == null) return;
+		
+		//get names
+		for (String mob: typesSection.getKeys(false)){
+			mobTypes.put(mob, typesSection.getString(mob));
+		}
+		
+		ConfigurationSection ratesSection = config.getConfigurationSection("Rates");
+		if (ratesSection == null) return;
+		
+		//get rates
+		for (String mob: typesSection.getKeys(false)){
+			mobRates.put(mob, ratesSection.getInt(mob));
+		}
+		
+		//parse types
+		for (Entry<String, String> entry: mobTypes.entrySet()){
+			
+			String name = entry.getKey();
+			String type = entry.getValue();
+			
+			Integer rate = mobRates.get(name);
+			if (rate == null) continue;
+			
+			//simple
+			if (type.equalsIgnoreCase("simple")){
+				mobs.put(new SimpleMob(EntityType.valueOf(type)), rate);
+			}
+			
+			//double
+			else if (type.toLowerCase().startsWith("double")){
+				String[] parts = type.split(" ");
+				SimpleMob bottom = new SimpleMob(EntityType.valueOf(parts[1]));
+				SimpleMob top = new SimpleMob(EntityType.valueOf(parts[2]));
+				mobs.put(new StackedMob(bottom, top), rate);
+			}
+			
+			//predefined
+			else if (type.equalsIgnoreCase("predefined")){
+				mobs.put(PredefinedMob.valueOf(name), rate);
+			}
+			
+			//complex
+			else if (type.equalsIgnoreCase("complex")){
+				
+				
+				
+				
+			}
+			
+		}
 	}
 
-	public Entity getRandomEntity(){
+	public CustomMob getRandomEntity(){
 		while(true){
 			int rand_index = random.nextInt(mobList.length);
 			int rand_spawn = random.nextInt(101);
 			
-			if (mobList[rand_index].getSpawnChance() <= rand_spawn){
-				return mobList[rand_index].getEntity();
+			Entry<CustomMob,Integer> entry = mobList[rand_index];
+			
+			if (entry.getValue() <= rand_spawn){
+				return entry.getKey();
 			}
 		}
-		
 	}
 	
 	/**
