@@ -13,7 +13,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class MobSpawn extends JavaPlugin {
 	
 	public static double spawnRate;
+	
+	//the monster spawner
 	protected MonsterSpawner spawn;
+	
 	final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 	
 	//configuration files. config stores the worlds, and mobIDLookup stores the mobs
@@ -22,6 +25,7 @@ public final class MobSpawn extends JavaPlugin {
 		
 	@Override
 	public void onEnable() {
+		
 		//runs when plugin is enabled;
 		getLogger().info("MobSpawn Plugin enabled!");
 		
@@ -37,55 +41,40 @@ public final class MobSpawn extends JavaPlugin {
 			e.printStackTrace();
 			getLogger().info("Plugin failed in loading/creating mobLookupTable file (located in MobSpawn/Resources/ in plugin directory) !!");
 			getLogger().info("MobSpawn has loaded incorrectly");
-			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvalidConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		
 		getLogger().info("MobSpawn initialization complete and successful!");
 		getLogger().info("MobSpawn is now turning off regular mob spawning in worlds specified in config.yml");
 		
-		
-		
 		MonsterSpawner spawn = new MonsterSpawner(this, mobIdLookup);
 		getServer().getPluginManager().registerEvents(spawn, this);
 		getServer().getPluginManager().registerEvents(spawn, this);
-		
 	}
-	
-	@Override
-	public void onDisable() {
-		
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * Load up yaml files for easy parsing
 	 * @throws InvalidConfigurationException 
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
-	 * 
-	 * 
 	 */
 	protected void loadYaml() throws FileNotFoundException, IOException, InvalidConfigurationException {
 		File path = new File(getDataFolder() + "/Resources");
 		
-		mobIdLookup = makeMobIdLookupTable(path);
-		config = makeConfig(path, this);
+		//create plugin directory
+		if (!path.exists()) {
+			if (!path.mkdirs()) {
+				//failed; read-write permissions?
+				logger.info("Failed to create directories up to the MobIdLookupTable!");
+				return;
+			}
+		}
 		
+		config = makeConfig(path, this);
+		mobIdLookup = makeMobIdLookupTable(path);
 	}
 	
 	/**
@@ -95,15 +84,6 @@ public final class MobSpawn extends JavaPlugin {
 	 * @return whether or not it succeeded
 	 */
 	private YamlConfiguration makeConfig(File path, MobSpawn plugin) throws FileNotFoundException, IOException, InvalidConfigurationException {
-		
-		//create plugin directory
-		if (!path.exists()) {
-			if (!path.mkdirs()) {
-				//failed; read-write permissions?
-				logger.info("Failed to create directories up to the MobIdLookupTable!");
-				return null;
-			}
-		}
 		
 		File pathName = new File(path.getPath() + File.separator + "Config.yml");
 		YamlConfiguration configFile = new YamlConfiguration();
@@ -117,8 +97,8 @@ public final class MobSpawn extends JavaPlugin {
 			//it exists, but is corrupt or doesn't have the right stuff
 			pathName.delete();
 		}
-		//if it gets here, needs to create the file
 		
+		//if it gets here, needs to create the file
 		configFile.createSection("Main");
 		
 		worldList.add("wilderness");
@@ -126,9 +106,6 @@ public final class MobSpawn extends JavaPlugin {
 		
 		
 		configFile.save(pathName);
-		
-		
-		
 		
 		return configFile;
 	}
@@ -141,16 +118,6 @@ public final class MobSpawn extends JavaPlugin {
 	 * @return whether or not it succeeded
 	 */
 	private YamlConfiguration makeMobIdLookupTable(File path) throws FileNotFoundException, IOException, InvalidConfigurationException {
-		
-		if (!path.exists()) {
-			//path doesn't exist, so create it
-			
-			if (!path.mkdirs()) {
-				//failed; read-write permissions?
-				logger.info("Failed to create directories up to the MobIdLookupTable!");
-				return null;
-			}
-		}
 		
 		//path should have been created
 		File pathName = new File(path.getPath() + File.separator + "MobIdLookupTable.yml");
