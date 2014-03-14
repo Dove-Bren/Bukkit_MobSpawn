@@ -15,7 +15,11 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.vehicle.VehicleExitEvent;
 
-public class spawnEvent implements Listener {
+/**
+ * Catches spawn events and changes the creatures being spawned
+ *
+ */
+public class MonsterSpawner implements Listener {
 	
 	private MobSpawn plugin;
 	private boolean trip;
@@ -23,12 +27,15 @@ public class spawnEvent implements Listener {
 	//load the config once, generate entities, and store them here
 	private Set<Entity> mobs;
 	
-	protected spawnEvent(MobSpawn plugin) {
+	protected MonsterSpawner(MobSpawn plugin) {
 		mobs = new HashSet<Entity>();
 		this.plugin = plugin;
 	}
 	
-	
+	/**
+	 * Catches a CreatureSpawnEvent and changes the creature being spawned
+	 * @param event
+	 */
 	@EventHandler (priority=EventPriority.HIGH)
 	protected void generateSpawn(CreatureSpawnEvent event) {
 		if ((event.getSpawnReason() == SpawnReason.NATURAL || event.getSpawnReason() == SpawnReason.CHUNK_GEN) && (event.getEntityType().compareTo(EntityType.SQUID) != 0)) {

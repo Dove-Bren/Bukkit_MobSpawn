@@ -12,7 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class MobSpawn extends JavaPlugin {
 	
 	public static double spawnRate;
-	protected spawnEvent spawn;
+	protected MonsterSpawner spawn;
 		
 	
 	//load up config files (a string-to-mob-id config file, for now
@@ -53,7 +53,7 @@ public final class MobSpawn extends JavaPlugin {
 		
 		
 		
-		spawnEvent spawn = new spawnEvent(this);
+		MonsterSpawner spawn = new MonsterSpawner(this);
 		getServer().getPluginManager().registerEvents(spawn, this);
 		getServer().getPluginManager().registerEvents(spawn, this);
 		
