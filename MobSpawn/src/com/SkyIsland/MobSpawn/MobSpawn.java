@@ -53,7 +53,7 @@ public final class MobSpawn extends JavaPlugin {
 		
 		
 		
-		MonsterSpawner spawn = new MonsterSpawner(this);
+		MonsterSpawner spawn = new MonsterSpawner(this, mobIdLookup);
 		getServer().getPluginManager().registerEvents(spawn, this);
 		getServer().getPluginManager().registerEvents(spawn, this);
 		

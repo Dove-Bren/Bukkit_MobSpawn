@@ -24,11 +24,42 @@ public class MonsterSpawner implements Listener {
 	private MobSpawn plugin;
 	
 	//load the config once, generate entities, and store them here
-	private Set<Entity> mobs;
+	private Set<CustomMob> mobs;
 	
-	protected MonsterSpawner(MobSpawn plugin) {
-		mobs = new HashSet<Entity>();
+	//after all mobs are in the set, turn it into an array, for fast random access
+	private CustomMob[] mobList;
+	
+	private Random random;
+	
+	public MonsterSpawner(MobSpawn plugin, YamlConfiguration config) {
+		mobs = new HashSet<CustomMob>();
+		random = new Random();
 		this.plugin = plugin;
+		
+		//add all mobs
+		loadMobs();
+		
+		//generate random list
+		mobList = (CustomMob[]) mobs.toArray();
+		
+	}
+	
+	
+	private void loadMobs() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Entity getRandomEntity(){
+		while(true){
+			int rand_index = random.nextInt(mobList.length);
+			int rand_spawn = random.nextInt(101);
+			
+			if (mobList[rand_index].getSpawnChance() <= rand_spawn){
+				return mobList[rand_index].getEntity();
+			}
+		}
+		
 	}
 	
 	/**
@@ -70,7 +101,7 @@ public class MonsterSpawner implements Listener {
 	}
 	
 	@EventHandler (priority=EventPriority.HIGH)
-	protected void noFreeLunch(VehicleExitEvent event){
+	protected void removeVehicle(VehicleExitEvent event){
 		
 		//do nothing if the player exited
 		if (event.getExited().getType().equals(EntityType.PLAYER)){
