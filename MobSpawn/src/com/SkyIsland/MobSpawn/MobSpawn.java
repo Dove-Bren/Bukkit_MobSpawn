@@ -34,9 +34,6 @@ public final class MobSpawn extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		
-		//runs when plugin is enabled;
-		getLogger().info("MobSpawn Plugin enabled!");
-		
 		//need to specify the commands are to be run using the command processor
 		MobSpawnCommandProcessor cmdProcess = new MobSpawnCommandProcessor(this); //create our command processor
 		getCommand("spawn_mob").setExecutor(cmdProcess); //tie spawn_mob command to command processor
@@ -45,13 +42,9 @@ public final class MobSpawn extends JavaPlugin {
 		//load up yaml files
 		try {
 			load();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
 			getLogger().info("Plugin failed in loading/creating mobLookupTable file (located in MobSpawn/Resources/ in plugin directory) !!");
 			getLogger().info("MobSpawn has loaded incorrectly");
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (InvalidConfigurationException e) {
 			e.printStackTrace();
 		}
 		
@@ -59,7 +52,6 @@ public final class MobSpawn extends JavaPlugin {
 		getLogger().info("MobSpawn is now turning off regular mob spawning in worlds specified in config.yml");
 		
 		MonsterSpawner spawn = new MonsterSpawner(this, mobTable);
-		getServer().getPluginManager().registerEvents(spawn, this);
 		getServer().getPluginManager().registerEvents(spawn, this);
 	}
 	
