@@ -27,7 +27,7 @@ public enum PredefinedPotionEffect {
 	
 	
 	
-	PotionEffect potionEffect;
+	public PotionEffect potionEffect;
 	
 	PredefinedPotionEffect(PotionEffect effect) {
 		this.potionEffect = effect;
