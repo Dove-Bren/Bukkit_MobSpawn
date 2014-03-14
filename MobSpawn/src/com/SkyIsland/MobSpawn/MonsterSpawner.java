@@ -38,8 +38,6 @@ public class MonsterSpawner implements Listener {
 	@EventHandler (priority=EventPriority.HIGH)
 	protected void generateSpawn(CreatureSpawnEvent event) {
 		
-		boolean trip = false;
-		
 		//do nothing if the spawn event was not naturally occurring
 		if (event.getSpawnReason() != SpawnReason.NATURAL && event.getSpawnReason() != SpawnReason.CHUNK_GEN){
 			return;
@@ -47,34 +45,27 @@ public class MonsterSpawner implements Listener {
 		
 		for (String e: plugin.config.getConfigurationSection("Main").getStringList("worlds")) {
 			if (e.compareToIgnoreCase(event.getLocation().getWorld().getName()) == 0) {
-				trip = true;
-				break;
+				event.setCancelled(true);
+				String current = getMob(plugin.mobIdLookup);
+				MobConfigProcessor.SpawnMob(current, plugin.mobIdLookup.getString("Types." + current), event.getLocation(), plugin);
+				return;
 			}
 		}
 		
-		if (trip == true) {
-			event.setCancelled(true);
-			String current = getMob(plugin.mobIdLookup);
-			MobConfigProcessor.SpawnMob(current, plugin.mobIdLookup.getString("Types." + current), event.getLocation(), plugin);
-		}
 	}
 	
 	@EventHandler (priority=EventPriority.HIGH)
 	protected void killHorses(EntityDeathEvent event){
 		
 		if (event.getEntity().isInsideVehicle() && event.getEntityType().compareTo(EntityType.PLAYER) != 0 && event.getEntity().getVehicle().getType().compareTo(EntityType.HORSE) == 0) {
-			boolean trip = false;
+			
+			//check if world is a custom mob world
 			for (String e: plugin.config.getConfigurationSection("Main").getStringList("worlds")) {
 				if (e.compareToIgnoreCase(event.getEntity().getLocation().getWorld().getName()) == 0) {
-					trip = true;
-					break;
+					event.getEntity().getVehicle().remove();
+					return;
 				}
-			}
-			
-			if (trip == true) {
-				event.getEntity().getVehicle().remove();
-			}
-			
+			}		
 		}
 	}
 	
@@ -86,16 +77,12 @@ public class MonsterSpawner implements Listener {
 			return;
 		}
 		
-		boolean trip = false;
+		//check if world is a custom mob world
 		for (String e: plugin.config.getConfigurationSection("Main").getStringList("worlds")) {
 			if (e.compareToIgnoreCase(event.getVehicle().getLocation().getWorld().getName()) == 0) {
-				trip = true;
-				break;
+				event.getVehicle().remove();
+				return;
 			}
-		}
-		
-		if (trip == true) {
-			event.getVehicle().remove();
 		}
 	}
 	
