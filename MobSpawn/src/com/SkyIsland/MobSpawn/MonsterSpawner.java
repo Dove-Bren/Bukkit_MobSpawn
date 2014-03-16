@@ -56,14 +56,22 @@ public class MonsterSpawner implements Listener {
 		//add all mobs
 		loadMobs(config);
 		
-		//generate random list
+		//generate mob list for fast, random access
 		mobList = (Entry<CustomMob, Integer>[]) mobs.entrySet().toArray();
 		
-		//for now, add Wilderness to the worlds
-		//TODO: load the worlds
-		worlds.add("wilderness");
+		//load worlds
+		loadWorlds(config);
 	}
 	
+	private void loadWorlds(YamlConfiguration config){
+		List<String> worlds = config.getStringList("Worlds");
+		if (worlds == null) return;
+		
+		//a little redundant, but just being safe
+		for (String world: worlds){
+			this.worlds.add(world);
+		}
+	}
 	
 	private void loadMobs(YamlConfiguration config) {
 		Map<String, String> mobTypes = new HashMap<String, String>();

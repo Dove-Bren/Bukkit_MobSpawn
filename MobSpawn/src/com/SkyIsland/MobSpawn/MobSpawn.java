@@ -19,17 +19,9 @@ public final class MobSpawn extends JavaPlugin {
 	//the monster spawner
 	protected MonsterSpawner spawn;
 	
-	//filenames
 	private final String configName = "config.yml";
-	private final String mobTableName = "MobIdLookupTable.yml";
-	
-	//files
 	private final File configFile = new File(this.getDataFolder(), configName);
-	private final File mobTableFile = new File(this.getDataFolder(), mobTableName);
-	
-	//configurations
 	public YamlConfiguration config;
-	public YamlConfiguration mobTable;
 	
 	@Override
 	public void onEnable() {
@@ -51,7 +43,7 @@ public final class MobSpawn extends JavaPlugin {
 		getLogger().info("MobSpawn initialization complete and successful!");
 		getLogger().info("MobSpawn is now turning off regular mob spawning in worlds specified in config.yml");
 		
-		MonsterSpawner spawn = new MonsterSpawner(this, mobTable);
+		MonsterSpawner spawn = new MonsterSpawner(this, config);
 		getServer().getPluginManager().registerEvents(spawn, this);
 	}
 	
@@ -73,14 +65,8 @@ public final class MobSpawn extends JavaPlugin {
 			}
 		}
 		
-		//load config files
-		loadConfig();
-		loadMobTable();
-		
-		//load worlds
-		
-		//load mobs
-		
+		//load config (mobs and worlds)
+		loadConfig();	
 	}
 	
 	/**
@@ -108,111 +94,80 @@ public final class MobSpawn extends JavaPlugin {
 	}
 	
 	/**
-	 * Loads the mob table. Creates a default mob table if one doesn't exist
-	 */
-	private void loadMobTable(){
-		try{
-		
-			//create file if it doesn't exist
-			if (!mobTableFile.exists()){
-				if (!mobTableFile.createNewFile()){
-					return;
-				}
-				
-				//create default
-				createDefaultMobTable();
-			}
-			
-			//load configuration
-			mobTable.load(mobTableFile);
-		}
-		catch (Exception e){
-			e.printStackTrace();
-		}
-	}
-	
-	/**
-	 * Creates a default configuration
+	 * Creates a default mob table and world configuration
 	 * @throws IOException
 	 */
 	private void createDefaultConfig() throws IOException{
-		config.createSection("Main");
+		
 		ArrayList<String> worldList = new ArrayList<String>();
 		worldList.add("wilderness");
-		config.getConfigurationSection("Main").set("worlds", worldList);
+		config.getConfigurationSection("Main").set("Worlds", worldList);
+		
+		config = new YamlConfiguration(); 
+		config.createSection("Types");
+		config.set("Types.zombie", "simple");
+		config.set("Types.zombie_on_zombie", "double ZOMBIE ZOMBIE");
+		config.set("Types.skeleton", "skeleton");
+		config.set("Types.skeleton_on_skeleton", "double SKELETON SKELETON");
+		config.set("Types.totem_pole", "complex");
+		config.set("Types.ghast_on_creeper", "double CREEPER GHAST true");
+		config.set("Types.pig_mutated", "complex");
+		
+		config.createSection("Rates");
+		config.set("Rates.zombie", 80);
+		config.set("Rates.zombie_on_zombie", 50);
+		config.set("Rates.skeleton", 70);
+		config.set("Rates.skeleton_on_skeleton", 40);
+		config.set("Rates.totem_pole", 8);
+		config.set("Rates.ghast_on_creeper", 15);
+		config.set("Rates.pig_mutated", 30);
+		
+		config.createSection("Definitions");
+		
+		config.createSection("totem_pole");
+		config.set("Definitions.totem_pole.numberOfPieces", 5);
+		config.set("Definitions.totem_pole.isBoss", true);
+		config.set("Definitions.totem_pole.entity1", "BLAZE");
+		config.set("Definitions.totem_pole.entity1Equips", "none none none none none");
+		config.set("Definitions.totem_pole.entity1Name", "none");
+		config.set("Definitions.totem_pole.entity1Hp", 9);
+		config.set("Definitions.totem_pole.entity1PotionEffect", "none");
+		config.set("Definitions.totem_pole.entity2", "CHIKEN");
+		config.set("Definitions.totem_pole.entity2Equips", "none none none none none");
+		config.set("Definitions.totem_pole.entity2Name", "none");
+		config.set("Definitions.totem_pole.entity2Hp", 9);
+		config.set("Definitions.totem_pole.entity2PotionEffect", "invisForever");
+		config.set("Definitions.totem_pole.entity3", "BLAZE");
+		config.set("Definitions.totem_pole.entity3Equips", "none none none none none");
+		config.set("Definitions.totem_pole.entity3Name", "none");
+		config.set("Definitions.totem_pole.entity3Hp", 9);
+		config.set("Definitions.totem_pole.entity3PotionEffect", "none");
+		config.set("Definitions.totem_pole.entity4", "CHICKEN");
+		config.set("Definitions.totem_pole.entity4Equips", "none none none none none");
+		config.set("Definitions.totem_pole.entity4Name", "none");
+		config.set("Definitions.totem_pole.entity4Hp", 9);
+		config.set("Definitions.totem_pole.entity4PotionEffect", "invisForever");
+		config.set("Definitions.totem_pole.entity5", "BLAZE");
+		config.set("Definitions.totem_pole.entity5Equips", "none none none none none");
+		config.set("Definitions.totem_pole.entity5Name", "none");
+		config.set("Definitions.totem_pole.entity5Hp", 9);
+		config.set("Definitions.totem_pole.entity5PotionEffect", "none");
+		
+		config.createSection("pig_mutated");
+		config.set("Definitions.pig_mutated.numberOfPieces", 2);
+		config.set("Definitions.pig_mutated.isBoss", "false");
+		config.set("Definitions.pig_mutated.entity1", "PIG");
+		config.set("Definitions.pig_mutated.entity1Equips", "none none none none none");
+		config.set("Definitions.pig_mutated.entity1Name", "");
+		config.set("Definitions.pig_mutated.entity1Hp", 20);
+		config.set("Definitions.pig_mutated.entity1PotionEffect", "none");
+		config.set("Definitions.pig_mutated.entity2", "PIG");
+		config.set("Definitions.pig_mutated.entity2Equips", "none none none none none");
+		config.set("Definitions.pig_mutated.entity2Name", "Grumm");
+		config.set("Definitions.pig_mutated.entity2Hp", 20);
+		config.set("Definitions.pig_mutated.entity2PotionEffect", "none");
+		
 		config.save(configFile);
-	}
-	
-	/**
-	 * Creates a default mob table
-	 * @throws IOException
-	 */
-	private void createDefaultMobTable() throws IOException{
-		mobTable = new YamlConfiguration(); 
-		mobTable.createSection("Types");
-		mobTable.set("Types.zombie", "simple");
-		mobTable.set("Types.zombie_on_zombie", "double ZOMBIE ZOMBIE");
-		mobTable.set("Types.skeleton", "skeleton");
-		mobTable.set("Types.skeleton_on_skeleton", "double SKELETON SKELETON");
-		mobTable.set("Types.totem_pole", "complex");
-		mobTable.set("Types.ghast_on_creeper", "double CREEPER GHAST true");
-		mobTable.set("Types.pig_mutated", "complex");
-		
-		mobTable.createSection("Rates");
-		mobTable.set("Rates.zombie", 80);
-		mobTable.set("Rates.zombie_on_zombie", 50);
-		mobTable.set("Rates.skeleton", 70);
-		mobTable.set("Rates.skeleton_on_skeleton", 40);
-		mobTable.set("Rates.totem_pole", 8);
-		mobTable.set("Rates.ghast_on_creeper", 15);
-		mobTable.set("Rates.pig_mutated", 30);
-		
-		mobTable.createSection("Definitions");
-		
-		mobTable.createSection("totem_pole");
-		mobTable.set("Definitions.totem_pole.numberOfPieces", 5);
-		mobTable.set("Definitions.totem_pole.isBoss", true);
-		mobTable.set("Definitions.totem_pole.entity1", "BLAZE");
-		mobTable.set("Definitions.totem_pole.entity1Equips", "none none none none none");
-		mobTable.set("Definitions.totem_pole.entity1Name", "none");
-		mobTable.set("Definitions.totem_pole.entity1Hp", 9);
-		mobTable.set("Definitions.totem_pole.entity1PotionEffect", "none");
-		mobTable.set("Definitions.totem_pole.entity2", "CHIKEN");
-		mobTable.set("Definitions.totem_pole.entity2Equips", "none none none none none");
-		mobTable.set("Definitions.totem_pole.entity2Name", "none");
-		mobTable.set("Definitions.totem_pole.entity2Hp", 9);
-		mobTable.set("Definitions.totem_pole.entity2PotionEffect", "invisForever");
-		mobTable.set("Definitions.totem_pole.entity3", "BLAZE");
-		mobTable.set("Definitions.totem_pole.entity3Equips", "none none none none none");
-		mobTable.set("Definitions.totem_pole.entity3Name", "none");
-		mobTable.set("Definitions.totem_pole.entity3Hp", 9);
-		mobTable.set("Definitions.totem_pole.entity3PotionEffect", "none");
-		mobTable.set("Definitions.totem_pole.entity4", "CHICKEN");
-		mobTable.set("Definitions.totem_pole.entity4Equips", "none none none none none");
-		mobTable.set("Definitions.totem_pole.entity4Name", "none");
-		mobTable.set("Definitions.totem_pole.entity4Hp", 9);
-		mobTable.set("Definitions.totem_pole.entity4PotionEffect", "invisForever");
-		mobTable.set("Definitions.totem_pole.entity5", "BLAZE");
-		mobTable.set("Definitions.totem_pole.entity5Equips", "none none none none none");
-		mobTable.set("Definitions.totem_pole.entity5Name", "none");
-		mobTable.set("Definitions.totem_pole.entity5Hp", 9);
-		mobTable.set("Definitions.totem_pole.entity5PotionEffect", "none");
-		
-		mobTable.createSection("pig_mutated");
-		mobTable.set("Definitions.pig_mutated.numberOfPieces", 2);
-		mobTable.set("Definitions.pig_mutated.isBoss", "false");
-		mobTable.set("Definitions.pig_mutated.entity1", "PIG");
-		mobTable.set("Definitions.pig_mutated.entity1Equips", "none none none none none");
-		mobTable.set("Definitions.pig_mutated.entity1Name", "");
-		mobTable.set("Definitions.pig_mutated.entity1Hp", 20);
-		mobTable.set("Definitions.pig_mutated.entity1PotionEffect", "none");
-		mobTable.set("Definitions.pig_mutated.entity2", "PIG");
-		mobTable.set("Definitions.pig_mutated.entity2Equips", "none none none none none");
-		mobTable.set("Definitions.pig_mutated.entity2Name", "Grumm");
-		mobTable.set("Definitions.pig_mutated.entity2Hp", 20);
-		mobTable.set("Definitions.pig_mutated.entity2PotionEffect", "none");
-		
-		mobTable.save(mobTableFile);
 	}
 	
 }

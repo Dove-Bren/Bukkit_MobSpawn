@@ -52,7 +52,7 @@ public class MobSpawnCommandProcessor implements CommandExecutor {
 			//and lookup the proper index
 			//!!!!!!!!!!!!!!!!!!!!!!!!!
 			
-			index = plugin.mobTable.getInt("Names." + args[0].toLowerCase());
+			index = plugin.config.getInt("Names." + args[0].toLowerCase());
 			
 			//if it didn't match, returns 0
 			
