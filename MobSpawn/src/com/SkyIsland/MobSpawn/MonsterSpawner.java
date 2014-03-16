@@ -151,7 +151,7 @@ public class MonsterSpawner implements Listener {
 			ArmorSet armor = (complexSection.contains(prefix + "Equips")) ? parseArmorString(complexSection.getString(prefix + "Equips")) : null;	
 			
 		    // get potion effect entity1PotionEffect: speedIV
-			PredefinedPotionEffect potionEffect = (complexSection.contains(prefix + "PotionEffect")) ? PredefinedPotionEffect.valueOf(complexSection.getString(prefix + "PotionEffect")) : null;
+			CustomPotionEffect potionEffect = (complexSection.contains(prefix + "PotionEffect")) ? CustomPotionEffect.valueOf(complexSection.getString(prefix + "PotionEffect")) : null;
 			
 			SimpleMob mob = new SimpleMob(type, customName, isBoss, hp, armor,potionEffect);
 			

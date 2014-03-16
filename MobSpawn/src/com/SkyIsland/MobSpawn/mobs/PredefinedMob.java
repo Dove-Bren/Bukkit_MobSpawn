@@ -6,7 +6,7 @@ import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 
 import com.SkyIsland.MobSpawn.InventoryCreator;
-import com.SkyIsland.MobSpawn.PredefinedPotionEffect;
+import com.SkyIsland.MobSpawn.CustomPotionEffect;
 public enum PredefinedMob implements CustomMob{
 	skeletonOnHorse(),
 	witherSkeletonOnHorse(),
@@ -220,7 +220,7 @@ public enum PredefinedMob implements CustomMob{
 		HorseVehicle.setRemoveWhenFarAway(true);
 		bat = (Bat) location.getWorld().spawnEntity(location, EntityType.BAT);
 		bat.setPassenger(HorseVehicle);
-		bat.addPotionEffects(PredefinedPotionEffect.invisForever.getPotionEffects());
+		bat.addPotionEffects(CustomPotionEffect.invisForever.getPotionEffects());
 		
 		return bat;
 	}

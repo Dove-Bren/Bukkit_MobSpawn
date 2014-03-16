@@ -7,7 +7,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public enum PredefinedPotionEffect {
+public enum CustomPotionEffect {
 	invisForever (new PotionEffect(PotionEffectType.INVISIBILITY, 99999999, 1, true)), //Invisibility designed to be there forever.
 	invis5Minutes (new PotionEffect(PotionEffectType.INVISIBILITY, 5*60*5, 1 , true)), //Invisibility, but only for 5 minutes
 	strengthII (new PotionEffect(PotionEffectType.INCREASE_DAMAGE , 999999999, 2 , true)), //This is a lot of damage....
@@ -31,7 +31,7 @@ public enum PredefinedPotionEffect {
 	
 	private Collection<PotionEffect> potionEffects;
 	
-	PredefinedPotionEffect(PotionEffect... effects) {
+	CustomPotionEffect(PotionEffect... effects) {
 		this.potionEffects = new TreeSet<PotionEffect>();
 		
 		for (PotionEffect effect: effects){

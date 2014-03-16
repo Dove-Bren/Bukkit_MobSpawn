@@ -5,7 +5,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.potion.PotionEffect;
 
-import com.SkyIsland.MobSpawn.PredefinedPotionEffect;
+import com.SkyIsland.MobSpawn.CustomPotionEffect;
 
 /**
  * This class is a wrapper class for a mob and its %chance of spawning
@@ -19,7 +19,7 @@ public class SimpleMob implements CustomMob{
 	private boolean isBoss = false;
 	private int health = 10;
 	private ArmorSet armor = null;
-	private PredefinedPotionEffect potionEffect = null;
+	private CustomPotionEffect potionEffect = null;
 	
 	public SimpleMob(EntityType entity) {
 		this.type = entity;
@@ -45,7 +45,7 @@ public class SimpleMob implements CustomMob{
 		this.armor = armor;
 	}
 	
-	public SimpleMob(EntityType entity, String name, boolean isBoss, int health, ArmorSet armor, PredefinedPotionEffect potionEffect) {
+	public SimpleMob(EntityType entity, String name, boolean isBoss, int health, ArmorSet armor, CustomPotionEffect potionEffect) {
 		this(entity, name, isBoss, health, armor);
 		this.potionEffect = potionEffect;
 	}
@@ -70,7 +70,7 @@ public class SimpleMob implements CustomMob{
 		return armor;
 	}
 	
-	public PredefinedPotionEffect getPotionEffect() {
+	public CustomPotionEffect getPotionEffect() {
 		return potionEffect;
 	}
 	
