@@ -5,8 +5,9 @@ import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 
-import com.SkyIsland.MobSpawn.InventoryCreator;
+import com.SkyIsland.MobSpawn.ItemFactory;
 import com.SkyIsland.MobSpawn.CustomPotionEffect;
+
 public enum PredefinedMob implements CustomMob{
 	skeletonOnHorse(),
 	witherSkeletonOnHorse(),
@@ -26,7 +27,7 @@ public enum PredefinedMob implements CustomMob{
 	 */
 	@SuppressWarnings("unused")
 	private LivingEntity skeletonOnHorse (Location location) {
-		ItemStack SkeletonWeapon = InventoryCreator.RangedWeapon(1);
+		ItemStack SkeletonWeapon = ItemFactory.RangedWeapon(1);
 		Horse HorseVehicle;
 		Skeleton SkeletonRider;
 		HorseVehicle = (Horse) location.getWorld().spawnEntity(location, EntityType.HORSE);
@@ -48,7 +49,7 @@ public enum PredefinedMob implements CustomMob{
 	 */
 	@SuppressWarnings("unused")
 	private LivingEntity witherSkeletonOnHorse (Location location) {
-		ItemStack SkeletonWeapon = InventoryCreator.RangedWeapon(3);
+		ItemStack SkeletonWeapon = ItemFactory.RangedWeapon(3);
 		Horse HorseVehicle;
 		Skeleton WitherSkeletonRider;
 		HorseVehicle = (Horse) location.getWorld().spawnEntity(location, EntityType.HORSE);
@@ -99,7 +100,7 @@ public enum PredefinedMob implements CustomMob{
 			HorseVehicle = (Horse) location.getWorld().spawnEntity(location, EntityType.HORSE);
 			HorseVehicle.setTamed(Boolean.TRUE);
 			SkeletonRider = (Skeleton) location.getWorld().spawnEntity(location, EntityType.SKELETON);
-			SkeletonRider.getEquipment().setItemInHand(InventoryCreator.RangedWeapon(1));
+			SkeletonRider.getEquipment().setItemInHand(ItemFactory.RangedWeapon(1));
 			HorseVehicle.setPassenger(SkeletonRider);
 			HorseVehicle.setVariant(Horse.Variant.SKELETON_HORSE);
 			HorseVehicle.setRemoveWhenFarAway(true);
@@ -107,7 +108,7 @@ public enum PredefinedMob implements CustomMob{
 		HorseVehicle = (Horse) location.getWorld().spawnEntity(location,  EntityType.HORSE);
 		HorseVehicle.setTamed(Boolean.TRUE);
 		SkeletonRider = (Skeleton)	location.getWorld().spawnEntity(location,EntityType.SKELETON);
-		SkeletonRider.getEquipment().setItemInHand(InventoryCreator.RangedWeapon(5));
+		SkeletonRider.getEquipment().setItemInHand(ItemFactory.RangedWeapon(5));
 		HorseVehicle.setPassenger(SkeletonRider);
 		HorseVehicle.setVariant(Horse.Variant.SKELETON_HORSE);
 		HorseVehicle.getInventory().setArmor(new ItemStack(Material.IRON_BARDING));
@@ -130,7 +131,7 @@ public enum PredefinedMob implements CustomMob{
 			HorseVehicle = (Horse) location.getWorld().spawnEntity(location, EntityType.HORSE);
 			HorseVehicle.setTamed(Boolean.TRUE);
 			WitherSkeletonRider = (Skeleton) location.getWorld().spawnEntity(location, EntityType.SKELETON);
-			WitherSkeletonRider.getEquipment().setItemInHand(InventoryCreator.RangedWeapon(1));
+			WitherSkeletonRider.getEquipment().setItemInHand(ItemFactory.RangedWeapon(1));
 			WitherSkeletonRider.setSkeletonType(Skeleton.SkeletonType.WITHER);
 			HorseVehicle.setPassenger(WitherSkeletonRider);
 			HorseVehicle.setVariant(Horse.Variant.SKELETON_HORSE);
@@ -139,7 +140,7 @@ public enum PredefinedMob implements CustomMob{
 		HorseVehicle = (Horse) location.getWorld().spawnEntity(location,  EntityType.HORSE);
 		HorseVehicle.setTamed(Boolean.TRUE);
 		WitherSkeletonRider = (Skeleton)	location.getWorld().spawnEntity(location,EntityType.SKELETON);
-		WitherSkeletonRider.getEquipment().setItemInHand(InventoryCreator.RangedWeapon(5));
+		WitherSkeletonRider.getEquipment().setItemInHand(ItemFactory.RangedWeapon(5));
 		HorseVehicle.setPassenger(WitherSkeletonRider);
 		HorseVehicle.setVariant(Horse.Variant.SKELETON_HORSE);
 		HorseVehicle.getInventory().setArmor(new ItemStack(Material.IRON_BARDING));
@@ -162,7 +163,7 @@ public enum PredefinedMob implements CustomMob{
 			HorseVehicle = (Horse) location.getWorld().spawnEntity(location, EntityType.HORSE);
 			HorseVehicle.setTamed(Boolean.TRUE);
 			ZombieRider = (Zombie) location.getWorld().spawnEntity(location, EntityType.ZOMBIE);
-			ZombieRider.getEquipment().setItemInHand(InventoryCreator.RangedWeapon(1));
+			ZombieRider.getEquipment().setItemInHand(ItemFactory.RangedWeapon(1));
 			HorseVehicle.setPassenger(ZombieRider);
 			HorseVehicle.setVariant(Horse.Variant.SKELETON_HORSE);
 			HorseVehicle.setRemoveWhenFarAway(true);
@@ -170,7 +171,7 @@ public enum PredefinedMob implements CustomMob{
 		HorseVehicle = (Horse) location.getWorld().spawnEntity(location,  EntityType.HORSE);
 		HorseVehicle.setTamed(Boolean.TRUE);
 		ZombieRider = (Zombie)	location.getWorld().spawnEntity(location,EntityType.ZOMBIE);
-		ZombieRider.getEquipment().setItemInHand(InventoryCreator.RangedWeapon(5));
+		ZombieRider.getEquipment().setItemInHand(ItemFactory.RangedWeapon(5));
 		HorseVehicle.setPassenger(ZombieRider);
 		HorseVehicle.setVariant(Horse.Variant.SKELETON_HORSE);
 		HorseVehicle.getInventory().setArmor(new ItemStack(Material.IRON_BARDING));
