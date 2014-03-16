@@ -3,6 +3,7 @@ package com.SkyIsland.MobSpawn;
 import java.util.Collection;
 import java.util.TreeSet;
 
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -40,6 +41,10 @@ public enum PredefinedPotionEffect {
 	
 	public Collection<PotionEffect> getPotionEffects(){
 		return potionEffects;
+	}
+	
+	public void applyPotionEffects(LivingEntity entity){
+		entity.addPotionEffects(potionEffects);
 	}
 	
 	

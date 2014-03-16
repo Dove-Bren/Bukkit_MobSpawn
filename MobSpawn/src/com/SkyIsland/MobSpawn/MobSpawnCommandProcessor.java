@@ -77,7 +77,7 @@ public class MobSpawnCommandProcessor implements CommandExecutor {
 			case 20:
 				mob = player.getWorld().spawnEntity(spawnAt, EntityType.ZOMBIE);
 				((Ageable) mob).setBaby();
-				PredefinedPotionEffect.invisForever.potionEffect.apply((LivingEntity) mob);
+				PredefinedPotionEffect.invisForever.applyPotionEffects((LivingEntity) mob);
 				mob.setPassenger(player.getWorld().spawnEntity(spawnAt, EntityType.CHICKEN));
 				return true;
 			case 4:
@@ -88,7 +88,7 @@ public class MobSpawnCommandProcessor implements CommandExecutor {
 			case 5:
 				mob = player.getWorld().spawnEntity(spawnAt, EntityType.BAT);
 				//a potion effect specified in MobSpawn is used here!
-				PredefinedPotionEffect.invisForever.potionEffect.apply((LivingEntity) mob);
+				PredefinedPotionEffect.invisForever.applyPotionEffects((LivingEntity) mob);
 				mob.setPassenger(player.getWorld().spawnEntity(spawnAt, EntityType.COW));
 				return true;
 			case 6:
@@ -127,7 +127,7 @@ public class MobSpawnCommandProcessor implements CommandExecutor {
 			case 9:
 				Ghast testGhast = (Ghast) player.getWorld().spawn(player.getLocation(), Ghast.class);
 				Creeper testCreeper = (Creeper) player.getWorld().spawn(player.getLocation(), Creeper.class);
-				PredefinedPotionEffect.invisForever.potionEffect.apply((LivingEntity) testGhast);
+				PredefinedPotionEffect.invisForever.applyPotionEffects((LivingEntity) testGhast);
 				testCreeper.setPassenger(testGhast);
 				testCreeper.getEquipment().setHelmet(new ItemStack(Material.TNT));
 				testGhast.setMaximumAir(1000);
@@ -136,7 +136,7 @@ public class MobSpawnCommandProcessor implements CommandExecutor {
 				for (int i = 0; i < 100; i++) {
 					if (Math.round(Math.random()) % 2 == 0) {
 						Chicken testChicken = (Chicken) player.getWorld().spawnEntity(spawnAt, EntityType.CHICKEN);						Creeper testCreeper2 = (Creeper) player.getWorld().spawn(player.getLocation(), Creeper.class);
-						PredefinedPotionEffect.invisForever.potionEffect.apply((LivingEntity) testCreeper2);
+						PredefinedPotionEffect.invisForever.applyPotionEffects((LivingEntity) testCreeper2);
 						testChicken.setPassenger(testCreeper2);
 					}
 					else {

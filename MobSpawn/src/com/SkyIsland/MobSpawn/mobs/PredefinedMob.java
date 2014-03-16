@@ -220,7 +220,7 @@ public enum PredefinedMob implements CustomMob{
 		HorseVehicle.setRemoveWhenFarAway(true);
 		bat = (Bat) location.getWorld().spawnEntity(location, EntityType.BAT);
 		bat.setPassenger(HorseVehicle);
-		bat.addPotionEffect(PredefinedPotionEffect.invisForever.potionEffect);
+		bat.addPotionEffects(PredefinedPotionEffect.invisForever.getPotionEffects());
 		
 		return bat;
 	}
