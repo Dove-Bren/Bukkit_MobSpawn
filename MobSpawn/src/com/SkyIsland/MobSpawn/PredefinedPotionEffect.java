@@ -1,5 +1,8 @@
 package com.SkyIsland.MobSpawn;
 
+import java.util.Collection;
+import java.util.TreeSet;
+
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -25,12 +28,18 @@ public enum PredefinedPotionEffect {
 	//poison
 	//regeneration
 	
+	private Collection<PotionEffect> potionEffects;
 	
+	PredefinedPotionEffect(PotionEffect... effects) {
+		this.potionEffects = new TreeSet<PotionEffect>();
+		
+		for (PotionEffect effect: effects){
+			potionEffects.add(effect);
+		}
+	}
 	
-	public PotionEffect potionEffect;
-	
-	PredefinedPotionEffect(PotionEffect effect) {
-		this.potionEffect = effect;
+	public Collection<PotionEffect> getPotionEffects(){
+		return potionEffects;
 	}
 	
 	
