@@ -34,7 +34,7 @@ import com.SkyIsland.MobSpawn.mobs.StackedMob;
  */
 public class MonsterSpawner implements Listener {
 	
-	private MobSpawn plugin;
+	private MobSpawnPlugin plugin;
 	
 	//load the config once, generate entities, and store them here
 	private Map<CustomMob, Integer> mobs;
@@ -47,7 +47,7 @@ public class MonsterSpawner implements Listener {
 	private Set<String> worlds;
 	
 	@SuppressWarnings("unchecked")
-	public MonsterSpawner(MobSpawn plugin, YamlConfiguration config) {
+	public MonsterSpawner(MobSpawnPlugin plugin, YamlConfiguration config) {
 		worlds = new HashSet<String>();
 		mobs = new HashMap<CustomMob, Integer>();
 		random = new Random();

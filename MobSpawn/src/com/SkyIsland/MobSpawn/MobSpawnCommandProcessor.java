@@ -13,20 +13,15 @@ import org.bukkit.inventory.ItemStack;
 
 public class MobSpawnCommandProcessor implements CommandExecutor {
 
-	private MobSpawn plugin; //we can use this to reference any methods in our plugin
+	private MobSpawnPlugin plugin; //we can use this to reference any methods in our plugin
 	
 	//just the constructor
-	public MobSpawnCommandProcessor(MobSpawn plugin) {
+	public MobSpawnCommandProcessor(MobSpawnPlugin plugin) {
 		this.plugin = plugin;
 	}
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		
-		//add test if console or not
-		if (!sender.isOp()){
-			return false;
-		}
 		
 		if (cmd.getName().equalsIgnoreCase("spawn_mob")) {
 			//spawn mob with ID
