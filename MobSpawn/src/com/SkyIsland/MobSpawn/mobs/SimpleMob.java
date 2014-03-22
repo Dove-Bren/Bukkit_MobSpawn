@@ -5,7 +5,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.potion.PotionEffect;
 
-import com.SkyIsland.MobSpawn.CustomPotionEffect;
+import com.SkyIsland.MobSpawn.additions.ArmorSet;
+import com.SkyIsland.MobSpawn.additions.CustomPotionEffect;
 
 /**
  * This class is a wrapper class for a mob and its %chance of spawning

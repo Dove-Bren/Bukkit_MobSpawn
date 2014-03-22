@@ -5,8 +5,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 
-import com.SkyIsland.MobSpawn.ItemFactory;
-import com.SkyIsland.MobSpawn.CustomPotionEffect;
+import com.SkyIsland.MobSpawn.additions.CustomPotionEffect;
+import com.SkyIsland.MobSpawn.additions.ItemFactory;
 
 public enum PredefinedMob implements CustomMob{
 	skeletonOnHorse(),

@@ -28,6 +28,8 @@ import org.bukkit.entity.Slime;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.SkyIsland.MobSpawn.additions.CustomPotionEffect;
+
 public final class MobSpawnPlugin extends JavaPlugin {
 	
 	public static double spawnRate;

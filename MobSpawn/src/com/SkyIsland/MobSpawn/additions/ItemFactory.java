@@ -1,4 +1,4 @@
-package com.SkyIsland.MobSpawn;
+package com.SkyIsland.MobSpawn.additions;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;

@@ -22,7 +22,8 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.bukkit.inventory.ItemStack;
 
-import com.SkyIsland.MobSpawn.mobs.ArmorSet;
+import com.SkyIsland.MobSpawn.additions.ArmorSet;
+import com.SkyIsland.MobSpawn.additions.CustomPotionEffect;
 import com.SkyIsland.MobSpawn.mobs.CustomMob;
 import com.SkyIsland.MobSpawn.mobs.PredefinedMob;
 import com.SkyIsland.MobSpawn.mobs.SimpleMob;

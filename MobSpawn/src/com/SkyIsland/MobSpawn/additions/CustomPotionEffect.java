@@ -1,4 +1,4 @@
-package com.SkyIsland.MobSpawn;
+package com.SkyIsland.MobSpawn.additions;
 
 import java.util.Collection;
 import java.util.TreeSet;

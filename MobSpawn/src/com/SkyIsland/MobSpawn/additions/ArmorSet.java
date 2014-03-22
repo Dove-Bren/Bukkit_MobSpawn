@@ -1,4 +1,4 @@
-package com.SkyIsland.MobSpawn.mobs;
+package com.SkyIsland.MobSpawn.additions;
 
 import org.bukkit.inventory.ItemStack;
 
