@@ -34,9 +34,7 @@ import com.SkyIsland.MobSpawn.mobs.StackedMob;
  *
  */
 public class MonsterSpawner implements Listener {
-	
-	private MobSpawnPlugin plugin;
-	
+		
 	//load the config once, generate entities, and store them here
 	private Map<CustomMob, Integer> mobs;
 	
@@ -48,11 +46,10 @@ public class MonsterSpawner implements Listener {
 	private Set<String> worlds;
 	
 	@SuppressWarnings("unchecked")
-	public MonsterSpawner(MobSpawnPlugin plugin, YamlConfiguration config) {
+	public MonsterSpawner(YamlConfiguration config) {
 		worlds = new HashSet<String>();
 		mobs = new HashMap<CustomMob, Integer>();
 		random = new Random();
-		this.plugin = plugin;
 		
 		//add all mobs
 		loadMobs(config);
@@ -230,15 +227,13 @@ public class MonsterSpawner implements Listener {
 	@EventHandler (priority=EventPriority.HIGH)
 	protected void killHorses(EntityDeathEvent event){
 		
-		if (event.getEntity().isInsideVehicle() && event.getEntityType().compareTo(EntityType.PLAYER) != 0 && event.getEntity().getVehicle().getType().compareTo(EntityType.HORSE) == 0) {
+		if (event.getEntity().isInsideVehicle() && (!event.getEntityType().equals(EntityType.PLAYER)) && event.getEntity().getVehicle().getType().equals(EntityType.HORSE)) {
 			
 			//check if world is a custom mob world
-			for (String e: plugin.config.getConfigurationSection("Main").getStringList("worlds")) {
-				if (e.compareToIgnoreCase(event.getEntity().getLocation().getWorld().getName()) == 0) {
-					event.getEntity().getVehicle().remove();
-					return;
-				}
-			}		
+			if (worlds.contains(event.getEntity().getWorld().getName())){
+				event.getEntity().getVehicle().remove();
+				return;
+			}
 		}
 	}
 	
@@ -250,41 +245,10 @@ public class MonsterSpawner implements Listener {
 			return;
 		}
 		
-		//check if world is a custom mob world
-		for (String e: plugin.config.getConfigurationSection("Main").getStringList("worlds")) {
-			if (e.compareToIgnoreCase(event.getVehicle().getLocation().getWorld().getName()) == 0) {
-				event.getVehicle().remove();
-				return;
-			}
+		if (worlds.contains(event.getVehicle().getWorld().getName())){
+			event.getVehicle().remove();
+			return;
 		}
 	}
 	
-	/**
-	 * 
-	 * @param mobTable the yaml config file to fetch mob from
-	 * @return the keyword for the mob
-	 */
-	public static String getMob(YamlConfiguration mobTable) {
-		Object keys[] = null;
-		Set<String> tempSet = mobTable.getConfigurationSection("Rates").getKeys(true);
-		Random rGen = new Random();
-		
-		keys = tempSet.toArray();
-		
-		int length, pos, chance, actualChance;
-		
-		length = keys.length;
-		
-		while (true) {
-			pos = (int) Math.floor(Math.random() * length); //hopefully 0 through list length-1
-			chance = (int) rGen.nextInt(100);
-			actualChance = mobTable.getInt("Rates." + keys[pos].toString(), 100); //should load up the reported chance, defaulting to 100
-			
-			if (chance <= actualChance) {
-				return keys[pos].toString();
-				
-			}
-		}
-		
-	}
 }

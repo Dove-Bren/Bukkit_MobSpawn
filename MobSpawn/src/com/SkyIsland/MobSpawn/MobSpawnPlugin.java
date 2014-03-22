@@ -58,7 +58,7 @@ public final class MobSpawnPlugin extends JavaPlugin {
 		getLogger().info("MobSpawn initialization complete and successful!");
 		getLogger().info("MobSpawn is now turning off regular mob spawning in worlds specified in config.yml");
 		
-		MonsterSpawner spawn = new MonsterSpawner(this, config);
+		MonsterSpawner spawn = new MonsterSpawner(config);
 		getServer().getPluginManager().registerEvents(spawn, this);
 	}
 	
