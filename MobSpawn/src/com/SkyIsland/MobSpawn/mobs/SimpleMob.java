@@ -3,6 +3,10 @@ package com.SkyIsland.MobSpawn.mobs;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.potion.PotionEffect;
+
+import com.SkyIsland.MobSpawn.additions.ArmorSet;
+import com.SkyIsland.MobSpawn.additions.CustomPotionEffect;
 
 /**
  * This class is a wrapper class for a mob and its %chance of spawning
@@ -16,6 +20,7 @@ public class SimpleMob implements CustomMob{
 	private boolean isBoss = false;
 	private int health = 10;
 	private ArmorSet armor = null;
+	private CustomPotionEffect potionEffect = null;
 	
 	public SimpleMob(EntityType entity) {
 		this.type = entity;
@@ -40,6 +45,11 @@ public class SimpleMob implements CustomMob{
 		this(entity, name, isBoss, health);
 		this.armor = armor;
 	}
+	
+	public SimpleMob(EntityType entity, String name, boolean isBoss, int health, ArmorSet armor, CustomPotionEffect potionEffect) {
+		this(entity, name, isBoss, health, armor);
+		this.potionEffect = potionEffect;
+	}
 
 	public EntityType getType() {
 		return type;
@@ -61,6 +71,10 @@ public class SimpleMob implements CustomMob{
 		return armor;
 	}
 	
+	public CustomPotionEffect getPotionEffect() {
+		return potionEffect;
+	}
+	
 	public LivingEntity spawnMob(Location location){
 		LivingEntity entity =  (LivingEntity) location.getWorld().spawnEntity(location, getType());
 		
@@ -79,6 +93,13 @@ public class SimpleMob implements CustomMob{
 			if (armor.getChestplate() != null) entity.getEquipment().setChestplate(armor.getChestplate());
 			if (armor.getLeggings() != null) entity.getEquipment().setLeggings(armor.getLeggings());
 			if (armor.getBoots() != null) entity.getEquipment().setBoots(armor.getBoots());
+		}
+		
+		//potion effects
+		if (potionEffect != null){
+			for (PotionEffect effect: potionEffect.getPotionEffects()){
+				entity.addPotionEffect(effect);
+			}
 		}
 		
 		return entity;
