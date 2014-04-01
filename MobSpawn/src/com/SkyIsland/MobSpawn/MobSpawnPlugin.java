@@ -41,7 +41,7 @@ public final class MobSpawnPlugin extends JavaPlugin {
 	
 	private final String configName = "config.yml";
 	private final File configFile = new File(this.getDataFolder(), configName);
-	public YamlConfiguration config;
+	public YamlConfiguration config = new YamlConfiguration();
 	
 	@Override
 	public void onEnable() {
@@ -208,6 +208,10 @@ public final class MobSpawnPlugin extends JavaPlugin {
 	protected void load() throws FileNotFoundException, IOException, InvalidConfigurationException {
 		File path = new File(getDataFolder() + "/Resources");
 		
+		if (configFile == null) {
+			logger.info("variable configFile is currently null (in load method, line 212)\n\n\n\n\n\n\n");
+		}
+		
 		//create plugin directory
 		if (!path.exists()) {
 			if (!path.mkdirs()) {
@@ -230,6 +234,8 @@ public final class MobSpawnPlugin extends JavaPlugin {
 			//create file if it doesn't exist
 			if (!configFile.exists()){
 				if (!configFile.createNewFile()){
+					logger.info("Failed to create default config file.");
+					logger.info("\n\n\n\n\n\n\n\n--------------------\n\n\n\n");
 					return;
 				}
 				//create default
