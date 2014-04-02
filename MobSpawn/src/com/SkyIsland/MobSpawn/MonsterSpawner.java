@@ -58,12 +58,21 @@ public class MonsterSpawner implements Listener {
 		loadWorlds(config);
 	}
 	
-	private void loadWorlds(YamlConfiguration config){
-		List<String> worlds = config.getStringList("Worlds");
-		if (worlds == null) return;
+	private void loadWorlds(YamlConfiguration config) {
+		List<String> worlds = config.getConfigurationSection("Main").getStringList("Worlds");
+		if (worlds == null) {
+			System.out.println("worlds == null!!!\nMake sure to specify which worlds are to use MobSpawn in the config file in a section 'Worlds' as a string list.");
+			return;
+		}
+		
+		//check if worlds list is empty; if so, we have a problem
+		if (worlds.isEmpty()) {
+			System.out.println("Unanble to load any worlds into MobSpawn plugin!\nMake sure to specify the worlds to use a list of strings in a section title 'Worlds'");
+		}
 		
 		//a little redundant, but just being safe
 		for (String world: worlds){
+			System.out.println("Added world " + world);
 			this.worlds.add(world);
 		}
 	}
