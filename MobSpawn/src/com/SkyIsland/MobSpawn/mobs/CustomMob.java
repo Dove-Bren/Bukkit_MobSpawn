@@ -22,5 +22,5 @@ public interface CustomMob {
 	 * @param location
 	 * @return
 	 */
-	//public boolean canSpawn(Location location);
+	public boolean canSpawn(Location location);
 }
