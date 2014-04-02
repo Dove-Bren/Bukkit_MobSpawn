@@ -211,10 +211,6 @@ public final class MobSpawnPlugin extends JavaPlugin {
 	protected void load() throws FileNotFoundException, IOException, InvalidConfigurationException {
 		File path = new File(getDataFolder() + "/Resources");
 		
-		if (configFile == null) {
-			logger.info("variable configFile is currently null (in load method, line 212)\n\n\n\n\n\n\n");
-		}
-		
 		//create plugin directory
 		if (!path.exists()) {
 			if (!path.mkdirs()) {
@@ -238,7 +234,6 @@ public final class MobSpawnPlugin extends JavaPlugin {
 			if (!configFile.exists()){
 				if (!configFile.createNewFile()){
 					logger.info("Failed to create default config file.");
-					logger.info("\n\n\n\n\n\n\n\n--------------------\n\n\n\n");
 					return;
 				}
 				//create default
@@ -261,11 +256,13 @@ public final class MobSpawnPlugin extends JavaPlugin {
 	private void createDefaultConfig() throws IOException{
 		
 		ArrayList<String> worldList = new ArrayList<String>();
+		config = new YamlConfiguration(); 
+		
+		
 		worldList.add("wilderness");
 		config.createSection("Main");
 		config.getConfigurationSection("Main").set("Worlds", worldList);
 		
-		config = new YamlConfiguration(); 
 		config.createSection("Types");
 		config.set("Types.zombie", "simple");
 		config.set("Types.zombie_on_zombie", "double ZOMBIE ZOMBIE");

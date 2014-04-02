@@ -82,7 +82,7 @@ public class SimpleMob implements CustomMob{
 		entity.setMaxHealth(health);
 		
 		//set name
-		if (name != null) entity.setCustomName(name);
+		if (name != null && !name.equalsIgnoreCase("none")) entity.setCustomName(name);
 
 		//boss stuff
 		entity.setRemoveWhenFarAway(!isBoss);
