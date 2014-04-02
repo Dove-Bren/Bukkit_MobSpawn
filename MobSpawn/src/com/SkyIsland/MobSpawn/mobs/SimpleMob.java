@@ -79,7 +79,7 @@ public class SimpleMob implements CustomMob{
 		LivingEntity entity =  (LivingEntity) location.getWorld().spawnEntity(location, getType());
 		
 		//set health
-		entity.setHealth(health);
+		entity.setMaxHealth(health);
 		
 		//set name
 		if (name != null) entity.setCustomName(name);
