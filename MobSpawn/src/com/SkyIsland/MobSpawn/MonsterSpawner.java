@@ -191,11 +191,11 @@ public class MonsterSpawner implements Listener {
 		String[] parts = string.split(" ");
 		ItemStack helmet = null, chestplate = null, leggings = null, boots = null, weapon = null;
 		
-		if (parts.length > 0) helmet     = new ItemStack(Material.valueOf(parts[0]));
-		if (parts.length > 1) chestplate = new ItemStack(Material.valueOf(parts[1]));
-		if (parts.length > 2) leggings   = new ItemStack(Material.valueOf(parts[2]));
-		if (parts.length > 3) boots      = new ItemStack(Material.valueOf(parts[3]));
-		if (parts.length > 4) weapon     = new ItemStack(Material.valueOf(parts[4]));
+		if (parts.length > 0 && !parts[0].equalsIgnoreCase("none")) helmet     = new ItemStack(Material.valueOf(parts[0]));
+		if (parts.length > 1 && !parts[1].equalsIgnoreCase("none")) chestplate = new ItemStack(Material.valueOf(parts[1]));
+		if (parts.length > 2 && !parts[2].equalsIgnoreCase("none")) leggings   = new ItemStack(Material.valueOf(parts[2]));
+		if (parts.length > 3 && !parts[3].equalsIgnoreCase("none")) boots      = new ItemStack(Material.valueOf(parts[3]));
+		if (parts.length > 4 && !parts[4].equalsIgnoreCase("none")) weapon     = new ItemStack(Material.valueOf(parts[4]));
 		
 		return new ArmorSet(helmet, chestplate, leggings, boots, weapon);
 	}

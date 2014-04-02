@@ -259,6 +259,7 @@ public final class MobSpawnPlugin extends JavaPlugin {
 		
 		ArrayList<String> worldList = new ArrayList<String>();
 		worldList.add("wilderness");
+		config.createSection("Main");
 		config.getConfigurationSection("Main").set("Worlds", worldList);
 		
 		config = new YamlConfiguration(); 
