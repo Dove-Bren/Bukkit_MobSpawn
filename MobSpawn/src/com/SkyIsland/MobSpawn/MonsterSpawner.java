@@ -1,5 +1,6 @@
 package com.SkyIsland.MobSpawn;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -35,27 +36,23 @@ import com.SkyIsland.MobSpawn.mobs.StackedMob;
  */
 public class MonsterSpawner implements Listener {
 		
-	//load the config once, generate entities, and store them here
-	private Map<CustomMob, Integer> mobs;
-	
-	//after all mobs are in the set, turn it into an array, for fast random access
-	private Entry<CustomMob,Integer>[] mobList;
+	//load the config once, storing each mapping between CustomMob to Rates in mobList for fast, random access
+	private ArrayList<MobToSpawn> mobList;
 	
 	private Random random;
 	
 	private Set<String> worlds;
 	
-	@SuppressWarnings("unchecked")
 	public MonsterSpawner(YamlConfiguration config) {
 		worlds = new HashSet<String>();
-		mobs = new HashMap<CustomMob, Integer>();
 		random = new Random();
 		
+		mobList = new ArrayList<MobToSpawn>(); //like a map, except instead of Entry we have MobToSpawn
 		//add all mobs
 		loadMobs(config);
 		
 		//generate mob list for fast, random access
-		mobList = (Entry<CustomMob, Integer>[]) mobs.entrySet().toArray();
+		//mobList = new ArrayList<MobToSpawn>(mobs.entrySet());
 		
 		//load worlds
 		loadWorlds(config);
@@ -105,7 +102,13 @@ public class MonsterSpawner implements Listener {
 			
 			//simple
 			if (type.equalsIgnoreCase("simple")){
-				mobs.put(new SimpleMob(EntityType.valueOf(type)), rate);
+				//mobs.put(new SimpleMob(EntityType.valueOf(type)), rate);
+				//We move from using a map just so we can get an entry set just so we can get an array of mappings
+				//to an ArrayList of MobToSpawn's. MobToSpawn is a class that acts like an Entry; it's just a
+				//key/value mapping. We store it straight in mobList and don't have to worry about
+				//extracting values to an array for random access.
+				SimpleMob mob = new SimpleMob(EntityType.valueOf(type)); //pull this out for readibility
+				mobList.add(new MobToSpawn(mob, rate));
 			}
 			
 			//double
@@ -113,12 +116,17 @@ public class MonsterSpawner implements Listener {
 				String[] parts = type.split(" ");
 				SimpleMob bottom = new SimpleMob(EntityType.valueOf(parts[1]));
 				SimpleMob top = new SimpleMob(EntityType.valueOf(parts[2]));
-				mobs.put(new StackedMob(bottom, top), rate);
+				//mobs.put(new StackedMob(bottom, top), rate);
+				mobList.add(new MobToSpawn(new StackedMob(bottom, top), rate));
+				//add entry mapping a stacked mob to it's rate.
+				//nested is new StackedMob(bottom, top) which creates the StackedMob to add to the entry mapping
 			}
 			
 			//predefined
 			else if (type.equalsIgnoreCase("predefined")){
-				mobs.put(PredefinedMob.valueOf(name), rate);
+				//mobs.put(PredefinedMob.valueOf(name), rate); replace with just adding an 'entry' to our
+				//arrayList mobList;
+				mobList.add(new MobToSpawn(PredefinedMob.valueOf(name), rate));
 			}
 			
 			//complex
@@ -126,7 +134,9 @@ public class MonsterSpawner implements Listener {
 				ConfigurationSection complexSection = definitionsSection.getConfigurationSection(name);
 				CustomMob mob = getComplexMob(complexSection);
 				if (mob != null){
-					mobs.put(mob, rate);
+					//mobs.put(mob, rate); We are gonna put a MobToSpawn (aka entry mocking class) into
+					//mobList, an arrayList holding each mapping
+					mobList.add(new MobToSpawn(mob, rate));
 				}
 			}	
 		}
@@ -193,13 +203,13 @@ public class MonsterSpawner implements Listener {
 
 	public CustomMob getRandomEntity(){
 		while(true){
-			int rand_index = random.nextInt(mobList.length);
+			int rand_index = random.nextInt(mobList.size());
 			int rand_spawn = random.nextInt(101);
 			
-			Entry<CustomMob,Integer> entry = mobList[rand_index];
+			MobToSpawn entry = mobList.get(rand_index);
 			
-			if (entry.getValue() <= rand_spawn){
-				return entry.getKey();
+			if (entry.rate <= rand_spawn){
+				return entry.mob;
 			}
 		}
 	}
