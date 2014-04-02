@@ -1,7 +1,7 @@
 package com.SkyIsland.MobSpawn.additions;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.TreeSet;
 
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.potion.PotionEffect;
@@ -32,8 +32,13 @@ public enum CustomPotionEffect {
 	private Collection<PotionEffect> potionEffects;
 	
 	CustomPotionEffect(PotionEffect... effects) {
-		this.potionEffects = new TreeSet<PotionEffect>();
-		
+		//this.potionEffects = new TreeSet<PotionEffect>();
+		//Changes this to a list; whenever we need to iterate, we're going to have to have linear time.
+		//We suffer in lookup, but when would we ever need to do that?
+		//We can't use a tree cause it needs to sort. PotionEffect doesn't implement comparable. 
+		//If we need lookup and want log(n) time, we can implement comparable and use tree again. Until then,
+		//I'm just going to use a list here.
+		this.potionEffects = new ArrayList<PotionEffect>();
 		for (PotionEffect effect: effects){
 			potionEffects.add(effect);
 		}

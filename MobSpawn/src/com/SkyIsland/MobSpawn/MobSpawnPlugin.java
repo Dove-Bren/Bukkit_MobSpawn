@@ -29,6 +29,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.SkyIsland.MobSpawn.additions.CustomPotionEffect;
+import com.SkyIsland.MobSpawn.mobs.CustomMob;
 
 public final class MobSpawnPlugin extends JavaPlugin {
 	
@@ -37,7 +38,7 @@ public final class MobSpawnPlugin extends JavaPlugin {
 	final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 	
 	//the monster spawner
-	protected MonsterSpawner spawn;
+	protected MonsterSpawner spawn = null;
 	
 	private final String configName = "config.yml";
 	private final File configFile = new File(this.getDataFolder(), configName);
@@ -58,7 +59,7 @@ public final class MobSpawnPlugin extends JavaPlugin {
 		getLogger().info("MobSpawn initialization complete and successful!");
 		getLogger().info("MobSpawn is now turning off regular mob spawning in worlds specified in config.yml");
 		
-		MonsterSpawner spawn = new MonsterSpawner(config);
+			spawn = new MonsterSpawner(config);
 		getServer().getPluginManager().registerEvents(spawn, this);
 	}
 	
@@ -67,9 +68,11 @@ public final class MobSpawnPlugin extends JavaPlugin {
 		
 		if (cmd.getName().equalsIgnoreCase("spawn_mob")) {
 			//spawn mob with ID
-			if (Array.getLength(args) != 1) {
-				getLogger().info("invalid length on a spawn_mob request");
-				return false;
+			if (Array.getLength(args) == 0) {
+				//temporarily just stole code from MonsterSpawner's event handler.
+				CustomMob mob = spawn.getRandomEntity();
+				mob.spawnMob(( (Player) sender).getLocation().add(10, 0, 0));
+				return true;
 			}
 
 			Player player = (Player) sender;
@@ -291,7 +294,7 @@ public final class MobSpawnPlugin extends JavaPlugin {
 		config.set("Definitions.totem_pole.entity1Name", "none");
 		config.set("Definitions.totem_pole.entity1Hp", 9);
 		config.set("Definitions.totem_pole.entity1PotionEffect", "none");
-		config.set("Definitions.totem_pole.entity2", "CHIKEN");
+		config.set("Definitions.totem_pole.entity2", "CHICKEN");
 		config.set("Definitions.totem_pole.entity2Equips", "none none none none none");
 		config.set("Definitions.totem_pole.entity2Name", "none");
 		config.set("Definitions.totem_pole.entity2Hp", 9);

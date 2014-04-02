@@ -107,15 +107,16 @@ public class MonsterSpawner implements Listener {
 				//to an ArrayList of MobToSpawn's. MobToSpawn is a class that acts like an Entry; it's just a
 				//key/value mapping. We store it straight in mobList and don't have to worry about
 				//extracting values to an array for random access.
-				SimpleMob mob = new SimpleMob(EntityType.valueOf(type)); //pull this out for readibility
+				SimpleMob mob = new SimpleMob(EntityType.valueOf(name.toUpperCase())); //pull this out for readibility
 				mobList.add(new MobToSpawn(mob, rate));
+			
 			}
 			
 			//double
 			else if (type.toLowerCase().startsWith("double")){
 				String[] parts = type.split(" ");
-				SimpleMob bottom = new SimpleMob(EntityType.valueOf(parts[1]));
-				SimpleMob top = new SimpleMob(EntityType.valueOf(parts[2]));
+				SimpleMob bottom = new SimpleMob(EntityType.valueOf(parts[1].toUpperCase()));
+				SimpleMob top = new SimpleMob(EntityType.valueOf(parts[2].toUpperCase()));
 				//mobs.put(new StackedMob(bottom, top), rate);
 				mobList.add(new MobToSpawn(new StackedMob(bottom, top), rate));
 				//add entry mapping a stacked mob to it's rate.
@@ -126,7 +127,7 @@ public class MonsterSpawner implements Listener {
 			else if (type.equalsIgnoreCase("predefined")){
 				//mobs.put(PredefinedMob.valueOf(name), rate); replace with just adding an 'entry' to our
 				//arrayList mobList;
-				mobList.add(new MobToSpawn(PredefinedMob.valueOf(name), rate));
+				mobList.add(new MobToSpawn(PredefinedMob.valueOf(name.toUpperCase()), rate));
 			}
 			
 			//complex
@@ -154,7 +155,7 @@ public class MonsterSpawner implements Listener {
 			String prefix = "entity" + (i + 1);
 			
 			// get type entity1: CAVE_SPIDER
-			EntityType type = (complexSection.contains(prefix)) ? EntityType.valueOf(complexSection.getString(prefix)) : EntityType.ZOMBIE;
+			EntityType type = (complexSection.contains(prefix)) ? EntityType.valueOf(complexSection.getString(prefix).toUpperCase()) : EntityType.ZOMBIE;
 			
 		    
 		    // get name entity1Name: none
@@ -167,7 +168,8 @@ public class MonsterSpawner implements Listener {
 			ArmorSet armor = (complexSection.contains(prefix + "Equips")) ? parseArmorString(complexSection.getString(prefix + "Equips")) : null;	
 			
 		    // get potion effect entity1PotionEffect: speedIV
-			CustomPotionEffect potionEffect = (complexSection.contains(prefix + "PotionEffect")) ? CustomPotionEffect.valueOf(complexSection.getString(prefix + "PotionEffect")) : null;
+			CustomPotionEffect potionEffect = (complexSection.contains(prefix + "PotionEffect") && !complexSection.getString(prefix + "PotionEffect").equalsIgnoreCase("none")) ? CustomPotionEffect.valueOf(complexSection.getString(prefix + "PotionEffect")) : null;
+			
 			
 			SimpleMob mob = new SimpleMob(type, customName, isBoss, hp, armor,potionEffect);
 			
