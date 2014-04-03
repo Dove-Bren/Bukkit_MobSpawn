@@ -1,6 +1,7 @@
 package com.SkyIsland.MobSpawn.mobs;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.potion.PotionEffect;
@@ -103,6 +104,58 @@ public class SimpleMob implements CustomMob{
 		}
 		
 		return entity;
+	}
+	
+	/**
+	 * Returns whether or not this mob can spawn at the passed location
+	 * @param location Where we want to check if the mob can spawn. This should be the location of the mob's feet.
+	 */
+	public boolean canSpawn(Location location) {
+		
+		switch (this.type) {
+		case GIANT:
+			//giants should only spawn outside; no way are they fitting in a cave.
+			//etc.
+			//if location.getBlock().
+			break;
+		case GHAST:
+			//ghasts are larger and need their own check. said to be 4x4x4
+			return checkArea(location, 4, 4, 4);
+		case SLIME:
+		case MAGMA_CUBE:
+			//slimes have varying sizes...
+			break;
+		default:
+			//rest of regular-sized mobs that we don't have to special checks for. Check a 1x2x1 area (x,y,z)
+			return checkArea(location, 1, 2, 1);
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Checks a cube of width X, height Y, and length Z for all air blocks. Returns as soon as it finds something else
+	 * @param w the width of the box
+	 * @param h the height of the box
+	 * @param l the length of the box
+	 * @return if all those blocks are air blocks
+	 * 
+	 */
+	private boolean checkArea(Location location, int w, int h, int l) {
+		int i, j, k;
+		for (i = 0; i < w; i++) {
+			for (j = 0; j < h; j++) {
+				for (k = 0; k < l; k++) {
+					//yucky. tripple nested brah. sick.
+					if (location.add(i, j, k).getBlock().getType() == Material.AIR) {
+						return false;
+					}
+				}
+			}
+		}
+		
+		//after all the for looping. It never returned false, so it must be okay.
+		return true;
 	}
 	
 }
