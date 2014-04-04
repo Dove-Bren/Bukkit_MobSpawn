@@ -95,10 +95,11 @@ public class SimpleMob implements CustomMob{
 			if (armor.getChestplate() != null) entity.getEquipment().setChestplate(armor.getChestplate());
 			if (armor.getLeggings() != null) entity.getEquipment().setLeggings(armor.getLeggings());
 			if (armor.getBoots() != null) entity.getEquipment().setBoots(armor.getBoots());
+			if (armor.getSword() != null) entity.getEquipment().setItemInHand(armor.getSword());
 		}
 		
 		//potion effects
-		if (potionEffect != null){
+		if (potionEffect != null && potionEffect.getPotionEffects() != null){
 			for (PotionEffect effect: potionEffect.getPotionEffects()){
 				entity.addPotionEffect(effect);
 			}

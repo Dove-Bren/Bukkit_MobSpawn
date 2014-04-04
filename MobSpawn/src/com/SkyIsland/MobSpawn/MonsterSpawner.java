@@ -27,6 +27,7 @@ import com.SkyIsland.MobSpawn.additions.ArmorSet;
 import com.SkyIsland.MobSpawn.additions.CustomPotionEffect;
 import com.SkyIsland.MobSpawn.mobs.CustomMob;
 import com.SkyIsland.MobSpawn.mobs.PredefinedMob;
+import com.SkyIsland.MobSpawn.mobs.PredefinedMob.PredefinedMobType;
 import com.SkyIsland.MobSpawn.mobs.SimpleMob;
 import com.SkyIsland.MobSpawn.mobs.StackedMob;
 
@@ -136,7 +137,13 @@ public class MonsterSpawner implements Listener {
 			else if (type.equalsIgnoreCase("predefined")){
 				//mobs.put(PredefinedMob.valueOf(name), rate); replace with just adding an 'entry' to our
 				//arrayList mobList;
-				mobList.add(new MobToSpawn(PredefinedMob.valueOf(name.toUpperCase()), rate));
+				
+				//the pricky part here is that we need to create an object of type PredefinedMob, and then
+				//call one of it's enumerated functions on it. This is exactly like
+				//PredefinedMob.VALUE, except we can't subsitute the name of the predefined on the fly like that
+				//instead we have to call 'invoke' on it
+				CustomMob mob = new PredefinedMob(PredefinedMobType.valueOf(name.toUpperCase()));
+				mobList.add(new MobToSpawn(mob, rate));
 			}
 			
 			//complex

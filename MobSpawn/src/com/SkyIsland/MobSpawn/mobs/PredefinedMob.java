@@ -1,5 +1,6 @@
 package com.SkyIsland.MobSpawn.mobs;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import org.bukkit.Location;
@@ -12,17 +13,20 @@ import com.SkyIsland.MobSpawn.additions.ArmorSet;
 import com.SkyIsland.MobSpawn.additions.CustomPotionEffect;
 import com.SkyIsland.MobSpawn.additions.ItemFactory;
 
-public enum PredefinedMob implements CustomMob{
-	WITHERSKELETON(),
-	SKELETONONHORSE(),
-	WITHERSKELETONONHORSE(),
-	ZOMBIEONHORSE(),
-	SKELETONHORSESQUAD(),
-	WITHERSKELETONSQUAD(),
-	ZOMBIEHORSESQUAD(),
-	SLIMEPYRAMID(),
-	SKELETONONHORSEONBAT(),
-	EMPTY();
+public class PredefinedMob implements CustomMob{
+	
+	public enum PredefinedMobType {
+		WITHERSKELETON,
+		SKELETONONHORSE,
+		WITHERSKELETONONHORSE,
+		ZOMBIEONHORSE,
+		SKELETONHORSESQUAD,
+		WITHERSKELETONSQUAD,
+		ZOMBIEHORSESQUAD,
+		SLIMEPYRAMID,
+		SKELETONONHORSEONBAT,
+		EMPTY;
+	}
 	
 	//use an arraylist to store any and all mobs that will be spawned for this predefined mob type
 	private ArrayList<CustomMob> entityList = new ArrayList<CustomMob>();
@@ -32,6 +36,15 @@ public enum PredefinedMob implements CustomMob{
 	//namely for WitherSkeletons
 	private String constantName = null;
 	
+	public PredefinedMob(PredefinedMobType type) {
+		try {
+			this.getClass().getMethod(type.name(), (Class<?>[]) null).invoke(this, (Object[]) null);
+		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	
 	/**
 	 * This value of predefined mob is NOT FOR CASUAL USE.
@@ -39,22 +52,21 @@ public enum PredefinedMob implements CustomMob{
 	 * <p />This *Does Not* introduce a way to modify the PRedefinedMob externally; only a way to sort of 'allocate'
 	 * an empty PredefinedMob
 	 */
-	@SuppressWarnings("unused")
-	private void EMPTY() {
+	public void EMPTY() {
 		constantName = "EMPTY";
 	}
 	
-	@SuppressWarnings("unused")
-	private void WITHERSKELETON() {
+	public void WITHERSKELETON() {
 		//redundant
 		//constantName = "WITHERSKELETON";
 		
 		PredefinedMob mobPackage = WITHERSKELETON("none", false, 20, new ArmorSet(null, null, null, null, ItemFactory.RangedWeapon(3)), CustomPotionEffect.empty);
 		this.constantName = mobPackage.constantName;
-		for (CustomMob mob : mobPackage.entityList) {
-			//we have to go through and add all the entities in it's list to our own :(
-			this.entityList.add(mob);
-		}
+		this.entityList.add(mobPackage);
+//		for (CustomMob mob : mobPackage.entityList) {
+//			//we have to go through and add all the entities in it's list to our own :(
+//			this.entityList.add(mob);
+//		}
 		mobPackage = null; //get rid of reference to useless package
 	
 	}
@@ -71,11 +83,11 @@ public enum PredefinedMob implements CustomMob{
 	 * @param potionEffect
 	 * @return
 	 */
-	private PredefinedMob WITHERSKELETON(String name, boolean isBoss, int health, ArmorSet armor, CustomPotionEffect potionEffect) {
+	public PredefinedMob WITHERSKELETON(String name, boolean isBoss, int health, ArmorSet armor, CustomPotionEffect potionEffect) {
 		//We want to make a new Predefined mob package with a defined wither skeleton.
 		//this involves making a new "Empty" predefined mob and setting it up like we want
 		//and then returning that new mob.
-		PredefinedMob mobPackage = PredefinedMob.EMPTY;
+		PredefinedMob mobPackage = new PredefinedMob(PredefinedMobType.EMPTY);
 		mobPackage.constantName = "WITHERSKELETON";
 		
 		SimpleMob skeleton;
@@ -93,8 +105,7 @@ public enum PredefinedMob implements CustomMob{
 	 * <p />Because horses are of free-will and do not follow their master's directions, each skeleton is spawned
 	 * with a bow rather than a melee weapon.
 	 */
-	@SuppressWarnings("unused")
-	private void SKELETONONHORSE() {
+	public void SKELETONONHORSE() {
 		constantName = "SKELETONONHORSE";
 		
 		SimpleMob skeletonRider;
@@ -114,8 +125,7 @@ public enum PredefinedMob implements CustomMob{
 	/**
 	 * Creates a wither skeleton riding a horse in the appropriate fashion
 	 */
-	@SuppressWarnings("unused")
-	private void WITHERSKELETONONHORSE() {
+	public void WITHERSKELETONONHORSE() {
 		//constantName = "WITHERSKELETONONHORSE";
 		PredefinedMob mobPackage;
 		mobPackage = WITHERSKELETONONHORSE(WITHERSKELETON("none", false, 20, new ArmorSet(null, null, null, null, ItemFactory.RangedWeapon(3)), CustomPotionEffect.empty));
@@ -123,9 +133,7 @@ public enum PredefinedMob implements CustomMob{
 		//since calling WITHERSKELETONONHORSE doesn't initialize any of our variables (but returns a package with them)
 		//we simply copy them
 		this.constantName = mobPackage.constantName;
-		for (CustomMob mob : mobPackage.entityList) {
-			this.entityList.add(mob);
-		}
+		this.entityList.add(mobPackage);
 		
 		
 	}
@@ -139,8 +147,8 @@ public enum PredefinedMob implements CustomMob{
 	 * @param skeletonRider
 	 * @return
 	 */
-	private PredefinedMob WITHERSKELETONONHORSE(PredefinedMob skeletonRider) {
-		PredefinedMob mobPackage = PredefinedMob.EMPTY;
+	public PredefinedMob WITHERSKELETONONHORSE(PredefinedMob skeletonRider) {
+		PredefinedMob mobPackage = new PredefinedMob(PredefinedMobType.EMPTY);
 		
 		mobPackage.constantName = "WITHERSKELETONONHORSE";
 		
@@ -160,8 +168,7 @@ public enum PredefinedMob implements CustomMob{
 	/**
 	 * Creates a zombie riding a horse. Zombie is spawned with no equipment, and does nothing.
 	 */
-	@SuppressWarnings("unused")
-	private void  ZOMBIEONHORSE() {
+	public void  ZOMBIEONHORSE() {
 		constantName = "ZOMBIEONHORSE";
 		
 		SimpleMob zombie;
@@ -181,20 +188,19 @@ public enum PredefinedMob implements CustomMob{
 	 * <p />
 	 * A more powerful skeleton (wither skeleton) is also created as a leader, who will possess greater equipment.
 	 */
-	@SuppressWarnings("unused")
-	private void SKELETONHORSESQUAD() {
+	public void SKELETONHORSESQUAD() {
 		constantName = "SKELETONHORSESQUADE";
 		
 		int squadCount = (int) ((Math.random() % 4) + 2); //get squadcount to be 2-5
 		
 		for (; squadCount > 0; squadCount--) {
 			//same as repeat(squadCount)
-			this.entityList.add(PredefinedMob.SKELETONONHORSE);
+			this.entityList.add(new PredefinedMob(PredefinedMobType.SKELETONONHORSE));
 		}
 		
 		//now we create the chief, bringing out squad total to 3-6
 		PredefinedMob chief;
-		chief = PredefinedMob.WITHERSKELETONONHORSE;
+		chief = new PredefinedMob(PredefinedMobType.WITHERSKELETONONHORSE);
 		this.entityList.add(chief);
 		
 	}
@@ -202,15 +208,14 @@ public enum PredefinedMob implements CustomMob{
 	/**
 	 * Creates a wither skeleton squad, with a very powerful leader.
 	 */
-	@SuppressWarnings("unused")
-	private void  WITHERSKELETONSQUAD() {
+	public void  WITHERSKELETONSQUAD() {
 		constantName = "WITHERSKELETONSQUAD";
 		
 		int squadCount = (int) ((Math.random() % 4) + 2); //get squadcount to be 1-4
 		
 		for (; squadCount > 0; squadCount--) {
 			//same as repeat(squadCount)
-			this.entityList.add(PredefinedMob.WITHERSKELETONONHORSE);
+			this.entityList.add(new PredefinedMob(PredefinedMobType.WITHERSKELETONONHORSE));
 		}
 		
 		//now we create the chief, bringing out squad total to 2-5
@@ -226,20 +231,19 @@ public enum PredefinedMob implements CustomMob{
 	/**
 	 * Creates a squade of zombie horsemen armed with swords!
 	 */
-	@SuppressWarnings("unused")
-	private void  ZOMBIEHORSESQUAD() {
+	public void  ZOMBIEHORSESQUAD() {
 		constantName = "ZOMBIESQUAD";
 		
 		int squadCount = (int) ((Math.random() % 4) + 2); //get squadcount to be 2-5
 		
 		for (; squadCount > 0; squadCount--) {
 			//same as repeat(squadCount)
-			this.entityList.add(PredefinedMob.ZOMBIEONHORSE);
+			this.entityList.add(new PredefinedMob(PredefinedMobType.ZOMBIEONHORSE));
 		}
 		
 		//now we create the chief, bringing out squad total to 3-6
 		PredefinedMob chief;
-		chief = PredefinedMob.ZOMBIEONHORSE;
+		chief = new PredefinedMob(PredefinedMobType.ZOMBIEONHORSE);
 		this.entityList.add(chief);
 		
 		
@@ -248,8 +252,7 @@ public enum PredefinedMob implements CustomMob{
 	/**
 	 * Creates a slime pyramid of height 4 or 5
 	 */
-	@SuppressWarnings("unused")
-	private void  SLIMEPYRAMID() {
+	public void  SLIMEPYRAMID() {
 		constantName = "SLIMEPYRAMID";
 		
 		for (int i = (int) ((Math.random() % 2) +4); i > 0; i++) {
@@ -262,8 +265,7 @@ public enum PredefinedMob implements CustomMob{
 	/**
 	 * Creates a Skeleton on a horse, which is on an invisible bat.
 	 */
-	@SuppressWarnings("unused")
-	private void  SKELETONONHORSEONBAT() {
+	public void  SKELETONONHORSEONBAT() {
 		constantName = "SKELETONONHORSEONBAT";
 		
 		SimpleMob skeleton = new SimpleMob(EntityType.SKELETON, "none", false, 20, new ArmorSet(null, null, null, null, ItemFactory.RangedWeapon(1)));
@@ -289,7 +291,7 @@ public enum PredefinedMob implements CustomMob{
 		
 		//We are given a list of mobs to spawn. They can be simple mobs, stacked mobs, who knows. We just spawn'em
 		if (entityList.isEmpty()) {
-			System.out.println("Tried to create PredefinedMob without any setup: PredefinedMob.java:52");
+			System.out.println("Tried to create PredefinedMob without any setup: PredefinedMob.java:spawnMob() - " + this.constantName);
 			return null;
 		}
 		
@@ -310,7 +312,7 @@ public enum PredefinedMob implements CustomMob{
 				continue;
 			}
 			
-			if (mob instanceof PredefinedMob && ((PredefinedMob) mob).constantName.equals(SLIMEPYRAMID)) {
+			if (mob instanceof PredefinedMob && ((PredefinedMob) mob).constantName.equals("SLIMEPYRAMID")) {
 				//we have to do slime pryamid separately, because each slime has a 'size' to be set that's not
 				//accessible though SimpleMob
 				LivingEntity slime2; //use to hold slime for increased reabability in the below loop
