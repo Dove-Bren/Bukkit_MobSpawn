@@ -153,7 +153,7 @@ public class SimpleMob implements CustomMob{
 			for (j = 0; j < h; j++) {
 				for (k = 0; k < l; k++) {
 					//yucky. tripple nested brah. sick.
-					if (location.add(i, j, k).getBlock().getType() == Material.AIR) {
+					if (location.add(i, j, k).getBlock().getType() != Material.AIR) {
 						return false;
 					}
 				}
