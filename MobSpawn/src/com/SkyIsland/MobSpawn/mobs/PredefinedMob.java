@@ -22,21 +22,79 @@ public enum PredefinedMob implements CustomMob{
 	skeletonOnHorseOnBat();
 	
 	//use an arraylist to store any and all mobs that will be spawned for this predefined mob type
-	private ArrayList<SimpleMob> entityList = new ArrayList<SimpleMob>();
+	private ArrayList<CustomMob> entityList = new ArrayList<CustomMob>();
 	
 	/**
 	 * Sets up this CustomMob to construct a skeleton riding a horse upon spawnMob method call.
 	 * <p />Because horses are of free-will and do not follow their master's directions, each skeleton is spawned
 	 * with a bow rather than a melee weapon.
 	 */
+	@SuppressWarnings("unused")
 	private void skeletonOnHorse() {
 		SimpleMob skeletonRider;
 		ArmorSet skeletonArmor = new ArmorSet(null, null, null, null, ItemFactory.RangedWeapon(1));
 		skeletonRider = new SimpleMob(EntityType.SKELETON, "none", false, 20, skeletonArmor);
 		
-		entityList.add(skeletonRider);
+		//entityList.add(skeletonRider);
+
+		HorseMob horse;
+		Horse.Variant variant = Horse.Variant.SKELETON_HORSE;
+		horse = new HorseMob(true, variant);
 		
-		SimpleMob horse;
+		StackedMob duo = new StackedMob(horse, skeletonRider);
+		entityList.add(duo);
+	}
+	
+	
+	/**
+	 * Spawns the mobtype held in this class at the given location.
+	 * @param location Where to spawn the mob at
+	 * @todo Make the locations of each group-member randomized a bit instead of spawning them all in the same location
+	 */
+	@Override
+	public LivingEntity spawnMob(Location location) {
+		
+		//We are given a list of mobs to spawn. They can be simple mobs, stacked mobs, who knows. We just spawn'em
+		if (entityList.isEmpty()) {
+			System.out.println("Tried to create PredefinedMob without any setup: PredefinedMob.java:52");
+			return null;
+		}
+		
+		LivingEntity returnEntity = null;
+		
+		//if we have more than one CustomMob to create, it's a group. Instead of finding
+		//a spawnable location for each, we'll just spawn them all on the same spot: location
+		for (CustomMob mob : entityList) {
+			returnEntity = mob.spawnMob(location);
+		}
+		
+		//returnEntity is given the last-spawned entity each time. We'll return whichever spawned last.
+		
+		return returnEntity;
+	}
+	
+	/**
+	 * Returns whether or not every single mob that's part of this PredefinedMobType can spawn at the location
+	 * @param location the Location to check at....
+	 */
+	@Override
+	public boolean canSpawn(Location location) {
+		
+		if (entityList.isEmpty()) {
+			//no entities were ever specified...
+			return false;
+			//we return false just to kind of signal an error
+		}
+		
+		for (CustomMob mob : entityList) {
+			if (!mob.canSpawn(location)) {
+				//if any of the mobs designated can't spawn, return false
+				return false;
+			}
+		}
+		
+		//if no mobs ended up not being able to spawn, it must be okay for them to spawn here.
+		return true;
 	}
 	
 //	
