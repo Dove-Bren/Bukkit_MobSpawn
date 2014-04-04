@@ -70,7 +70,7 @@ public final class MobSpawnPlugin extends JavaPlugin {
 			//spawn mob with ID
 			if (Array.getLength(args) == 0) {
 				//temporarily just stole code from MonsterSpawner's event handler.
-				CustomMob mob = spawn.getRandomEntity();
+				CustomMob mob = spawn.getRandomEntity(( (Player) sender).getLocation().add(10, 0, 0));
 				mob.spawnMob(( (Player) sender).getLocation().add(10, 0, 0));
 				return true;
 			}

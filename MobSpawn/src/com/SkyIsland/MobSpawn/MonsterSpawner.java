@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -219,14 +220,15 @@ public class MonsterSpawner implements Listener {
 	}
 
 
-	public CustomMob getRandomEntity(){
+	public CustomMob getRandomEntity(Location location){
 		while(true){
 			int rand_index = random.nextInt(mobList.size());
 			int rand_spawn = random.nextInt(101);
 			
 			MobToSpawn entry = mobList.get(rand_index);
 			
-			if (entry.rate <= rand_spawn){
+			if (entry.rate <= rand_spawn)
+			if (entry.mob.canSpawn(location)){
 				return entry.mob;
 			}
 		}
@@ -246,7 +248,7 @@ public class MonsterSpawner implements Listener {
 		
 		if (worlds.contains(event.getLocation().getWorld().getName())){
 			event.setCancelled(true);
-			CustomMob mob = this.getRandomEntity();
+			CustomMob mob = this.getRandomEntity(event.getLocation());
 			mob.spawnMob(event.getLocation());
 		}
 		
