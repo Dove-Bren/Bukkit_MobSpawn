@@ -30,7 +30,7 @@ public enum PredefinedMob implements CustomMob{
 	 * with a bow rather than a melee weapon.
 	 */
 	@SuppressWarnings("unused")
-	private void skeletonOnHorse() {
+	private PredefinedMob skeletonOnHorse() {
 		SimpleMob skeletonRider;
 		ArmorSet skeletonArmor = new ArmorSet(null, null, null, null, ItemFactory.RangedWeapon(1));
 		skeletonRider = new SimpleMob(EntityType.SKELETON, "none", false, 20, skeletonArmor);
@@ -43,6 +43,81 @@ public enum PredefinedMob implements CustomMob{
 		
 		StackedMob duo = new StackedMob(horse, skeletonRider);
 		entityList.add(duo);
+		
+		return this;
+	}
+
+	/**
+	 * Creates a wither skeleton riding a horse in the appropriate fashion
+	 */
+	@SuppressWarnings("unused")
+	private PredefinedMob witherSkeletonOnHorse() {
+		
+		return this;
+		
+	}
+	
+	/**
+	 * Creates a zombie riding a horse. Zombie is spawned with no equipment, and does nothing.
+	 * @deprecated
+	 */
+	@SuppressWarnings("unused")
+	private PredefinedMob  zombieOnHorse() {
+		
+		return this;
+		
+	}
+	
+	/**
+	 * Spawns a whole squad of skeletons, each with weapons of moderate enchantment.
+	 * <p />
+	 * A more powerful skeleton (wither skeleton) is also created as a leader, who will possess greater equipment.
+	 */
+	@SuppressWarnings("unused")
+	private PredefinedMob skeletonHorseSquad() {
+		
+		return this;
+		
+	}
+	
+	/**
+	 * Creates a wither skeleton squad, with a very powerful leader.
+	 */
+	@SuppressWarnings("unused")
+	private PredefinedMob  witherSkeletonSquad() {
+		
+		return this;
+		
+	}
+	
+	/**
+	 * Creates a squade of zombie horsemen armed with bows!
+	 */
+	@SuppressWarnings("unused")
+	private PredefinedMob  ZombieHorseSquad() {
+		
+		return this;
+		
+	}
+	
+	/**
+	 * Creates a slime pyramid of height 4 or 5
+	 */
+	@SuppressWarnings("unused")
+	private PredefinedMob  slimePyramid() {
+		
+		return this;
+		
+	}
+	
+	/**
+	 * Creates a 
+	 */
+	@SuppressWarnings("unused")
+	private PredefinedMob  skeletonOnHorseOnBat() {
+		
+		return this;
+		
 	}
 	
 	
