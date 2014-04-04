@@ -23,7 +23,8 @@ public enum CustomPotionEffect {
 	poisonIII (new PotionEffect(PotionEffectType.POISON, 999999999, 3, true)),
 	regenI (new PotionEffect(PotionEffectType.REGENERATION, 999999999, 1, true)),
 	regenII (new PotionEffect(PotionEffectType.REGENERATION, 999999999, 2, true)),
-	regenIII (new PotionEffect(PotionEffectType.REGENERATION, 999999999, 3, true));
+	regenIII (new PotionEffect(PotionEffectType.REGENERATION, 999999999, 3, true)),
+	empty ();
 	
 	//weakness
 	//poison
@@ -31,13 +32,21 @@ public enum CustomPotionEffect {
 	
 	private Collection<PotionEffect> potionEffects;
 	
+	
 	CustomPotionEffect(PotionEffect... effects) {
 		//this.potionEffects = new TreeSet<PotionEffect>();
-		//Changes this to a list; whenever we need to iterate, we're going to have to have linear time.
+		//Changed this to a list; whenever we need to iterate, we're going to have to have linear time.
 		//We suffer in lookup, but when would we ever need to do that?
 		//We can't use a tree cause it needs to sort. PotionEffect doesn't implement comparable. 
 		//If we need lookup and want log(n) time, we can implement comparable and use tree again. Until then,
 		//I'm just going to use a list here.
+		
+		//check to make sure no potions were passed
+		if (effects.length == 0) {
+			this.potionEffects = null;
+			return;
+		}
+		
 		this.potionEffects = new ArrayList<PotionEffect>();
 		for (PotionEffect effect: effects){
 			potionEffects.add(effect);
@@ -49,7 +58,9 @@ public enum CustomPotionEffect {
 	}
 	
 	public void applyPotionEffects(LivingEntity entity){
-		entity.addPotionEffects(potionEffects);
+		if (this.potionEffects != null) {
+			entity.addPotionEffects(potionEffects);
+		}
 	}
 	
 	
