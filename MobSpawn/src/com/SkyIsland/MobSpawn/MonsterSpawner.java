@@ -221,16 +221,23 @@ public class MonsterSpawner implements Listener {
 
 
 	public CustomMob getRandomEntity(Location location){
+		int tolerance = 25; //how many times we wanna try before giving up
 		while(true){
 			int rand_index = random.nextInt(mobList.size());
 			int rand_spawn = random.nextInt(101);
 			
+			
+			if (tolerance == 0) {
+				return null;
+			}
+			
 			MobToSpawn entry = mobList.get(rand_index);
 			
 			if (entry.rate <= rand_spawn)
-			if (entry.mob.canSpawn(location)){
+			if (entry.mob.canSpawn(location)) {
 				return entry.mob;
 			}
+			tolerance--;
 		}
 	}
 	
@@ -249,6 +256,7 @@ public class MonsterSpawner implements Listener {
 		if (worlds.contains(event.getLocation().getWorld().getName())){
 			event.setCancelled(true);
 			CustomMob mob = this.getRandomEntity(event.getLocation());
+			if (mob != null)
 			mob.spawnMob(event.getLocation());
 		}
 		

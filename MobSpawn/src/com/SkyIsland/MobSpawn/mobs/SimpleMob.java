@@ -149,11 +149,16 @@ public class SimpleMob implements CustomMob{
 	 */
 	private boolean checkArea(Location location, int w, int h, int l) {
 		int i, j, k;
+		Location checkLocation;
+		Material blockType;
 		for (i = 0; i < w; i++) {
 			for (j = 0; j < h; j++) {
 				for (k = 0; k < l; k++) {
+					checkLocation = location.add(i, j, k);
+					blockType = checkLocation.getBlock().getType();
 					//yucky. tripple nested brah. sick.
-					if (location.add(i, j, k).getBlock().getType() != Material.AIR) {
+					if (blockType != Material.AIR && blockType != Material.LONG_GRASS) {
+						System.out.println("Block (" + checkLocation.getX() + "," + checkLocation.getY() +"," + checkLocation.getZ() +") was of type " + location.add(i, j, k).getBlock().getType().name());
 						return false;
 					}
 				}
