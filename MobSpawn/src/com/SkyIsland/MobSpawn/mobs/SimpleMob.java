@@ -16,12 +16,13 @@ import com.SkyIsland.MobSpawn.additions.CustomPotionEffect;
  */
 public class SimpleMob implements CustomMob{
 
-	private EntityType type = null;
-	private String name = null;
-	private boolean isBoss = false;
-	private int health = 10;
-	private ArmorSet armor = null;
-	private CustomPotionEffect potionEffect = null;
+	//changed these fields from private to protected, so subclasses can keep and use the same values
+	protected EntityType type = null;
+	protected String name = null;
+	protected boolean isBoss = false;
+	protected int health = 10;
+	protected ArmorSet armor = null;
+	protected CustomPotionEffect potionEffect = null;
 	
 	public SimpleMob(EntityType entity) {
 		this.type = entity;
@@ -124,6 +125,8 @@ public class SimpleMob implements CustomMob{
 		case SLIME:
 		case MAGMA_CUBE:
 			//slimes have varying sizes...
+			break;
+		case HORSE:
 			break;
 		default:
 			//rest of regular-sized mobs that we don't have to special checks for. Check a 1x2x1 area (x,y,z)
