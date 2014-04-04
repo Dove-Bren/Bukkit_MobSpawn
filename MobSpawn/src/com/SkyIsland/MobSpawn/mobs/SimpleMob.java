@@ -158,7 +158,6 @@ public class SimpleMob implements CustomMob{
 					blockType = checkLocation.getBlock().getType();
 					//yucky. tripple nested brah. sick.
 					if (blockType != Material.AIR && blockType != Material.LONG_GRASS) {
-						System.out.println("Block (" + checkLocation.getX() + "," + checkLocation.getY() +"," + checkLocation.getZ() +") was of type " + location.add(i, j, k).getBlock().getType().name());
 						return false;
 					}
 				}
