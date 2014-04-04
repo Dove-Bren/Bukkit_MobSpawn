@@ -125,9 +125,11 @@ public class SimpleMob implements CustomMob{
 		case SLIME:
 		case MAGMA_CUBE:
 			//slimes have varying sizes...
-			break;
+			//we'll assume a size of 4 (Large slime) which has width 2.4
+			return checkArea(location, 3, 3, 3);
 		case HORSE:
-			break;
+			//we'll use a 2x2x2 cube to be sure
+			return checkArea(location, 2, 2, 2);
 		default:
 			//rest of regular-sized mobs that we don't have to special checks for. Check a 1x2x1 area (x,y,z)
 			return checkArea(location, 1, 2, 1);
