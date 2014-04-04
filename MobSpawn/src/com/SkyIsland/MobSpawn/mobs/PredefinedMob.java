@@ -12,14 +12,14 @@ import com.SkyIsland.MobSpawn.additions.CustomPotionEffect;
 import com.SkyIsland.MobSpawn.additions.ItemFactory;
 
 public enum PredefinedMob implements CustomMob{
-	skeletonOnHorse(),
-	witherSkeletonOnHorse(),
-	zombieOnHorse(),
-	skeletonHorseSquad(),
-	witherSkeletonSquad(),
-	zombieHorseSquad(),
-	slimePyramid(),
-	skeletonOnHorseOnBat();
+	SKELETONONHORSE(),
+	WITHERSKELETONONHORSE(),
+	ZOMBIEONHORSE(),
+	SKELETONHORSESQUAD(),
+	WITHERSKELETONSQUAD(),
+	ZOMBIEHORSESQUAD(),
+	SLIMEPYRAMID(),
+	SKELETONONHORSEONBAT();
 	
 	//use an arraylist to store any and all mobs that will be spawned for this predefined mob type
 	private ArrayList<CustomMob> entityList = new ArrayList<CustomMob>();
@@ -30,7 +30,7 @@ public enum PredefinedMob implements CustomMob{
 	 * with a bow rather than a melee weapon.
 	 */
 	@SuppressWarnings("unused")
-	private PredefinedMob skeletonOnHorse() {
+	private PredefinedMob SKELETONONHORSE() {
 		SimpleMob skeletonRider;
 		ArmorSet skeletonArmor = new ArmorSet(null, null, null, null, ItemFactory.RangedWeapon(1));
 		skeletonRider = new SimpleMob(EntityType.SKELETON, "none", false, 20, skeletonArmor);
@@ -51,7 +51,7 @@ public enum PredefinedMob implements CustomMob{
 	 * Creates a wither skeleton riding a horse in the appropriate fashion
 	 */
 	@SuppressWarnings("unused")
-	private PredefinedMob witherSkeletonOnHorse() {
+	private PredefinedMob WITHERSKELETONONHORSE() {
 		
 		return this;
 		
@@ -62,7 +62,7 @@ public enum PredefinedMob implements CustomMob{
 	 * @deprecated
 	 */
 	@SuppressWarnings("unused")
-	private PredefinedMob  zombieOnHorse() {
+	private PredefinedMob  ZOMBIEONHORSE() {
 		
 		return this;
 		
@@ -74,7 +74,7 @@ public enum PredefinedMob implements CustomMob{
 	 * A more powerful skeleton (wither skeleton) is also created as a leader, who will possess greater equipment.
 	 */
 	@SuppressWarnings("unused")
-	private PredefinedMob skeletonHorseSquad() {
+	private PredefinedMob SKELETONHORSESQUAD() {
 		
 		return this;
 		
@@ -84,7 +84,7 @@ public enum PredefinedMob implements CustomMob{
 	 * Creates a wither skeleton squad, with a very powerful leader.
 	 */
 	@SuppressWarnings("unused")
-	private PredefinedMob  witherSkeletonSquad() {
+	private PredefinedMob  WITHERSKELETONSQUAD() {
 		
 		return this;
 		
@@ -94,7 +94,7 @@ public enum PredefinedMob implements CustomMob{
 	 * Creates a squade of zombie horsemen armed with bows!
 	 */
 	@SuppressWarnings("unused")
-	private PredefinedMob  ZombieHorseSquad() {
+	private PredefinedMob  ZOMBIEHORSESQUAD() {
 		
 		return this;
 		
@@ -104,7 +104,7 @@ public enum PredefinedMob implements CustomMob{
 	 * Creates a slime pyramid of height 4 or 5
 	 */
 	@SuppressWarnings("unused")
-	private PredefinedMob  slimePyramid() {
+	private PredefinedMob  SLIMEPYRAMID() {
 		
 		return this;
 		
@@ -114,7 +114,7 @@ public enum PredefinedMob implements CustomMob{
 	 * Creates a 
 	 */
 	@SuppressWarnings("unused")
-	private PredefinedMob  skeletonOnHorseOnBat() {
+	private PredefinedMob  SKELETONONHORSEONBAT() {
 		
 		return this;
 		

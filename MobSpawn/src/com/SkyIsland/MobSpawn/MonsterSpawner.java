@@ -136,7 +136,7 @@ public class MonsterSpawner implements Listener {
 			else if (type.equalsIgnoreCase("predefined")){
 				//mobs.put(PredefinedMob.valueOf(name), rate); replace with just adding an 'entry' to our
 				//arrayList mobList;
-				mobList.add(new MobToSpawn(PredefinedMob.valueOf(name), rate));
+				mobList.add(new MobToSpawn(PredefinedMob.valueOf(name.toUpperCase()), rate));
 			}
 			
 			//complex
