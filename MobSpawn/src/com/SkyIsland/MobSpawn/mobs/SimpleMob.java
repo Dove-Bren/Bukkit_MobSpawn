@@ -118,8 +118,11 @@ public class SimpleMob implements CustomMob{
 		case GIANT:
 			//giants should only spawn outside; no way are they fitting in a cave.
 			//etc.
-			//if location.getBlock().
-			break;
+			if (location.getBlock().getLightFromSky() > 2) {
+				//moon gives light level 3 (or 4?). So this should work, right?
+				return checkArea(location, 5, 1, 5); //might as well check that the bottom couple blocks are good
+			}
+			return false;
 		case GHAST:
 			//ghasts are larger and need their own check. said to be 4x4x4
 			return checkArea(location, 4, 4, 4);
@@ -135,8 +138,6 @@ public class SimpleMob implements CustomMob{
 			//rest of regular-sized mobs that we don't have to special checks for. Check a 1x2x1 area (x,y,z)
 			return checkArea(location, 1, 2, 1);
 		}
-		
-		return false;
 	}
 	
 	/**
