@@ -118,8 +118,9 @@ public class SimpleMob implements CustomMob{
 		case GIANT:
 			//giants should only spawn outside; no way are they fitting in a cave.
 			//etc.
-			if (location.getBlock().getLightFromSky() > 2) {
-				//moon gives light level 3 (or 4?). So this should work, right?
+			if (location.getBlock().getLightFromSky() == 15) {
+				//getLightFromSky gives 15 if there is nothing over the player's head, and goes down as you dig
+				//into the side of a mountain (tested) even at night.
 				return checkArea(location, 5, 1, 5); //might as well check that the bottom couple blocks are good
 			}
 			return false;

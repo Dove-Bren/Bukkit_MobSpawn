@@ -66,6 +66,7 @@ public final class MobSpawnPlugin extends JavaPlugin {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		
+		
 		if (cmd.getName().equalsIgnoreCase("spawn_mob")) {
 			//spawn mob with ID
 			if (Array.getLength(args) == 0) {
