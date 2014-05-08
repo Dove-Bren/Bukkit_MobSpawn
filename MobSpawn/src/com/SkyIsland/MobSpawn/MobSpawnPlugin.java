@@ -31,6 +31,39 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.SkyIsland.MobSpawn.additions.CustomPotionEffect;
 import com.SkyIsland.MobSpawn.mobs.CustomMob;
 
+/**
+ * <h2>Class Description</h2><br />
+ * Core component of the plugin.<br />
+ * This class is responsible for initializing configuration files, creating a MonsterSpawner, and handling commands.<br />
+ * <p>
+ * Most of the actual work is done in the {@link com.SkyIsland.MobSpawn.MonsterSpawner MonsterSpawner}, which is responsible for catching mob-spawn events
+ * and doing work on them. </p>
+ * <p>
+ * Rather than do what {@link com.SkyIsland.Mobspawn.MonsterSpawner MonsterSpawner} does, this plugin class is only in charge of: <br />
+ * <ul>
+ * <li>Opening and loading up the config file 'config.yml', creating and initializing it to default values if it does not exists.</li>
+ * <li>Registering the created {@link com.SkyIsland.MobSpawn.MonsterSpawner MonsterSpawner} as an event handler so it can <i>do its thang</i></li>
+ * <li>Register as a command handler to the server and handle commands as they are issued.</li>
+ * </ul>
+ * </p>
+ * <h2>Plugin Description</h2><br />
+ * <p>
+ * The Mobspawn Plugin is designed to take regular mob-spawning and turn it into a completely customizable experience. By capturing mob spawn events, this
+ * plugin works to swap out default Minecraft mobs for different mobs native to Minecraft for a new experience. 
+ * </p>
+ * <p>
+ * This plugin is compatible with other plugins that <b>do not</b> disable the {@link org.bukkit.event.entity.CreatureSpawnEvent Creature Spawn Event}. 
+ * MobSpawn is designed to take any {@link org.bukkit.event.entity.CreatureSpawnEvent Creature Spawn Event} and simply alter the outcome.
+ * </p>
+ * <p>
+ * When Mobspawn grabs a {@link org.bukkit.event.entity.CreatureSpawnEvent Creature Spawn Event}, it tries to swap out the mob for one that's specified
+ * in the plugin's config file. More information can be found in MonsterSpawner's {@link com.SkyIsland.MobSpawn.MonsterSpawner#getRandomEntity(Location) getRandomEntity}.
+ * </p>
+ * @author William, Skyler, Matt
+ * @see com.SkyIsland.MobSpawn.MonsterSpawner MonsterSpawner
+ * @see org.bukkit.event.entity.CreatureSpawnEvent CreatureSpawnEvent
+ *
+ */
 public final class MobSpawnPlugin extends JavaPlugin {
 	
 	public static double spawnRate;
@@ -44,6 +77,9 @@ public final class MobSpawnPlugin extends JavaPlugin {
 	private final File configFile = new File(this.getDataFolder(), configName);
 	public YamlConfiguration config = new YamlConfiguration();
 	
+	/**
+	 * 
+	 */
 	@Override
 	public void onEnable() {
 		
