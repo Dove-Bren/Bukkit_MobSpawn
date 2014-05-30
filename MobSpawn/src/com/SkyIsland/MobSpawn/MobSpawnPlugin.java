@@ -268,7 +268,7 @@ public final class MobSpawnPlugin extends JavaPlugin {
 		config.createSection("Types");
 		config.set("Types.zombie", "simple");
 		config.set("Types.zombie_on_zombie", "double ZOMBIE ZOMBIE");
-		config.set("Types.skeleton", "skeleton");
+		config.set("Types.skeleton", "simple");
 		config.set("Types.skeleton_on_skeleton", "double SKELETON SKELETON");
 		config.set("Types.totem_pole", "complex");
 		config.set("Types.ghast_on_creeper", "double CREEPER GHAST");
@@ -319,7 +319,7 @@ public final class MobSpawnPlugin extends JavaPlugin {
 		config.set("Definitions.pig_mutated.isBoss", "false");
 		config.set("Definitions.pig_mutated.entity1", "PIG");
 		config.set("Definitions.pig_mutated.entity1Equips", "none none none none none");
-		config.set("Definitions.pig_mutated.entity1Name", "");
+		config.set("Definitions.pig_mutated.entity1Name", "none");
 		config.set("Definitions.pig_mutated.entity1Hp", 20);
 		config.set("Definitions.pig_mutated.entity1PotionEffect", "none");
 		config.set("Definitions.pig_mutated.entity2", "PIG");
