@@ -271,7 +271,7 @@ public final class MobSpawnPlugin extends JavaPlugin {
 		config.set("Types.skeleton", "skeleton");
 		config.set("Types.skeleton_on_skeleton", "double SKELETON SKELETON");
 		config.set("Types.totem_pole", "complex");
-		config.set("Types.ghast_on_creeper", "double CREEPER GHAST true");
+		config.set("Types.ghast_on_creeper", "double CREEPER GHAST");
 		config.set("Types.pig_mutated", "complex");
 		
 		config.createSection("Rates");
